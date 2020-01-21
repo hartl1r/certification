@@ -1,0 +1,86 @@
+body { 
+     font-family: "Open Sans", Tahoma, sans-serif 
+     }
+     
+.certification {
+    color:navy 
+}
+
+.shop1classes {
+    background-color: lightgrey;
+    color:blue;
+    width: 45%;
+    float: left;
+    padding: 5px;
+    margin: 5px
+} 
+
+.shop2classes {
+    background-color:lightgrey;
+    color:blue;
+    width: 45%;
+    float: right;
+    padding: 5px;
+    margin: 5px
+}
+
+.summary {
+    display:block;
+    float: left;
+    clear: both;
+    color:blue;
+    border: navy;
+    background-color:wheat;
+}
+
+.newSession {
+    display: block;
+    color:blue;
+    background-color:lightgray;
+    width: 45%;
+    padding: 10px;
+    margin: 10px;
+    float:right;  
+}
+
+.newSession h2 {
+    color:blue;
+    text-align: center
+}
+
+table {
+    border: 1px solid blue;
+    width:100%;
+    padding: 5px;
+    margin: 0 auto 0 auto;
+}
+
+th {
+    width:100%;
+    padding: 5px;
+    margin: 0 auto 0 auto;
+    background-color: blue;
+    color: white;
+    font-size: small;
+    line-height: 2px;
+  }
+
+td {
+    border: 1px solid blue;
+    width:100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left:25px;
+    padding-right:25px;
+    margin: 0 auto 0 auto;
+    font-size:medium;
+    color:blue 
+}
+
+
+input { 
+    text-align: center; 
+}
+
+
+

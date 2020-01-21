@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h2>Not Certified</h2>
+    <form autocomplete="off" action="" method="post" novalidate>
+        <input autocomplete="false" name="hidden" type="text" style="display:none;">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.villageID.label }}<br>
+            {{ form.villageID(size=6) }}
+            {% for error in form.firstName.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.fullName.label }}<br>
+            {{ form.fullName(size=32) }}
+        </p>
+        <p>
+            {{ form.dateForCertificationTraining.label }}<br>
+            {{ form.dateForCertificationTraining(size=32) }}
+            {% for error in form.certified.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.certified.label }}<br>
+            {{ form.certified(size=32) }}
+            {% for error in form.certified.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <hr>
+    <table border="1">
+        <caption>Members Not Certified</caption>
+        <tr>
+            <th style="background-color: white">Village ID</th>
+            <th style="background-color: white">Name</th>
+            <th style="background-color: white">Certified</th>
+            <th style="background-color: white">Home Phone</th>
+            <th style="background-color: white">Date Joined</th>
+            <th style="background-color: white">Cert Trng Date</th>
+        </tr>
+        {% for person in people %}
+            <tr>
+                <td>{{ person.villageID }}</td>
+                <td>{{ person.fullName }}</td>
+                <td>{{ person.certified }}</td>
+                <td>{{ person.homePhone }}</td>
+                <td>{{ person.dateJoined }}</td>
+                <td>{{ person.dateForCertificationTraining }}</td>
+
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

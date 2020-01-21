@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+<!-- <link rel="stylesheet" href="/app/static/css/main.css">   -->
+
+{% block app_content %}
+
+<div>
+    <h2>CHANGE CLASS LIMIT</h2>
+    <form autocomplete="off" action="/editClassLimit/{{form.id.data}}/" method="post" novalidate>
+        <input autocomplete="false" name="hidden" type="text" style="display:none;">
+        <p>{{ form.hidden_tag() }}</p>
+        <p>{{ form.shopNumber.label }}
+            {{ form.shopNumber(readonly=true,size=1) }} </p>
+        <p>{{ form.trainingDate.label}}
+            {{ form.trainingDate(readonly=true,size=32) }}</p>
+        <p>{{ form.classLimit.label}}
+            {{ form.classLimit(size=3) }}</p>
+            {% for error in form.classLimit.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+</div>
+{% endblock %}
+    

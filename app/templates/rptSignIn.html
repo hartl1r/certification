@@ -1,0 +1,39 @@
+<!-- rptNotCertified.html -->
+{% extends "base.html" %}
+{% block app_content %} 
+<!-- Include Print CSS -->
+ <head>
+    <title>CERTIFICATION SIGN IN - {{ shopName }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/print.css') }}">
+</head>
+<div class="VWCreports">
+    <button id="printPageButton" onClick="window.print();">PRINT</button>
+    <h1 class="text-center">THE VILLAGES WOODWORKERS CLUB</h1>
+    <h2 class="text-center">SIGN IN SHEET</h2>
+    <h2 class="text-center">TODAY IS {{ todays_date }}</h2>
+   
+    <table style="display: inline block;">                      
+        <tbody>
+        <tr>
+            <th style="width:300px">Name</th>
+            <th style="text-align:left">Training</th>
+            <th>Cell</th>
+            <th style="text-align:left">Home</th>
+            <th style="text-align:left">E-Mail</th>
+            <th style="text-align:center">Joined</th>
+        </tr>    
+    {% for n in enrollees %}
+    <tr>
+        <td style="text-align:left">{{n.wholeName}}</td>
+        <td style="text-align:left">{{n.trainingDt}}</td>
+        <td style="text-align:left">{{n.mobilePhone}}</td>
+        <td style="text-align:left">{{n.homePhone}}</td>
+        <td style="text-align:left">{{n.emailAddress}}</td>
+        <td style="text-align:center">{{n.dateJoined.strftime('%m-%d-%Y')}}</td>
+        
+    </tr>    
+    {% endfor %}
+    <tfoot>"Record count - " {{recordCount}}</tfoot> 
+    </tbody>
+</div>  
+{% endblock %} 

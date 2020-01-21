@@ -1,0 +1,126 @@
+2020-01-01 17:33:24,960 ERROR: Exception on / [GET] [in c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\routes.py", line 70, in home
+    certifiedShop2=certifiedShop2,notCertifiedShop1=notCertifiedShop1,notCertifiedShop2=notCertifiedShop2,noCertification=noCertification)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\templating.py", line 135, in render_template
+    context, ctx.app)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\templating.py", line 117, in _render
+    rv = template.render(context)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\home.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 4, in block "doc"
+    {%- block html %}
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 33, in block "html"
+    {% block body -%}
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 34, in block "body"
+    {% block navbar %}
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\base.html", line 34, in block "navbar"
+    <a class="nav-link" href="{{ url_for('reports') }}">REPORTS</a>
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\helpers.py", line 356, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 2080, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\helpers.py", line 345, in url_for
+    force_external=external)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\werkzeug\routing.py", line 2007, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'reports'. Did you forget to specify values ['id']?
+2020-01-02 08:41:14,640 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]
+2020-01-02 08:51:44,000 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]
+2020-01-02 08:51:52,561 ERROR: Exception on /login [POST] [in c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\routes.py", line 142, in login
+    return redirect(url_for('home'),nameOfUser=nameOfUser)
+TypeError: redirect() got an unexpected keyword argument 'nameOfUser'
+2020-01-02 08:54:13,468 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]
+2020-01-02 08:55:50,645 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]
+2020-01-02 08:56:05,397 ERROR: Exception on /login [POST] [in c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\routes.py", line 194, in login
+    return render_template('home.html',nameOfUser=nameOfUser)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\templating.py", line 135, in render_template
+    context, ctx.app)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\templating.py", line 117, in _render
+    rv = template.render(context)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\home.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 4, in block "doc"
+    {%- block html %}
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 33, in block "html"
+    {% block body -%}
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 36, in block "body"
+    {% block content -%}
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\base.html", line 115, in block "content"
+    {% block app_content %}{% endblock %}
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\home.html", line 136, in block "app_content"
+    {{ form.hidden_tag() }}
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\environment.py", line 430, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'form' is undefined
+2020-01-02 09:10:40,569 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]
+2020-01-02 09:19:29,253 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]
+2020-01-02 09:21:09,061 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]
+2020-01-02 09:25:04,364 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]
+2020-01-02 09:31:15,036 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]

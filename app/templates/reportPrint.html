@@ -1,0 +1,31 @@
+<!-- memberLookup.html -->
+{% extends "base.html" %}
+
+{% block app_content %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+
+<h1>Complete the following then click on PRINT</h1>
+<form action="./printReport" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    {{ form.shopNumber.label }} {{ form.shopNumber }}
+    <br>
+    {{ form.trainingDate.label }}   {{ form.trainingDate }}
+    <br>
+    {{ form.reportNumber.label }} {{ form.reportNumber }}
+    <br>
+    {{ form.submit() }}
+</form>
+  
+
+   
+{% endblock %}    
+ 

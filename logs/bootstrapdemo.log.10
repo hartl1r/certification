@@ -1,0 +1,92 @@
+2019-11-21 10:12:29,968 ERROR: Exception on /postmethod [POST] [in c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\app\routes.py", line 1085, in postmethod
+    return redirect(url_for('trainingClass'),id=id)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\helpers.py", line 356, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 2080, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\helpers.py", line 345, in url_for
+    force_external=external)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\werkzeug\routing.py", line 2007, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'trainingClass'. Did you forget to specify values ['id']?
+2019-11-21 10:13:21,649 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-21 10:13:51,313 ERROR: Exception on /postmethod [POST] [in c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\app\routes.py", line 1085, in postmethod
+    return redirect('/trainingClass',id=id)
+TypeError: redirect() got an unexpected keyword argument 'id'
+2019-11-21 10:15:03,642 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-21 10:16:44,973 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-21 10:17:33,769 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-21 10:18:30,503 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-21 14:10:39,736 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-21 14:12:47,031 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-21 14:14:06,141 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-21 14:15:43,960 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-21 14:23:05,521 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-21 14:25:26,186 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-21 16:41:41,564 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-21 16:44:16,914 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-22 14:37:47,061 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-22 14:42:53,914 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-11-22 14:45:40,346 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-12-23 14:26:45,544 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-12-23 15:02:06,330 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-12-23 15:08:36,519 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-12-23 15:13:46,882 ERROR: Exception on /changeClassLimit/3/ [POST] [in c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\app\routes.py", line 554, in editTrainingSession
+    return redirect(url_for("/index"))
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\helpers.py", line 356, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 2080, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\helpers.py", line 345, in url_for
+    force_external=external)
+  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\werkzeug\routing.py", line 2007, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint '/index'. Did you mean 'index' instead?
+2019-12-23 15:30:14,107 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+2019-12-23 15:54:34,123 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]

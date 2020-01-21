@@ -1,0 +1,39 @@
+<!-- certify.html -->
+{% extends "base.html" %}
+
+{% block app_content %}
+<body>
+<div style="width: 100%; overflow: hidden;">
+    <div style="margin-left: 200; width: 900px; float: left;">
+        <h1 class="text-center">MEMBERS NOT CERTIFIED</h1>
+        <table>
+            <tr>
+                <th style="width: 20%">Name</th>
+                <th style="width: 20%">Home Phone</th>
+                <th style="width: 20%">Date Joined</th>
+                <th style="width: 20%">Cert Trng Date</th>
+                <th style="width: 20%">Certified</th>
+            </tr>
+            
+            {% for c in notcertified %}
+            <tr>
+            <form method="POST" action="./certifyupdate" style="display: inline" >
+              <input type="hidden" value="{{c.id}}" name="oldpersonID">
+                <td><input type="text" value="{{c.fullName}}" name="fullName"></td>
+                <td><input type="hidden" value="{{c.homePhone}}" name="oldHomePhone"></td>
+                <td><input type="text" value="{{c.homePhone}}" name="newHomePhone"></td>
+                <td>{{c.dateJoined}}</td>
+                <td><input type="hidden" value="{{c.dateForCertificationTraining}}" name="oldTraining"></td>
+                <td><input type="text" value="{{c.dateForCertificationTraining}}" name="newTraining"></td>
+                <td><input type="hidden" value="{{c.certified}}" name="oldCertified"></td>
+                <td><input type="checkbox" value="{{c.certified}}" name="newCertified"></td>
+                <td>{{c.certified}}</td>
+                
+                <td><input type="submit" value="Update"></td>
+            </form>
+        </tr>
+        {% endfor %}
+        </table>
+    </body>
+{% endblock %}    
+ 

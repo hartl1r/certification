@@ -1,0 +1,99 @@
+2019-12-24 09:23:40,335 ERROR: Exception on / [GET] [in c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\routes.py", line 70, in home
+    certifiedShop2=certifiedShop2,notCertifiedShop1=notCertifiedShop1,notCertifiedShop2=notCertifiedShop2,noCertification=noCertification)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\templating.py", line 135, in render_template
+    context, ctx.app)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\templating.py", line 117, in _render
+    rv = template.render(context)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\jinja2\asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\jinja2\environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\jinja2\environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\jinja2\_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\home.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\bootstrap\base.html", line 4, in block "doc"
+    {%- block html %}
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\bootstrap\base.html", line 33, in block "html"
+    {% block body -%}
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\bootstrap\base.html", line 36, in block "body"
+    {% block content -%}
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\base.html", line 133, in block "content"
+    {% block app_content %}{% endblock %}
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\home.html", line 111, in block "app_content"
+    <button type="button" class="btn btn-success btn-sm btn-spacing" onclick="location.href='reports/{{t1.id}}'">REPORTS</button>
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\jinja2\environment.py", line 430, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 't1' is undefined
+2019-12-24 09:23:45,219 ERROR: Exception on /home [GET] [in c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\routes.py", line 70, in home
+    certifiedShop2=certifiedShop2,notCertifiedShop1=notCertifiedShop1,notCertifiedShop2=notCertifiedShop2,noCertification=noCertification)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\templating.py", line 135, in render_template
+    context, ctx.app)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\templating.py", line 117, in _render
+    rv = template.render(context)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\jinja2\asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\jinja2\environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\jinja2\environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\jinja2\_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\home.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\bootstrap\base.html", line 4, in block "doc"
+    {%- block html %}
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\bootstrap\base.html", line 33, in block "html"
+    {% block body -%}
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\bootstrap\base.html", line 36, in block "body"
+    {% block content -%}
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\base.html", line 133, in block "content"
+    {% block app_content %}{% endblock %}
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\templates\home.html", line 111, in block "app_content"
+    <button type="button" class="btn btn-success btn-sm btn-spacing" onclick="location.href='reports/{{t1.id}}'">REPORTS</button>
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\jinja2\environment.py", line 430, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 't1' is undefined
+2019-12-24 09:24:18,189 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert23\app\__init__.py:48]
+2019-12-24 16:40:41,594 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert23\app\__init__.py:48]
+2019-12-24 16:47:19,179 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert23\app\__init__.py:48]
+2019-12-24 16:49:26,276 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert23\app\__init__.py:48]
+2019-12-24 16:52:15,931 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert23\app\__init__.py:48]

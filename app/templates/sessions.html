@@ -1,0 +1,44 @@
+% extends "base.html" %}
+
+{% block app_content %}
+<div style="width: 100%;">
+    <div style="margin-left: 200;  width:600px;"> 
+        <caption>TRAINING DATES</caption>
+        <table class="table table-striped table-bordered">   
+            <thead>
+                <tr>
+                    <th style="width:5px">Date</th>
+                    <th style="width:5px">Limit</th>
+                    <th style="width:5px">Seats Taken</th>
+                    <th style="width:5px"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for t in trainingDates %}
+            <tr>
+                <td>
+                <form method="POST" action="./updateTrainingDate" class="form-inline">
+                        <input type="hidden" value = "{{t.sateForCertificationTraining}}" name="oldTrainingDate" >
+                        <input type="text" value = "{{t.dateForCertificationTraining}}" name="newTrainingDate" size="5">
+                        <input type="hidden" value="{{t.classLimit}}" name="oldClassLimit">
+                        <input type="text" value="{{t.classLimit}}" name="newClassLimit" size="5">
+                        <input type="text" value="{{t.seatsTaken}}" name="seatsTaken" size="5">
+                        <input type="submit" value="Update">
+                </form>
+                </td>
+            {% endfor %}
+            </tbody>
+       </table>
+    </div>
+</div>
+       <h2>ADD NEW TRAINING DATE</h2>
+    <form autocomplete="off" action="" method="post" novalidate>
+        <input autocomplete="false" name="hidden" type="text" style="display:none;">
+        <p>
+        {{ form.hidden_tag() }}
+            {{ form.dateForCertificationTraining(size=32) }}  <!-- datepicker ?-->
+            {{ form.classLimit(size=32) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

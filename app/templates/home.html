@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}"> 
+{% endblock %}
+
+{% block scripts %}
+	{{super()}}
+	<script src="{{ url_for('static', filename='js/home.js') }}"defer>  </script> 
+{% endblock %}
+{% block app_content %}
+<!-- {{super()}}   -->
+<div class="container-fluid py-0 m-0">
+<div class="card-group py-0 m-0 ">
+    <div class="card py-0 m-0 col-md-6 ">
+        <div class="card-heading p-0 m-0 text-center"style="background:green"><h2>ROLLING ACRES</h2></div>
+        <div class="card-body p-0 m-0">
+            <table id="shop1Table" class="table table-sm table-hover mr-5"> <!-- class ="table text-center border-collapse"> -->
+                <thead> <!--  style="font-size: 10px; padding: 1px !important; height: 15px"> --> 
+                     <tr>
+                        <th></th>
+                        <th></th>
+                        <th>DATE</th>
+                        <th>CLASS</th>
+                        <th>SEATS</th>
+                        <th>SEATS</th>
+                        <th></th> 
+                        <th></th> 
+                        <th></th>  
+                    </tr>    
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>LIMIT</th>
+                        <th>TAKEN</th>
+                        <th>AVAILABLE</th>
+                        <th></th>
+                        <th></th>
+                        <th></th> 
+                    </tr>
+                </thead>
+       
+                <tbody class="shop1body">
+                {% for t1 in trainingDatesShop1 %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:center">{{t1.trainingDate}}</td>
+                        <td style="text-align:center">{{t1.classLimit}}</td>
+                        <td class="seatsTaken" style="text-align:center">{{t1.seatsTaken}}</td>
+                        <td style="text-align:center">{{t1.classLimit - t1.seatsTaken}}</td>
+                        <td>
+                            <button type="button" class="shop1Btn reportBtn btn btn-success btn-sm btn-spacing" onclick="location.href='reports/{{t1.id}}'">REPORTS</button>
+                            <button type="button" class="shop1Btn viewBtn btn btn-success btn-sm btn-spacing" onclick="location.href='trainingClass/{{t1.id}}'">View Class</button>
+                            <button type="button" class="shop1Btn deleteBtn btn btn-danger btn-sm btn-spacing" onclick="location.href='removeTrainingClass/{{t1.id}}'">Delete</button>
+                            <button type="button" class="shop1Btn limitBtn btn btn-success btn-sm btn-spacing" onclick="location.href='changeClassLimit/{{t1.id}}'">Change Limit</button>
+                        </td>
+                    </tr>    
+                {% endfor %}
+                </tbody>
+            </table> 
+        </div>
+        <div class="card-footer">                
+            <!--<button type="button" class="btn btn-sm btn-block">Print Sign In Sheet</button>
+            <button type="button" class="btn btn-sm btn-warning btn-block">List Not Certified</button>
+            <button type="button" class="btn btn-sm btn-primary btn-info btn-block">Certify a Class</button>
+            <button type="button" class="btn btn-sm btn-outline-info btn-block">report 4</button>-->
+        </div>
+    </div>
+
+    <div class="card col-md-6">
+        <div class="card-heading  text-center"style="background:brown"><h2>BROWNWOOD</h2></div>
+        <div class="card-body">
+            <table id="shop2Table" class="table table-sm table-hover mx-auto">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>DATE</th>
+                    <th>CLASS</th>
+                    <th>SEATS</th>
+                    <th>SEATS</th>
+                    <th></th>
+                    <th></th>
+                    <th></th> 
+                </tr>  
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>LIMIT</th>
+                    <th>TAKEN</th>
+                    <th>AVAILABLE</th>
+                    <th> </th>
+                    <th> </th>
+                    <th></th> 
+                </tr> 
+                </thead>
+
+                <tbody px-5 mx-5>
+                {% for t2 in trainingDatesShop2 %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td style="text-align:center">{{t2.trainingDate}}</td>
+                    <td style="text-align:center">{{t2.classLimit}}</td>
+                    <td style="text-align:center">{{t2.seatsTaken}}</td>
+                    <td style="text-align:center">{{t2.classLimit - t2.seatsTaken}}</td>
+                    <td>
+                        <button type="button" class="shop2Btn reportBtn btn btn-success btn-sm btn-spacing" onclick="location.href='reports/{{t2.id}}'">REPORTS</button>
+                        <button type="button" class="shop2Btn viewBtn btn btn-success btn-sm btn-spacing" onclick="location.href='trainingClass/{{t2.id}}'">View Class</button>
+                        <button type="button" class="shop2Btn deleteBtn btn btn-danger btn-sm btn-spacing" onclick="location.href='removeTrainingClass/{{t2.id}}'">Delete</button>
+                        <button type="button" class="shop2Btn limitBtn btn btn-success btn-sm btn-spacing" onclick="location.href='changeClassLimit/{{t2.id}}'">Change Limit</button>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table> 
+        </div>
+    
+        <div class="card-footer">
+  <!--     <button type="button" class="btn btn-primary btn-block">report 1</button>
+            <button type="button" class="btn btn-primary btn-block">report 2</button>
+            <button type="button" class="btn btn-primary btn-block">report 3</button> -->
+        </div>
+        
+    </div>
+</div>
+<div class="card-group">
+    <div class="card col-md-6">
+        <div class="card-heading text-center">NEW TRAINING CLASS</div>
+        <div class="card-body mt-15px pt-15px">
+            <div class="container mt-15px pt-5 text-center">
+                <form method="post" action="./newSession">
+                    {{ form.hidden_tag() }}
+                    <p> {{ form.shopNumber.label }}
+                        {{ form.shopNumber(size=1) }} </p>
+                        {% for error in form.shopNumber.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    <p>{{ form.trainingDate.label }}
+                        {{ form.trainingDate(size=8,placeholder='mm/dd/yy') }} </p>
+                        {% for error in form.trainingDate.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    <p> {{ form.classLimit.label }}
+                        {{ form.classLimit(size=3) }}  </p>
+                        {% for error in form.classLimit.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    <br>
+                    <p>{{ form.submit() }}</p>        
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card col-md-12">
+        <div class="card-heading text-center">STATISTICS</div>
+        <div class="card-body">
+            <div class="container">
+                <div class="row mx-5">
+                    <div class="col-sm-7 mt-3 ml-5 mr-0 px-0">
+                        
+                        <p>Number certified (Rolling Acres) -<br>
+                        Number certified (Brownwood) -<br>
+                        Number certified for both shops -</p>
+                        <p>Number not certified (Rolling Acres) -<br>
+                        Number not certified (Brownwood) -<br>
+                        Number not certified for either shop -</p>
+                        <p>Number of new members this year -<br>
+                        Current paid membership - </p>
+                    </div>
+                    <div class="col-sm-2 mt-3 text-right">
+                        <p>{{certifiedShop1}}<br>
+                        {{certifiedShop2}}<br>
+                        {{currentMembers}}</p>
+                        <p>{{ notCertifiedShop1}}<br>
+                        {{ notCertifiedShop2}}<br>
+                        {{ noCertification }}</p>
+                        <p>{{ newThisYear }}<br>
+                        {{ currentMembers }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

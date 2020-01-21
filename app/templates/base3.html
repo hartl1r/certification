@@ -1,0 +1,155 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}
+{% if title %}{{ title }} - CERTIFICATION{% else %}CERTIFICATION{% endif %}
+{% endblock %}
+
+{% block navbar %}
+<!--  <nav class="navbar navbar-expand-md bg-light navbar-dark"> -->
+<nav class="navbar navbar-default"> 
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
+            <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="{{ url_for('index') }}">STATUS</a>
+                    <a class="nav-item nav-link" href="{{ url_for('home') }}">HOME</a>
+                    <a class="nav-item nav-link" href="{{ url_for('notcertified') }}">NOT CERTIFIED</a>
+                    <a class="nav-item nav-link" href="{{ url_for('trainingClass') }}">EDit CLASS</a>
+                    <a class="nav-item nav-link" href="{{ url_for('certify') }}">CERTIFY</a>
+                    <a class="nav-item nav-link" href="{{ url_for('memberlookup') }}">MEMBER LOOKUP</a>
+                    <a class="nav-item nav-link" href="{{ url_for('login') }}">LOGIN</a>
+                    <a class="nav-item nav-link" href="{{ url_for('logout') }}">LOGOUT</a>
+            </div>
+        </div>
+            <!--<ul class="nav navbar-nav"> 
+                <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="pill" href="{{ url_for('index') }}">STATUS</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('home') }}">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="{{ url_for('notcertified') }}">NOT CERTIFIED</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="{{ url_for('trainingClass') }}">EDIT CLASS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="{{ url_for('certify') }}">CERTIFY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="{{ url_for('memberlookup') }}">MEMBER LOOKUP</a>
+                </li>
+                <li class="nav-item"><a href="{{ url_for('rpt') }}">REPORT - NOT CERTIFIED </a></li class="nav-item">
+                <li class="nav-item"><a href="{{ url_for('rpt2') }}">LIST CERTIFIED </a></li class="nav-item">
+                <li class="nav-item"><a href="{{ url_for('reports') }}">RPRTS</a></li class="nav-item">
+                <li class="nav-item"><a href="{{ url_for('reportPrint') }}">REPORTS</a></li class="nav-item">
+            </ul>
+            <ul class="nav nav-pills navbar-nav navbar-right"></ul> -->
+           <!-- <ul class="nav navbar-nav navbar-right"> -->
+           <!--     {% if current_user.is_anonymous %}
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="{{ url_for('login') }}">LOGIN</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="{{ url_for('logout') }}">LOGOUT</a>
+                </li>
+                {% endif %}
+            </ul> 
+        </div> -->
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-r"> <!-- SUCCESS -->
+                {% with messages = get_flashed_messages(category_filter=["success"]) %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <span>{{ message }}</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div class="col-sm-r"> <!-- WARNING -->
+                {% with messages = get_flashed_messages(category_filter=["warning"]) %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible " role="alert">
+                    <span>{{ message }}</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div class="col-sm-r"> <!-- DANGER -->
+                {% with messages = get_flashed_messages(category_filter=["danger"]) %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <span>{{ message }}</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="bs-example">
+                    <div class="alert alert-warning">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <strong>Warning!</strong> {{ message }}
+                    </div>
+                </div>
+                <!-- ABOVE IS FROM - http://www.java2s.com/Tutorials/HTML_CSS/Bootstrap_Tutorial/Bootstrap_Alert.htm -->
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div class="col-sm-r"> <!-- INFO -->
+                {% with messages = get_flashed_messages(category_filter=["info"]) %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <span>{{ message }}</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>        
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+</div>
+
+{# application content needs to be provided in the app_content block #}
+{% block app_content %}{% endblock %}
+
+{% endblock %}

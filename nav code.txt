@@ -1,0 +1,56 @@
+{% block navbar %}
+<!-- <nav class="navbar navbar-custom navbar-expand-sm bg-light navbar-light"> -->
+<nav class="navbar navbar-custom navbar-expand-sm bg-company-navy navbar-light">
+    <!-- Links -->
+    <a class="navbar-brand" href="#">CERTIFICATION</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCustom" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('index') }}">STATUS <span class="sr-only">(current)</span></a>
+                </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ url_for('home') }}">HOME</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('notcertified') }}">NOT CERTIFIED</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('trainingClass') }}">EDIT CLASS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('certify') }}">CERTIFY</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('memberlookup') }}">MEMBER LOOKUP</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav ml-auto">   
+            {% if current_user.is_anonymous %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('login') }}">LOGIN</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">LOGOUT</a>
+            </li>
+            {%  endif %} 
+        </ul>       
+    </div>                
+        <!-- <li class="nav-item"><a class="nav-link" href="{{ url_for('rpt') }}">REPORT - NOT CERTIFIED </a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('rpt2') }}">LIST CERTIFIED </a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('reports') }}">RPRTS</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('reportPrint') }}">REPORTS</a></li> 
+    </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_anonymous %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">LOGIN</a></li>
+                {% else %}
+                <li class="nav-item">{{ nameOfUser }}<a class="nav-link" href="{{ url_for('logout') }}">LOGOUT</a></li>
+                {% endif %}
+            </ul>
+    </div> -->
+</nav>
+{% endblock %}

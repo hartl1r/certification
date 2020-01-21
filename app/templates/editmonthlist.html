@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+ <div>
+    <h1>EDIT LIST OF MONTHS</h1>
+     <table>
+        {% for m in monthlist %}
+            <tr>
+                <td>
+                    {{m.monthName}}
+                </td>
+                <td>
+                <form method="POST" action="./showmonthlist" style="display: inline">
+                    <input type="text" value = "{{m.monthNumber}}" name="monthnumber">
+                    <input type="hidden" value="{{m.monthName}}" name="oldname">
+                    <input type="text" value="{{m.monthName}}" name="newname">
+                    <input type="hidden" value="{{m.monthAbbr}}" name="oldabbr">
+                    <input type="text" value="{{m.monthAbbr}}" name="newabbr">
+                    <input type="submit" value="Update">
+                </form>
+                </td>
+        {% endfor %}
+        </table>
+</div>
+{% endblock %}

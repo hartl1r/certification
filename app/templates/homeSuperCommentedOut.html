@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+<!--{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">  
+    <link rel="stylesheet" href="/app/static/css/home.css"> 
+{% endblock %} -->
+{% block content %}  
+<div class="container">
+<div class="panel-group">
+    <div class="panel panel-default col-md-6 ">
+        <div class="panel-heading  text-center" style="background-color: lightblue; color: darkblue; font-size: 18px">ROLLING ACRES</div>
+        <div class="panel-body fixed-panel">
+            <table class="table"> <!-- class ="table text-center border-collapse"> -->
+                <thead> <!--  style="font-size: 10px; padding: 1px !important; height: 15px"> -->
+                    
+                     <tr>
+                        <th>DATE</th>
+                        <th>CLASS</th>
+                        <th>SEATS</th>
+                        <th>SEATS</th>
+                        <th> </th>
+                        <th> </th>
+                    </tr>    
+                    <tr>
+                        <th></th>
+                        <th>LIMIT</th>
+                        <th>TAKEN</th>
+                        <th>AVAILABLE</th>
+                        <th> </th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for t1 in trainingDatesShop1 %}
+                    <tr>
+                        <td>{{t1.trainingDate}}</td>
+                        <td>{{t1.classLimit}}</td>
+                        <td>{{t1.seatsTaken}}</td>
+                        <td>{{t1.classLimit - t1.seatsTaken}}</td>
+                        <td><a href="changeClassLimit/{{t1.id}}">Chg Limit</a></td>
+                        <td><a href="deleteTrainingClass/{{t1.id}}">Delete</a></td>
+                        <!-- <td><a href="selectTrainingClass/{{t1.id}}">SELECT</a></td> -->
+                    </tr>    
+                {% endfor %}
+                </tbody>
+            </table>                   
+            <button type="button" class="btn btn-primary btn-block">Sign In Sheet</button>
+            <button type="button" class="btn btn-primary btn-block">List Not Certified</button>
+            <button type="button" class="btn btn-primary btn-block">Certify Class</button>
+            <button type="button" class="btn btn-primary btn-block">report 4</button>
+        </div>
+    </div>
+
+    <div class="panel panel-default col-md-6">
+        <div class="panel-heading  text-center" style="background-color: lightblue; color: darkblue; font-size: 18px">BROWNWOOD</div>
+        <div class="panel-body fixed-panel">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th style="text-align:center">DATE</th>
+                    <th style="text-align:center">CLASS</th>
+                    <th style="text-align:center">SEATS</th>
+                    <th style="text-align:center">SEATS</th>
+                    <th style="text-align:center"></th>
+                    <th style="text-align:center"></th>
+                </tr>  
+                <tr>
+                    <th></th>
+                    <th style="text-align:center">LIMIT</th>
+                    <th style="text-align:center">TAKEN</th>
+                    <th style="text-align:center">AVAILABLE</th>
+                    <th style="text-align:center"> </th>
+                    <th style="text-align:center"> </th>
+                </tr>  
+                {% for t2 in trainingDatesShop2 %}
+                <tr>
+                    <td>{{t2.trainingDate}}</td>
+                    <td style="text-align:center">{{t2.classLimit}}</td>
+                    <td style="text-align:center">{{t2.seatsTaken}}</td>
+                    <td style="text-align:center">{{t2.classLimit - t2.seatsTaken}}</td>
+                    <td><a href="changeClassLimit/{{t2.id}}">Chg Limit</a></td>
+                    <td><a href="deleteTrainingClass/{{t2.id}}">Delete</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table> 
+
+        </div>
+        <div class="panel-footer">
+            <button type="button" class="btn btn-primary btn-block">report 1</button>
+            <button type="button" class="btn btn-primary btn-block">report 2</button>
+            <button type="button" class="btn btn-primary btn-block">report 3</button>
+        </div>
+        
+    </div>
+    <div class="panel panel-default col-md-6">
+        <div class="panel-heading text-center">STATISTICS</div>
+        <div class="panel-body fixed-panel">
+                <p>Number certified -</p>
+                <p>Number not certified (Rolling Acres) -</p>
+                <p>Number certified (Brownwood) -</p>
+                <p>Number of new members -</p>
+        </div>
+    </div>
+    <div class="panel panel-default col-md-6">
+        <div class="panel-heading text-center">ADD NEW SESSION</div>
+        <div class="panel-body fixed-panel">
+            <p>form goes here </p>
+            <button type="button" class="btn btn-primary btn-block">Submit</button>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

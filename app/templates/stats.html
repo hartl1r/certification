@@ -1,0 +1,135 @@
+<!-- stats.html -->
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <title>CERTIFICATION</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stat.css') }}">  
+    <!-- <link rel="stylesheet" href="/app/static/css/stat.css">  -->
+</head>
+
+<div class='certification'>
+     <div class='shop1classes' >
+        <h1 style="text-align:center">ROLLING ACRES</h1>
+        <table style="display: inline block;">
+            <tbody>
+            <tr>
+                <th style="text-align:center">DATE</th>
+                <th style="text-align:center">CLASS</th>
+                <th style="text-align:center">SEATS</th>
+                <th style="text-align:center">SEATS</th>
+                <th style="text-align:center"> </th>
+                <th style="text-align:center"> </th>
+            </tr>    
+            <tr>
+                <th></th>
+                <th style="text-align:center">LIMIT</th>
+                <th style="text-align:center">TAKEN</th>
+                <th style="text-align:center">AVAILABLE</th>
+                <th style="text-align:center"> </th>
+                <th style="text-align:center"> </th>
+            </tr>
+            {% for t1 in trainingDatesShop1 %}
+                <tr>
+                    <td>{{t1.trainingDate}}</td>
+                    <td style="text-align:center">{{t1.classLimit}}</td>
+                    <td style="text-align:center">{{t1.seatsTaken}}</td>
+                    <td style="text-align:center">{{t1.classLimit - t1.seatsTaken}}</td>
+                    <td><a href="changeClassLimit/{{t1.id}}">Chg Limit</a></td>
+                    <td><a href="deleteTrainingClass/{{t1.id}}">Delete</a></td>
+                    <td><a href="selectTrainingClass/{{t1.id}}">SELECT</a></td>
+                </tr>    
+            {% endfor %}
+            </tbody>
+        </table>
+        <p>Date selected -> {{selectedDate1}}
+
+        </p> 
+        <form method='POST' action="">
+            <input type="submit" formaction="./printSignIn"              value="PRINT SIGN IN SHEET .............">
+            <input type="submit" formaction="./printCertificationList"   value="PRINT CERTIFICATION LIST         ">
+            <input type="submit" formaction="./certifyClass"             value="CERTIFY CLASS                    ">
+            <input type="submit" formaction="./printNotCertified"        value="PRINT LIST OF THOSE NOT CERTIFIED">
+            <input type="submit" value="PRINT SIGN IN SHEET">
+        </form>
+        <form method='POST' action="./printCertificationList">
+            <input type="submit" value="PRINT CERTIFICATION LIST">
+        </form>
+        <form method='POST' action="./certifyClass">
+            <input type="submit" value="CERTIFY CLASS">
+        </form>
+        <form method='POST' action="./printNotCertified">
+            <input type="submit" value="PRINT LIST OF THOSE NOT CERTIFIED">
+        </form>
+    </div>
+    
+    <div class='shop2classes' >
+        <h1 style="text-align:center">BROWNWOOD</h1>  
+        <table style="display: inline block;"> 
+            <tbody>
+            <tr>
+                <th style="text-align:center">DATE</th>
+                <th style="text-align:center">CLASS</th>
+                <th style="text-align:center">SEATS</th>
+                <th style="text-align:center">SEATS</th>
+                <th style="text-align:center"></th>
+                <th style="text-align:center"></th>
+            </tr>  
+            <tr>
+                <th></th>
+                <th style="text-align:center">LIMIT</th>
+                <th style="text-align:center">TAKEN</th>
+                <th style="text-align:center">AVAILABLE</th>
+                <th style="text-align:center"> </th>
+                <th style="text-align:center"> </th>
+            </tr>  
+            {% for t2 in trainingDatesShop2 %}
+            <tr>
+                <td>{{t2.trainingDate}}</td>
+                <td style="text-align:center">{{t2.classLimit}}</td>
+                <td style="text-align:center">{{t2.seatsTaken}}</td>
+                <td style="text-align:center">{{t2.classLimit - t2.seatsTaken}}</td>
+                <td><a href="changeClassLimit/{{t2.id}}">Chg Limit</a></td>
+                <td><a href="deleteTrainingClass/{{t2.id}}">Delete</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table> 
+    </div>
+
+    <p></p>
+
+    <div class = "summary">     
+        <br>
+        <p>Current number of paid members - {{ currentMembers }}</p>
+        <p>New members this year - {{ newThisYear }}</p>
+        <p>Members not certified for ROLLING ACRES - {{ NotCertifiedShop1 }}</p> 
+        <p>Members not certified for BROWNWOOD - {{ NotCertifiedShop2 }}</p> <br>
+        <p>Members not certified for EITHER SHOP - <b>{{ NoCertification }}</b></p> 
+    </div>
+   
+    <div class=newSession>
+        <h2>ADD NEW TRAINING DATE</h2>
+        <form method="post" action="./newSession">
+            {{ form.hidden_tag() }}
+            <p> {{ form.shopNumber.label }}
+                {{ form.shopNumber(size=1) }} </p>
+                {% for error in form.shopNumber.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            <p>{{ form.trainingDate.label }}
+                {{ form.trainingDate(size=32) }} </p>
+                {% for error in form.trainingDate.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            <p> {{ form.classLimit.label }}
+                {{ form.classLimit(size=3) }}  </p>
+                {% for error in form.classLimit.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            <br>
+            <p>{{ form.submit() }}</p>
+            
+        </form>
+    </div>
+</div>
+{% endblock %}

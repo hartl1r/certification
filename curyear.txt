@@ -1,0 +1,44 @@
+ <!-- {% from "_formhelpers.html" import render_field %} -->
+ 
+  <!--    <dl>
+            {{ render_field(form.hidden_tag()) }}
+            {{ render_field(form.shopNumber(size=1)) }} 
+            {{ render_field(form.trainingDate(size=32)) }}  
+            {{ remder_field(form.classLimit(size=3)) }} -->
+            <!-- {{ render_field(form.hidden_tag()) }}
+            {{ render_field(form.shopNumber) }} 
+            {{ render_field(form.trainingDate) }}  
+            {{ remder_field(form.classLimit) }} 
+        </dl>
+        <p><input type=submit value=Submit> -->
+		
+		-------------------------------------------------
+		# @app.route("/stats", methods=["GET", "POST"])
+#@login_required
+#def stats():
+#   curyear = (db.session.query\
+#        (MonthList.monthName,\
+#        func.count(case([(Person.yearJoined == datetime.date.today().year, 1)])).label('newmembers'), \
+#       func.count(case([(Person.yearJoined == datetime.date.today().year and Person.certified != True,1)])).label('notcertified')) \
+#        .join(Person,Person.monthJoined == MonthList.monthNumber))\
+#        .group_by(MonthList.monthNumber)\
+#        .order_by(MonthList.monthNumber)
+
+#    lastyear = (db.session.query \
+#        (MonthList.monthName, \
+#        func.count(case([(Person.yearJoined == datetime.date.today().year-1, 1)])).label('newmembers'),\
+#        func.count(case([(Person.yearJoined == datetime.date.today().year - 1 and Person.certified != True,1)])).label('notcertified'))\
+#        .join(Person, MonthList.monthNumber == Person.monthJoined))\
+#        .group_by(MonthList.monthNumber) \
+#        .order_by(MonthList.monthNumber)
+
+#    newThisYear = db.session.query(func.count(Person.villageID)).filter(Person.yearJoined == datetime.date.today().year).scalar()
+#    notCertifiedLastYear = db.session.query(func.count(Person.villageID)).filter(Person.yearJoined == datetime.date.today().year -1 and Person.certified != True).scalar()
+#    notCertifiedThisYear = db.session.query(func.count(Person.villageID)).filter(Person.yearJoined == datetime.date.today().year and Person.certified != True).scalar()
+#    currentMembers = db.session.query(func.count(Person.villageID)).filter(Person.duesPaid == True).scalar()
+#    totalNotCertified=db.session.query(func.count(Person.villageID)).filter(Person.certified != True).scalar()
+
+
+    #notcertifiedcnt = (db.session.query(func.count(case([Person.certified != True,1]))))
+ #   return render_template("stats.html", curyear=curyear, lastyear=lastyear,totalNotCertified=totalNotCertified,currentMembers=currentMembers,newThisYear=newThisYear,notCertifiedThisYear=notCertifiedThisYear,notCertifiedLastYear=notCertifiedLastYear)
+#rows = session.query(func.count(Congress.id)).scalar()

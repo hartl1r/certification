@@ -1,0 +1,40 @@
+.navbar-custom {
+    background-color:navy ;
+}
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: rgb(255, 81, 0);
+}
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: #ffffff;
+}
+/* change the color of active links */
+.navbar-custom .nav-item .nav-link.active  {
+    color:yellow;
+}
+.nav-item.active {
+    color:orange;
+}
+.myNavbar .nav-link.active {
+    color:rgb(255, 0, 221)
+}
+/* change the color of hovered links */
+.navbar-custom .nav-item:hover .nav-link  {
+    color:yellow;
+}
+
+.nav-link.active {
+    color:yellow;
+}
+/* change navbar background */
+.bg-company-navy {
+    background-color: navy !important;
+}
+a:active {
+    color:yellowgreen;
+}
+.navbar-dark .nav-item > .nav-link.active {
+    color:goldenrod;
+}

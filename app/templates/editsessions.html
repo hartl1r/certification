@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+<!-- <link rel="stylesheet" href="/app/static/css/main.css">   -->
+
+{% block app_content %}
+<style> 
+    body { 
+         font-family: "Open Sans", Tahoma, sans-serif 
+         }
+    
+    .certificationTraining {
+        border-style: 1px solid green;
+    }
+    
+    .shop1classes {
+        border-style: 2px solid blue;
+        background-color: lightskyblue;
+        width: 45%;
+        float: left;
+        padding: 10px;
+        margin: 5px
+    } 
+    
+    .shop2classes {
+        border-style: 2px solid red;
+        background-color: lightsalmon;
+        width: 45%;
+        float: right;
+        padding: 10px;
+        margin: 10px
+    }
+    table, th, td {
+        border: 1px solid blue;
+        width:300px;
+        padding: 5px;
+        margin: 0 auto 0 auto;
+    }
+    
+    th {
+        background-color: #4CAF50;
+        color: white;
+        font-size: small;
+      }
+    
+    td {
+        font-size:medium;
+    }
+    .newTrainingDate {
+        clear: both;
+        color: navy;
+    }
+    </style>
+    
+    <div class="certificationTraining">
+        <div class='shop1classes' >
+            <h1 class="text-center">ROLLING ACRES</h1>  
+            <table style="display: inline block;">                      
+                <tbody>
+                <tr>
+                    <th style="text-align:center">DATE</th>
+                    <th style="text-align:center">CURRENT</th>
+                    <th style="text-align:center">ENROLLED</th>
+                    <th style="text-align:center">NEW</th>
+                </tr>    
+                <tr>
+                    <th></th>
+                    <th style="text-align:center">LIMIT</th>
+                    <th></th>
+                    <th style="text-align:center">LIMIT</th>
+                </tr>
+    
+            </tr>    
+            {% for t in trainingDatesShop1 %}
+            <tr>
+                <form method="POST" action="./updateTrainingDate">
+                <td>
+                    <input type="text" value = "{{t.shopNumber}}" name="shopNumber" > 
+                    <input type="text" value = "{{t.trainingDate}}" name="trainingDate" >
+                </td>
+                <td>
+                    <input type="text" value="{{t.classLimit}}" name="newClassLimit" size="5">
+                </td>
+                <td>
+                    <input type="submit" value="Change Class Limit">
+                </td>
+                </form>
+                </td>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="shop2classes">
+        <h1 class="text-center">BROWNWOOD</h1>  
+        <table >  <!--</table>style="float: right;"">  -->
+            <tbody>
+            <tr>
+                <th style="text-align:center">DATE</th>
+                <th style="text-align:center">CURRENT</th>
+                <th style="text-align:center">ENROLLED</th>
+                <th style="text-align:center">NEW</th>
+            </tr>  
+            <tr>
+                <th></th>
+                <th style="text-align:center">LIMIT</th>
+                <th></th>
+                <th style="text-align:center">LIMIT</th>
+            </tr>  
+
+    
+            {% for t in trainingDatesShop2 %}
+            <tr>
+
+                <form method="POST" action="./updateTrainingDate"> <!--  class="form-inline"> -->
+                <td>   
+                    <input type="text" value = "{{t.trainingDate}}" name="trainingDate" size="5" >
+                </td>
+                <td>
+                    <input type="text" value="{{t.classLimit}}" name="oldClassLimit">
+                </td>
+                <td>
+                    <input type="text" value="{{t.enrolled}}" name="enrolled" size="5">
+                </td>
+                <td>
+                    <input type="text" value="{{t.classLimit}}" name="newClassLimit" size="5">
+                </td>
+                <td>
+                    <input type="submit" value="Change Class Limit">
+                </td>>    
+                </form>
+                </td>
+            {% endfor %}
+            </tbody>
+        </table>
+     </div>
+</div>
+
+<div class=newTrainingDate>
+    <h2>ADD NEW TRAINING DATE</h2>
+   
+    <form autocomplete="off" action="" method="post" novalidate>
+        <input autocomplete="false" name="hidden" type="text" style="display:none;">
+        <p>
+            {{ form.hidden_tag() }}
+            {{ form.shopNumber(size=1) }}  <!-- Must be 1 or 2 -->
+            {{ form.trainingDate(size=32) }}  <!-- datepicker ?-->
+            {{ form.classLimit(size=3) }}
+           
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+</div>
+{% endblock %}
+
+<!--
+<form method=post>
+<form method=post>
+  <dl>
+    {{ render_field(form.select) }}
+    <p>
+    {{ render_field(form.search) }}
+  </dl>
+  <p><input type=submit value=Search>
+</form>
+
+-->

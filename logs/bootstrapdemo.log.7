@@ -1,0 +1,115 @@
+2019-12-24 16:52:21,618 ERROR: Exception on /trainingClass/1044/ [GET] [in c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\default.py", line 550, in do_execute
+    cursor.execute(statement, parameters)
+pyodbc.DataError: ('22007', '[22007] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting date and/or time from character string. (241) (SQLExecDirectW)')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\routes.py", line 690, in trainingClass
+    .filter(Person.certTrainingShop1==classDate).all()
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3167, in all
+    return list(self)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3323, in __iter__
+    return self._execute_and_instances(context)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3348, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\util\compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\util\compat.py", line 128, in reraise
+    raise value.with_traceback(tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\default.py", line 550, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DataError: (pyodbc.DataError) ('22007', '[22007] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting date and/or time from character string. (241) (SQLExecDirectW)')
+[SQL: SELECT person.id AS person_id, person.[firstName] + ? + person.[lastName] AS anon_1, person.[mobilePhone] AS [person_mobilePhone], person.[homePhone] AS [person_homePhone], person.[emailAddress] AS [person_emailAddress], person.[certTrainingShop1] AS [person_certTrainingShop1], person.[dateJoined] AS [person_dateJoined], person.[certifiedShop1] AS [person_certifiedShop1] 
+FROM person 
+WHERE person.[certTrainingShop1] = ?]
+[parameters: (' ', 'Thursday, December 26, 2019')]
+(Background on this error at: http://sqlalche.me/e/9h9h)
+2019-12-24 16:56:11,754 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert23\app\__init__.py:48]
+2019-12-24 16:56:24,289 ERROR: Exception on /trainingClass/1044/ [GET] [in c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\default.py", line 550, in do_execute
+    cursor.execute(statement, parameters)
+pyodbc.DataError: ('22007', '[22007] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting date and/or time from character string. (241) (SQLExecDirectW)')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\app\routes.py", line 690, in trainingClass
+    .filter(Person.certTrainingShop1==classDate).all()
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3167, in all
+    return list(self)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3323, in __iter__
+    return self._execute_and_instances(context)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3348, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\util\compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\util\compat.py", line 128, in reraise
+    raise value.with_traceback(tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\Cert23\venv\lib\site-packages\sqlalchemy\engine\default.py", line 550, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DataError: (pyodbc.DataError) ('22007', '[22007] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Conversion failed when converting date and/or time from character string. (241) (SQLExecDirectW)')
+[SQL: SELECT person.id AS person_id, person.[firstName] + ? + person.[lastName] AS anon_1, person.[mobilePhone] AS [person_mobilePhone], person.[homePhone] AS [person_homePhone], person.[emailAddress] AS [person_emailAddress], person.[certTrainingShop1] AS [person_certTrainingShop1], person.[dateJoined] AS [person_dateJoined], person.[certifiedShop1] AS [person_certifiedShop1] 
+FROM person 
+WHERE person.[certTrainingShop1] = ?]
+[parameters: (' ', 'Thursday, December 26, 2019')]
+(Background on this error at: http://sqlalche.me/e/9h9h)
+2019-12-24 16:57:42,646 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert23\app\__init__.py:48]
+2019-12-24 17:02:24,973 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert23\app\__init__.py:48]
+2019-12-24 17:03:20,504 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert23\app\__init__.py:48]
+2019-12-24 17:04:10,133 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert23\app\__init__.py:48]

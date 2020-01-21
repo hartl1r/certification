@@ -1,0 +1,185 @@
+<html lang="en-US"></html>
+{% extends "base.html" %}
+{% block app_content %} 
+<style>
+@media screen {
+	#printPageButton {
+		float: right;
+	}
+body {
+    background-color: #f5f5f0ea;
+    color: rgb(40, 5, 97);
+   }
+   h1, h2, h3 {
+	color: rgb(29, 9, 114);
+    text-align: center;
+	font-family: "Times New Roman",Times, sans-serif,serif;
+   }
+   
+   table {
+		width:100%;
+	}
+	
+	#colHeadings {
+		font-weight: bold;
+		color:red;
+	}
+	#colHeadings h2 {
+		text-align:center;
+		color:red;
+	}
+	#topHeadings {
+		text-align:center;
+		color:red;
+	}
+	th {
+  		background-color: rgb(74, 72, 189);
+  		color: white;
+	}
+	tr:nth-child(even) {
+		background-color: #d5d2dfa6;
+	}
+	th, td {
+  		border-bottom: 1px solid #ddd;
+	}
+   p {
+    background-color: #FFFF33;
+    color: #330980;
+    text-align: center;
+    border: 3px groove #FFFF33;
+   }  
+}
+@media print {
+ 	#content, #page {
+	width: 100%; 
+	margin: 0; 
+	float: none;
+	 }
+
+	#printPageButton {
+		display: none;
+	}
+
+	#body {
+	font-family: "Times New Roman",Times, sans-serif,serif;
+	line-height: 1.5;
+	font-size: 12pt;
+	background: white !important;
+	color: black;
+	}
+
+	body {
+		height: 100%;
+	}
+
+	h1 {
+			font-size: 18pt;
+			break-before: page;
+			/*counter-increment: page;*/
+	}
+			
+	h2 {
+			font-size: 16pt;
+			}
+			
+	h3 {
+			font-size: 14pt;
+			}
+			
+	h1, h2, h3, h4, h5 {
+		text-align:center;
+		font-weight: bold;
+		break-after: avoid;
+	}
+
+
+	table {
+		width:100%;
+	}
+	
+	table thead th { border-bottom: 1px solid #000; }
+
+	th {
+  		background-color: rgba(9, 10, 9, 0);
+  		color: rgba(255, 255, 255, 0.973);
+	}
+	
+	tr:nth-child(even) {
+		background-color: #f2f2f23b;
+	}
+
+	tfoot::after {
+		counter-increment:page;
+		content: "Page " counter(page) " of " counter(pages);
+	}
+
+	#reportFooter {
+		color:blue;
+	}
+
+}
+@page {
+	size:  landscape;
+	display:block;
+	position:relative;
+	margin: 1cm;
+	/*counter-increment: page;*/
+	page-break-before: always;
+}
+</style>
+<!--
+    <link rel="stylesheet" type="text/css"  href="/app/static/styles.css"> -->
+    <!-- <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/css/print.css') }}"> -->
+    <!--<link rel="stylesheet" href="print.css" type="text/css" media="print"/>  -->
+    <!--<link href="{{ url_for('static', filename='css/print.css') }}" rel="stylesheet"> -->
+
+<head>
+	<div id="header">
+		<button id="printPageButton" onClick="window.print();">PRINT</button>
+		<h1>THE VILLAGES WOODWORKERS CLUB</h1>
+		<h2>MEMBERS CERTIFIED</h2>
+		<h2>TODAY IS {{ todays_date }}</h2>
+		<br>
+	</div>
+</head>
+
+<body>
+<div id="body">
+    <table>
+		<thead>
+			<tr>	
+				<th style="text-align:left">NAME</th>
+				<th style="text-align:left">TRAINING</th>
+				<th style="text-align:left">Cell</th>
+				<th style="text-align:left">Home</th>
+				<th style="text-align:left">E-Mail</th>
+				<th style="text-align:left">Joined</th>
+			</tr>	
+			
+		</thead>
+		
+		<tbody>   
+		{% for n in certified %}
+		<tr>
+			<td style="text-align:left">{{n.wholeName}}</td>
+			<td style="text-align:left">{{n.certifiedTrainingShop1}}</td>
+			<td style="text-align:left">{{n.mobilePhone}}</td>
+			<td style="text-align:left">{{n.homePhone}}</td>
+			<td style="text-align:left">{{n.emailAddress}}</td>
+			<td style="text-align:left">{{n.dateJoined.strftime('%m-%d-%Y')}}</td>
+		</tr>    
+		{% endfor %}
+		</tbody> 
+
+		<tfoot>
+			
+		</tfoot>
+	</table>	
+</body>
+
+<footer id="reportFooter">
+	<br>
+	<p>Number certified - <b> {{ recordCount }}</b></p>
+</footer>
+
+{% endblock %} 

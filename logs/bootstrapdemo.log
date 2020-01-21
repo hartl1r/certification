@@ -1,0 +1,122 @@
+2020-01-08 09:58:14,801 ERROR: Exception on /login [POST] [in c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\engine\default.py", line 550, in do_execute
+    cursor.execute(statement, parameters)
+pyodbc.ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'password_hash'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\routes.py", line 150, in login
+    user = User.query.filter_by(username=form.username.data).first()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3221, in first
+    ret = list(self[0:1])
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3011, in __getitem__
+    return list(res)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3323, in __iter__
+    return self._execute_and_instances(context)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3348, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\engine\base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\util\compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\util\compat.py", line 128, in reraise
+    raise value.with_traceback(tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\engine\default.py", line 550, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'password_hash'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+[SQL: SELECT TOP 1 [user].id AS user_id, [user].[userID] AS [user_userID], [user].username AS user_username, [user].password_hash AS user_password_hash, [user].email AS user_email, [user].[lastSeen] AS [user_lastSeen] 
+FROM [user] 
+WHERE [user].username = ?]
+[parameters: ('604875',)]
+(Background on this error at: http://sqlalche.me/e/f405)
+2020-01-08 10:03:35,198 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]
+2020-01-08 10:03:56,321 ERROR: Exception on /login [POST] [in c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\orm\base.py", line 399, in _entity_descriptor
+    return getattr(entity, key)
+AttributeError: type object 'User' has no attribute 'username'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\routes.py", line 150, in login
+    user = User.query.filter_by(username=form.username.data).first()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\orm\query.py", line 1796, in filter_by
+    for key, value in kwargs.items()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\orm\query.py", line 1796, in <listcomp>
+    for key, value in kwargs.items()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\orm\base.py", line 402, in _entity_descriptor
+    "Entity '%s' has no property '%s'" % (description, key)
+sqlalchemy.exc.InvalidRequestError: Entity '<class 'app.models.User'>' has no property 'username'
+2020-01-08 10:09:30,926 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]
+2020-01-08 10:24:08,827 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]
+2020-01-08 10:26:06,897 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]
+2020-01-08 10:27:20,734 ERROR: Exception on /login [POST] [in c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\orm\base.py", line 399, in _entity_descriptor
+    return getattr(entity, key)
+AttributeError: type object 'User' has no attribute 'username'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+    raise value
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\Cert25\app\routes.py", line 150, in login
+    user = User.query.filter_by(username=form.userName.data).first()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\orm\query.py", line 1796, in filter_by
+    for key, value in kwargs.items()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\orm\query.py", line 1796, in <listcomp>
+    for key, value in kwargs.items()
+  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\sqlalchemy\orm\base.py", line 402, in _entity_descriptor
+    "Entity '%s' has no property '%s'" % (description, key)
+sqlalchemy.exc.InvalidRequestError: Entity '<class 'app.models.User'>' has no property 'username'
+2020-01-08 10:28:00,751 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]

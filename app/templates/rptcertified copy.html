@@ -1,0 +1,261 @@
+<html lang="en-US"></html>
+{% extends "base.html" %}
+{% block app_content %} 
+<style>
+@media screen {
+body {
+    background-color: #f5f5f0ea;
+    color: rgb(40, 5, 97);
+   }
+   h1, h2, h3 {
+	color: rgb(29, 9, 114);
+    text-align: center;
+	font-family: "Times New Roman",Times, sans-serif,serif;
+   }
+   
+   table {
+		width:100%;
+	}
+	
+	#colHeadings {
+		display: none;
+	}
+	#topHeadings {
+		display: none;
+	}
+	th {
+  		background-color: #4CAF50;
+  		color: white;
+	}
+	tr:nth-child(even) {
+		background-color: #54c467a6;
+	}
+	th, td {
+  		border-bottom: 1px solid #ddd;
+	}
+   p {
+    background-color: #FFFF33;
+    color: #330980;
+    text-align: center;
+    border: 3px groove #FFFF33;
+   }
+}
+
+
+@media print {
+ 	#content, #page {
+	width: 100%; 
+	margin: 0; 
+	float: none;
+	 }
+	#printPageButton {
+		display: none;
+	}
+/*
+	div.page:after {
+		content: " PAGE - " counter(page);
+		position: absolute;
+		bottom: 0px;
+		right: 15px
+	}
+*/
+	#body {
+	font-family: "Times New Roman",Times, sans-serif,serif;
+	line-height: 1.5;
+	font-size: 12pt;
+	background: white !important;
+	color: black;
+	}
+
+	body {
+		height: 100%;
+	}
+
+	h1 {
+			font-size: 18pt;
+			break-before: page;
+			counter-increment: page;
+			counter-increment: page;
+			}
+	h1::before {	
+		content: "PageY " counter(page) " of " counter(pages) ": ";
+	}
+	
+	#footer1 {
+		content: "PageZ " counter(page) ": ";
+	}
+			
+	h2 {
+			font-size: 16pt;
+			}
+			
+	h3 {
+			font-size: 14pt;
+			}
+			
+	h1, h2, h3, h4, h5 {
+		text-align:center;
+		font-weight: bold;
+		break-after: avoid;
+	}
+
+	table {
+		width:100%;
+	}
+
+	thead {display: table-header-group;}
+
+	thead:before {
+		counter-increment: page;
+		content: counter(page);
+	}
+/*	#colHeading:after { 
+		
+	}
+*/	
+	th {
+  		background-color: rgba(9, 10, 9, 0);
+  		color: rgba(255, 255, 255, 0.973);
+	}
+	tr:nth-child(even) {
+		background-color: #f2f2f23b;
+	}
+	
+	tfoot {display: table-footer-group;
+		vertical-align: middle;
+  		border-color: inherit;
+	}
+	tfoot::before {
+		counter-increment: page;
+	}
+
+	tfoot::after {
+		content: "PageX " counter(page) " of " counter(pages);
+	}
+
+	#content {
+	    display: table;
+		content: counter(page);
+	}
+
+	#pageFooter {
+    	display: table-footer-group;
+		content: "PageA- " counter(page);
+	}
+
+	#pageFooter:after {
+    	content: "PageB - " counter(page);
+	}
+	#pagenumber { content: "PageC - " counter(page) }
+}
+
+	#pagenumber:before {
+		content: "PageD - " counter(page);
+}
+
+	#pagecount:before {
+		content: "PageE - " counter(pages);
+}
+
+	@page {
+		size:  landscape;
+		display:block;
+		position: relative;
+        margin: 1cm;
+		counter-increment: page;
+		page-break-before: always;
+    }
+   </style>
+<!--
+    <link rel="stylesheet" type="text/css"  href="/app/static/styles.css"> -->
+    <!-- <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/css/print.css') }}"> -->
+    <!--<link rel="stylesheet" href="print.css" type="text/css" media="print"/>  -->
+    <!--<link href="{{ url_for('static', filename='css/print.css') }}" rel="stylesheet"> -->
+
+<head>
+	<div id="header">
+		<h1>THE VILLAGES WOODWORKERS CLUB</h1>
+		<h2>MEMBERS CERTIFIED</h2>
+		<h2>TODAY IS {{ todays_date }}</h2>
+	</div>
+<button id="printPageButton" onClick="window.print();">PRINT</button>
+<!-- <a titit="PRINT" alt="Print Screen" onclick="window.print();"target="_blank" style="cursor:pointer;">PRINT</a> -->
+
+</head>
+<body>
+<div id="body">
+    <table>
+		<thead id="colHeading">	
+			<div id="topHeadings">
+			<tr>
+				<th>
+				<h1>Test Heading 1 </h1>
+				</th>
+			</tr>
+			</div>
+			<tr>	
+				<th style="text-align:left">NAME</th>
+				<th style="text-align:left">TRAINING</th>
+				<th style="text-align:left">Cell</th>
+				<th style="text-align:left">Home</th>
+				<th style="text-align:left">E-Mail</th>
+				<th style="text-align:left">Joined</th>
+			</tr>	
+		</thead>
+		
+		<tbody> 
+		{% set count = 1 %}   
+		{% for n in certified %}
+			{% set count = count + 1 %}
+		<tr>
+			<td style="text-align:left">{{n.wholeName}}</td>
+			<td style="text-align:left">{{n.certifiedTrainingShop1}}</td>
+			<td style="text-align:left">{{n.mobilePhone}}</td>
+			<td style="text-align:left">{{n.homePhone}}</td>
+			<td style="text-align:left">{{n.emailAddress}}</td>
+			<td style="text-align:left">{{n.dateJoined.strftime('%m-%d-%Y')}}</td>
+		</tr>    
+		
+		{% endfor %}
+		
+		</tbody> 
+		<tfoot>
+			<tr>
+				<td>
+					<div id="content">
+						<div id="pageFooter">1. Page </div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div id="footer1">3. Page</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Footer</td>
+			</tr>
+			<tr>
+			<td>
+				<div class="footer">
+					<div>Footer static message</div>
+					<div class="pages">Pag: 
+						<span id="pagenumber"></span>/
+						<span id="pagecount"></span>
+					</div>
+				</div>
+			</td>
+			</tr>
+		</tfoot>
+	</table>	
+</body>
+
+<footer id="pageNumber">
+	<br>
+	5. Number certified - <b> {{ recordCount }}</b>
+	<br>
+	6. Page number content: counter(page)
+	<div id="pageNumber">7. Pagenumber content: counter(pageNumber)</div>
+</footer>
+
+{% endblock %} 

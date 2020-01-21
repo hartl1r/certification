@@ -1,0 +1,73 @@
+/* BEGIN @MEDIA PRINT */
+@media print {
+ 	#content, #page {
+	width: 100%; 
+	margin: 0; 
+	float: none;
+	 }
+	#printPageButton {
+		display: none;
+	}
+
+
+	@page {
+		size: 8.5in 11.0in portrait;
+		margin: 2cm;
+	
+		@bottom-left {
+			content: "Printed on ";
+			}
+
+		@top-center {
+				content: "THE VILLAGES WOODWORKERS CLUB";
+				}
+				
+		
+				
+		@bottom-right {
+				content: "Page " counter(page) " of " counter(pages);
+				}
+		
+			}
+	h1 {
+			font-size: 18pt;
+			page-break-before: always;
+			}
+			
+	h2 {
+			font-size: 16pt
+			}
+			
+	h3 {
+			font-size: 14pt
+			}
+			
+	h1, h2, h3, h4, h5 {
+		font-weight: bold;
+		page-break-after: avoid;
+		page-break-inside:avoid;
+	}
+	#header {
+		page-break-before:auto
+	}
+
+	#body {
+	font-family: "Times New Roman",Times, sans-serif,serif;
+	line-height: 1.5;
+	font-size: 12pt;
+	background: #fff !important;
+	color: #000;
+	}
+
+	.footer {
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		background-color: red;
+		color: white;
+		text-align: center;
+	  }
+}
+
+/* END OF @MEDIA PRINT */

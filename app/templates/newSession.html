@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+<div class=newTrainingDate>
+    <h2>ADD NEW TRAINING DATE</h2>
+   
+    <form method="post" action="./newSession">
+    <p>
+        {{ form.hidden_tag() }}
+        {{ form.shopNumber(size=1) }}
+        {{ form.trainingDate(size=32) }}  <!-- datepicker ?-->
+        {{ form.classLimit(size=3) }}  
+    </p>
+    
+    <p>{{ form.submit() }}</p>
+    
+    </form>
+</div>
+
+{% endblock %}

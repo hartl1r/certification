@@ -1,0 +1,120 @@
+.bg-container{
+    background:whitesmoke;
+}
+
+.bg-row{
+    background:yellow;
+}
+
+.bg-col{
+    background:green;
+}
+
+.table-responsive{
+    height:400px;  
+    overflow:scroll;
+  }
+.thead th{
+    background: cornflowerblue;
+    color:white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.tbody {
+    background:lightgray;
+    color:black;
+}
+
+.card-header {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color:cornflowerblue;
+    color:white;   
+}
+.card-body {
+    background-color:lightgray;
+    color:black;
+}
+
+#form1 {
+    font-size: 20px;
+}
+
+/*table {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+thead {
+    flex: 0 0 auto;
+}
+
+tbody {
+    flex: 1 1 auto;
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+tr {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+} */
+
+
+
+
+/* .custom-table> tbody {
+    display:block;
+    overflow:auto;
+}
+.custom-table> thead, tbody tr {
+    display:table;
+    width:100%;         
+}
+.custom-table> thead {
+    width:   100%   
+}
+.custom-table {
+    width:100%;
+} */
+
+/*.table-fixed tbody {
+    height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    }
+    .table-fixed thead,
+    .table-fixed tbody,
+    .table-fixed tr,
+    .table-fixed td,
+    .table-fixed th {
+    display: block;
+    }
+   .table-fixed tr:after {
+    content: "";
+    display: block;
+    visibility: hidden;
+    clear: both;
+    }
+    .table-fixed tbody td,
+    .table-fixed thead > tr > th {
+    float: left;
+    }
+    .table > thead > tr > th,
+    .table > thead > tr > td {
+    font-size: .9em;
+    font-weight: 400;
+    border-bottom: 0;
+    letter-spacing: 1px;
+    vertical-align: top;
+    padding: 8px;
+    background: #51596a;
+    text-transform: uppercase;
+    color: #ffffff;
+    } */
