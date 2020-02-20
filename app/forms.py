@@ -8,7 +8,7 @@ from wtforms.fields.html5 import DateField
 from wtforms import Form
 
 class LoginForm(FlaskForm):
-    userName = StringField('Village ID', validators=[DataRequired()])
+    userID= StringField('Village ID', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
@@ -25,7 +25,7 @@ class ResetPasswordForm(FlaskForm):
 
     
 class RegistrationForm(FlaskForm):
-    userID = stringfield('userID')
+    userID = StringField('userID')
     userName = StringField('userName', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -89,14 +89,14 @@ class MemberLookupForm(Form):
     searchByName = StringField('or enter a name')
 
 class DisplayMemberForm(Form):
-    villageID = StringField('Village ID')
+    Member_ID = StringField('Village ID')
     fullName = StringField('Name')
-    dateJoined = DateTimeField('Date joined')
-    certTrainingShop1 = DateField('Rolling Acres Training')
-    certifiedShop1 = BooleanField('Certified for RA')
-    certTrainingShop2 = DateField('Brownwood Training')
-    certifiedShop2 = BooleanField('Certified for BW')
-    homePhone = StringField('Home phone')
-    mobilePhone = StringField('Mobile phone')
-    emailAddress = StringField('Email')
+    Date_Joined = DateTimeField('Date joined')
+    Certification_Training_Date = DateField('Rolling Acres Training')
+    Certified = BooleanField('Certified for RA')
+    Certification_Training_Date_2 = DateField('Brownwood Training')
+    Certified_2 = BooleanField('Certified for BW')
+    Home_Phone = StringField('Home phone')
+    Cell_Phone = StringField('Mobile phone')
+    Email = StringField('Email')
     submit = SubmitField('Submit')

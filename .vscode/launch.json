@@ -13,13 +13,13 @@
             "env": {
                 "FLASK_APP": "app.py"
             },
-            "debug": true,
             "args": [
                 "run",
                 "--no-debugger",
                 "--no-reload"
             ],
             "jinja": true
+            
         }
     ]
 }

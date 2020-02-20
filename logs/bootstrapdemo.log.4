@@ -1,108 +1,112 @@
-2020-01-01 15:14:31,586 ERROR: Exception on / [GET] [in c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py:1780]
+2020-02-19 13:00:36,334 ERROR: Exception on /reportMenu/10/ [GET] [in c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py:1780]
 Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\routes.py", line 70, in home
-    certifiedShop2=certifiedShop2,notCertifiedShop1=notCertifiedShop1,notCertifiedShop2=notCertifiedShop2,noCertification=noCertification)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\templating.py", line 135, in render_template
-    context, ctx.app)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\templating.py", line 117, in _render
-    rv = template.render(context)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\asyncsupport.py", line 76, in render
-    return original_render(self, *args, **kwargs)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\home.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\base.html", line 1, in top-level template code
-    {% extends 'bootstrap/base.html' %}
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 1, in top-level template code
-    {% block doc -%}
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 4, in block "doc"
-    {%- block html %}
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 33, in block "html"
-    {% block body -%}
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 34, in block "body"
-    {% block navbar %}
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\base.html", line 33, in block "navbar"
-    <a class="nav-link" href="{{ url_for('notcertified') }}">NOT CERTIFIED</a>
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\helpers.py", line 356, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 2080, in handle_url_build_error
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\helpers.py", line 345, in url_for
-    force_external=external)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\werkzeug\routing.py", line 2007, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'notcertified'. Did you mean 'certify' instead?
-2020-01-01 15:17:11,168 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]
-2020-01-01 16:28:38,030 ERROR: Exception on / [GET] [in c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py:1780]
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\default.py", line 550, in do_execute
+    cursor.execute(statement, parameters)
+pyodbc.ProgrammingError: ('Invalid parameter type.  param-index=0 param-type=set', 'HY105')
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
     response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
     raise value
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
     rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\routes.py", line 70, in home
-    certifiedShop2=certifiedShop2,notCertifiedShop1=notCertifiedShop1,notCertifiedShop2=notCertifiedShop2,noCertification=noCertification)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\templating.py", line 135, in render_template
-    context, ctx.app)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\templating.py", line 117, in _render
-    rv = template.render(context)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\asyncsupport.py", line 76, in render
-    return original_render(self, *args, **kwargs)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\jinja2\_compat.py", line 37, in reraise
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\app\routes.py", line 815, in reportMenu
+    trainingDates = db.session.query(CertificationClass).filter(CertificationClass.id == {id}).all()
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3167, in all
+    return list(self)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3323, in __iter__
+    return self._execute_and_instances(context)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3348, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\util\compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\util\compat.py", line 128, in reraise
     raise value.with_traceback(tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\home.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\base.html", line 1, in top-level template code
-    {% extends 'bootstrap/base.html' %}
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 1, in top-level template code
-    {% block doc -%}
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 4, in block "doc"
-    {%- block html %}
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 33, in block "html"
-    {% block body -%}
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\bootstrap\base.html", line 34, in block "body"
-    {% block navbar %}
-  File "c:\Users\richa\OneDrive\Projects\Cert25\app\templates\base.html", line 33, in block "navbar"
-    <a class="nav-link" href="{{ url_for('notcertified') }}">NOT CERTIFIED</a>
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\helpers.py", line 356, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\app.py", line 2080, in handle_url_build_error
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\default.py", line 550, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('Invalid parameter type.  param-index=0 param-type=set', 'HY105')
+[SQL: SELECT dbo.[tblTrainingDates].id AS [dbo_tblTrainingDates_id], dbo.[tblTrainingDates].[trainingDate] AS [dbo_tblTrainingDates_trainingDate], dbo.[tblTrainingDates].[classLimit] AS [dbo_tblTrainingDates_classLimit], dbo.[tblTrainingDates].[shopNumber] AS [dbo_tblTrainingDates_shopNumber] 
+FROM dbo.[tblTrainingDates] 
+WHERE dbo.[tblTrainingDates].id = ?]
+[parameters: ({'10'},)]
+(Background on this error at: http://sqlalche.me/e/f405)
+2020-02-19 13:03:18,513 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-19 13:04:34,186 ERROR: Exception on /reportMenu/11/ [GET] [in c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\default.py", line 550, in do_execute
+    cursor.execute(statement, parameters)
+pyodbc.ProgrammingError: ('Invalid parameter type.  param-index=0 param-type=set', 'HY105')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
     raise value
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\flask\helpers.py", line 345, in url_for
-    force_external=external)
-  File "c:\Users\richa\OneDrive\Projects\Cert25\venv\lib\site-packages\werkzeug\routing.py", line 2007, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'notcertified'. Did you mean 'certify' instead?
-2020-01-01 16:31:54,914 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert25\app\__init__.py:48]
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\app\routes.py", line 817, in reportMenu
+    trainingDates = db.session.query(CertificationClass).filter(CertificationClass.id == {id}).all()
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3167, in all
+    return list(self)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3323, in __iter__
+    return self._execute_and_instances(context)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3348, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\util\compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\util\compat.py", line 128, in reraise
+    raise value.with_traceback(tb)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\default.py", line 550, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('Invalid parameter type.  param-index=0 param-type=set', 'HY105')
+[SQL: SELECT dbo.[tblTrainingDates].id AS [dbo_tblTrainingDates_id], dbo.[tblTrainingDates].[trainingDate] AS [dbo_tblTrainingDates_trainingDate], dbo.[tblTrainingDates].[classLimit] AS [dbo_tblTrainingDates_classLimit], dbo.[tblTrainingDates].[shopNumber] AS [dbo_tblTrainingDates_shopNumber] 
+FROM dbo.[tblTrainingDates] 
+WHERE dbo.[tblTrainingDates].id = ?]
+[parameters: ({'11'},)]
+(Background on this error at: http://sqlalche.me/e/f405)
+2020-02-19 13:05:47,437 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]

@@ -15,7 +15,7 @@
     <div class="card py-0 m-0 col-md-6 ">
         <div class="card-heading p-0 m-0 text-center"style="background:green"><h2>ROLLING ACRES</h2></div>
         <div class="card-body p-0 m-0">
-            <table id="shop1Table" class="table table-sm table-hover mr-5"> <!-- class ="table text-center border-collapse"> -->
+            <table id="shop1Table" class="table table-sm table-hover mr-5 py-5"> <!-- class ="table text-center border-collapse"> -->
                 <thead> <!--  style="font-size: 10px; padding: 1px !important; height: 15px"> --> 
                      <tr>
                         <th></th>
@@ -51,7 +51,14 @@
                         <td class="seatsTaken" style="text-align:center">{{t1.seatsTaken}}</td>
                         <td style="text-align:center">{{t1.classLimit - t1.seatsTaken}}</td>
                         <td>
-                            <button type="button" class="shop1Btn reportBtn btn btn-success btn-sm btn-spacing" onclick="location.href='reports/{{t1.id}}'">REPORTS</button>
+                            <div class="dropdown"></div>
+                                <button type="button" class="shop1Btn dropdown-toggle reportBtn btn btn-success btn-sm btn-spacing" data-toggle="dropdown" >REPORTS<span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="rptSignIn/{{t1.id}}">Print Sign In Sheet</a></li>
+                                    <li><a href="rptCertified/{{t1.id}}"">Print Class Roster</a></li>
+                                    <li><a href="rptNotCertified/1">List Members NOT Certified</a></li>
+                                </ul> 
+                            </div>                               
                             <button type="button" class="shop1Btn viewBtn btn btn-success btn-sm btn-spacing" onclick="location.href='trainingClass/{{t1.id}}'">View Class</button>
                             <button type="button" class="shop1Btn deleteBtn btn btn-danger btn-sm btn-spacing" onclick="location.href='removeTrainingClass/{{t1.id}}'">Delete</button>
                             <button type="button" class="shop1Btn limitBtn btn btn-success btn-sm btn-spacing" onclick="location.href='changeClassLimit/{{t1.id}}'">Change Limit</button>
@@ -108,7 +115,14 @@
                     <td style="text-align:center">{{t2.seatsTaken}}</td>
                     <td style="text-align:center">{{t2.classLimit - t2.seatsTaken}}</td>
                     <td>
-                        <button type="button" class="shop2Btn reportBtn btn btn-success btn-sm btn-spacing" onclick="location.href='reports/{{t2.id}}'">REPORTS</button>
+                            <div class="dropdown"></div>
+                            <button type="button" class="shop1Btn dropdown-toggle reportBtn btn btn-success btn-sm btn-spacing" data-toggle="dropdown" >REPORTS<span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="rptSignIn/{{t2.id}}">Print Sign In Sheet</a></li>
+                                <li><a href="rptCertified/{{t2.id}}"">Print Class Roster</a></li>
+                                <li><a href="rptNotCertified/1">List Members NOT Certified</a></li>
+                            </ul> 
+                        </div>  
                         <button type="button" class="shop2Btn viewBtn btn btn-success btn-sm btn-spacing" onclick="location.href='trainingClass/{{t2.id}}'">View Class</button>
                         <button type="button" class="shop2Btn deleteBtn btn btn-danger btn-sm btn-spacing" onclick="location.href='removeTrainingClass/{{t2.id}}'">Delete</button>
                         <button type="button" class="shop2Btn limitBtn btn btn-success btn-sm btn-spacing" onclick="location.href='changeClassLimit/{{t2.id}}'">Change Limit</button>
@@ -160,27 +174,56 @@
         <div class="card-body">
             <div class="container">
                 <div class="row mx-5">
-                    <div class="col-sm-7 mt-3 ml-5 mr-0 px-0">
-                        
-                        <p>Number certified (Rolling Acres) -<br>
-                        Number certified (Brownwood) -<br>
-                        Number certified for both shops -</p>
-                        <p>Number not certified (Rolling Acres) -<br>
-                        Number not certified (Brownwood) -<br>
-                        Number not certified for either shop -</p>
-                        <p>Number of new members this year -<br>
-                        Current paid membership - </p>
-                    </div>
-                    <div class="col-sm-2 mt-3 text-right">
-                        <p>{{certifiedShop1}}<br>
-                        {{certifiedShop2}}<br>
-                        {{currentMembers}}</p>
-                        <p>{{ notCertifiedShop1}}<br>
-                        {{ notCertifiedShop2}}<br>
-                        {{ noCertification }}</p>
-                        <p>{{ newThisYear }}<br>
-                        {{ currentMembers }}</p>
-                    </div>
+                    <div class="col-sm-12 mt-3 ml-5 mr-0 px-0">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>Current paid memberships -</td>
+                                    <td style=text-align:right>{{currentPaidMembers}}</td>
+                                </tr>
+                                <tr>
+                                    <td>--------------------------------------------------</td>
+                                    <td>-------</td>
+                                </tr>
+                                <tr>
+                                    <td>Number certified (Rolling Acres) -</td>
+                                    <td style=text-align:right>{{certifiedShop1}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Number certified (Brownwood) -</td>
+                                    <td style = text-align:right>{{certifiedShop2}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Number certified for both shops -</td>
+                                    <td style=text-align:right>{{certifiedForBothShops}}</td>
+                                </tr>
+                                <tr>
+                                    <td>------------</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Number NOT certified (Rolling Acres) -</td>
+                                    <td style=text-align:right>{{notCertifiedShop1}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Number NOT certified (Brownwood) -</td>
+                                    <td style=text-align:right>{{notCertifiedShop2}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Number NOT certified for either shop -</td>
+                                    <td style=text-align:right>{{noCertification}}</td>
+                                </tr>
+                                <tr>
+                                    <td>------------</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Number of new members this year -</td>
+                                    <td style=text-align:right>{{newThisYear}}</td>
+                                </tr>
+                               
+                            </tbody>
+                        </table>
                 </div>
             </div>
         </div>

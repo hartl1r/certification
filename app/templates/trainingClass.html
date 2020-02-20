@@ -2,11 +2,11 @@
 
 {% block styles %}
 {{super()}}
-<!--	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-	<!--<link rel="stylesheet" href="{{ url_for('static', filename='css/trainingClass.css') }}">  -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!--<link rel="stylesheet" href="{{ url_for('static', filename='css/trainingClass.css') }}">-->
 {% endblock %}
 
 {% block scripts %}
@@ -17,95 +17,88 @@
 
 {% block content %}
 {{ super() }}
-    <div class="container">
-        <div class="table-wrapper">
+    <div class="container-fluid py-5 m-0">
+	    <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-6">
-						<h2>Training class of <b>{{classDate}} for {{shopName}} certification.</b></h2><br>
-						<p>
-							<!-- LOOK FOR CLASS info-modal IN AUTHORS JS FILE -->
-						<a href="#" data-text="Certification means ..." class="info-modal">CERTIFICATION</a>
-						</p>
+                    <div class="col-12">
+						<h2>Training class of <b>{{headingDate}} for {{shopName}} certification.</b></h2><br>
+						<p hidden id="shopNumber">{{shopNumber}}</p> 
+						<p hidden id = "trainingClassID">{{trainingClassID}}</p>
+
+													<!-- LOOK FOR CLASS info-modal IN AUTHORS JS FILE -->
+						<!-- <a href="#" data-text="Certification means ..." class="info-modal">CERTIFICATION</a>  -->
 						<br>
 					</div>
 					<div class="col-sm-6">
-						<a href="#" id="btnCertify" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Certify Class</span></a>  
-						<a href="#" id="btnSendArray" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Send Array</span></a>  
 						
-						<!-- <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
+						<!--<a href="#" id="btnSendArray" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>TEST Sending Array</span></a>  -->
+						<!--<button type="button" class="btn btn-success btn-sm btn-spacing" onclick="location.href='/certifySelected/[1,2,3]'">Set Certified Flag</button>-->
+						<!--<button id="ajaxButton" type="button">Make a request</button>-->
+
+						<!--<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
 						<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						-->
 					</div>
                 </div>
-            </div>
+			</div>
+			
+			<div class="col-sm-12">
 			<table class="table table-striped table-hover table-sm" id="Table1">
                 <thead>
-                    <tr>
-						<th>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span>
-						</th>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Mobile Phone</th>
-						<th>Home Phone</th>
-						<th>Email</th>
-						<th>Date Joined</th>
-						<th>Certified</th>
-                    </tr>
+				<tr>
+					
+					<th class="custom-checkbox">
+							<input type="checkbox" id="selectAll">
+							<label for="selectAll">Select All</label>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th>
+						<a href="#" id="btnCertify" class="btn btn-success" data-toggle="modal"> <span>Certify Selected Members</span></a>
+					</th>
+				</tr>
+				<tr>
+					<th></th>					
+					<th>Name</th>
+					<th>ID</th>
+					<th>Mobile Phone</th>
+					<th>Home Phone</th>
+					<th>Email</th>
+					<th>Date Joined</th>
+					<th>Certified</th> 
+				</tr>
                 </thead>
-                <tbody id="tableBody">
-                    
+                <tbody>
 					{% for t in trainingClass %}
 					<tr>
 						<td>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="1">
-								<label for="checkbox1"></label>
+								<!--<label for="checkbox1"></label>-->
 							</span>
 						</td>	
-						<td>{{t.id}}</td>
                         <td>{{t.fullName}}</td>
-						<td>{{t.mobilePhone}}</td>
-						<td>{{t.homePhone}}</td>
-						<td>{{t.emailAddress}}</td>
-						<td>{{t.dateJoined}}</td>
-						<td>{{t.certifiedShop1}}</td>
-                        <td>
+						<td>{{t.Member_ID}}</td>
+						<td>{{t.Cell_Phone}}</td>
+						<td>{{t.Home_Phone}}</td>
+						<td>{{t.Email}}</td>
+						<td>{{t.Date_Joined}}</td>
+						<td>{{t.labelCertified}}</td>
+
+                        <!--<td>
                             <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                             <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-						</td>
+						</td>-->
 					</tr>
 					{% endfor %}
                    
                 </tbody>
 			</table>
-			<div id="txtHint">string of ID's will appear here ...</div>
-			<div id="demo">
-				<h2>Let AJAX change this text</h2>
-				<button type="button" onclick="loadDoc()">Change Content</button>
-			  </div>
-			  <div id="demo">
-				<h2>SEND REQUEST VIA AJAX</h2>
-				<!-- <button type="button" onclick="sendArray()">SEND ARRAY</button> -->
-				<textarea name='Status'> </textarea>
-				<input type='button' onclick='sendArray()' value='Status Update'>
-			  </div>
-			<!-- <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul>
-            </div>
-        </div> -->
+			</div>
+		
 	</div>
 	
 	

@@ -1,106 +1,47 @@
-2019-12-23 15:54:41,455 ERROR: Exception on /trainingClass/3/ [GET] [in c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py:1780]
+2020-02-17 12:21:10,409 ERROR: Exception on /certifySelected [POST] [in c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py:1780]
 Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
     response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
     raise value
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
     rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\app\routes.py", line 689, in trainingClass
-    return render_template("trainingClass.html",trainingClass=trainingClass,classDate=classDate,shopName=shopName)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\templating.py", line 135, in render_template
-    context, ctx.app)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\templating.py", line 117, in _render
-    rv = template.render(context)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\jinja2\asyncsupport.py", line 76, in render
-    return original_render(self, *args, **kwargs)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\jinja2\environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\jinja2\environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\jinja2\_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\app\templates\trainingClass.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "c:\Users\richa\OneDrive\Projects\Cert22\app\templates\base.html", line 1, in top-level template code
-    {% extends 'bootstrap/base.html' %}
-  File "c:\Users\richa\OneDrive\Projects\Cert22\app\templates\bootstrap\base.html", line 1, in top-level template code
-    {% block doc -%}
-  File "c:\Users\richa\OneDrive\Projects\Cert22\app\templates\bootstrap\base.html", line 4, in block "doc"
-    {%- block html %}
-  File "c:\Users\richa\OneDrive\Projects\Cert22\app\templates\bootstrap\base.html", line 33, in block "html"
-    {% block body -%}
-  File "c:\Users\richa\OneDrive\Projects\Cert22\app\templates\bootstrap\base.html", line 36, in block "body"
-    {% block content -%}
-  File "c:\Users\richa\OneDrive\Projects\Cert22\app\templates\trainingClass.html", line 25, in block "content"
-    <h2>Training class of <b>{{classDate('%m-%d-%Y')}} for {{shopName}} certification.</b></h2><br>
-TypeError: 'datetime.date' object is not callable
-2019-12-23 15:58:31,469 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-12-23 16:30:24,968 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-12-23 17:13:40,575 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-12-23 17:14:07,078 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-12-23 17:14:20,848 ERROR: Exception on /trainingClass/3/ [GET] [in c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py:1780]
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\app\routes.py", line 578, in certifySelected
+    print(selecteedIDs)
+NameError: name 'selecteedIDs' is not defined
+2020-02-17 12:22:16,194 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 12:23:28,764 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 12:24:05,045 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 12:29:24,443 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 12:37:01,686 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 13:29:50,444 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 13:48:58,509 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 14:26:47,016 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 14:27:21,188 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 14:28:44,671 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 14:29:21,708 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 14:59:09,162 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 14:59:58,755 ERROR: Exception on /certifySelected [POST] [in c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py:1780]
 Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
     response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
     raise value
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
     rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\app\routes.py", line 669, in trainingClass
-    classDate = currentTrainingClass.classDate
-AttributeError: 'ResultProxy' object has no attribute 'classDate'
-2019-12-23 17:20:18,088 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-12-23 17:21:40,880 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-12-23 17:22:04,253 ERROR: Exception on /trainingClass/3/ [GET] [in c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py:1780]
-Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\app\routes.py", line 676, in trainingClass
-    shopNumber = qry.shopNumber
-NameError: name 'qry' is not defined
-2019-12-23 17:23:12,258 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-12-23 17:23:15,923 ERROR: Exception on /trainingClass/3/ [GET] [in c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py:1780]
-Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\app\routes.py", line 677, in trainingClass
-    shopNumber = qry.shopNumber
-NameError: name 'qry' is not defined
-2019-12-23 17:23:49,611 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-12-24 09:15:24,740 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert23\app\__init__.py:48]
-2019-12-24 09:18:18,545 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert23\app\__init__.py:48]
-2019-12-24 09:19:48,185 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert23\app\__init__.py:48]
-2019-12-24 09:23:31,549 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert23\app\__init__.py:48]
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\app\routes.py", line 587, in certifySelected
+    m = session.query(Member).get(id)
+NameError: name 'session' is not defined
+2020-02-17 15:01:18,604 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]

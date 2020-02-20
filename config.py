@@ -3,20 +3,37 @@
 import os
 import urllib.parse
 basedir = os.path.abspath(os.path.dirname(__file__))
-
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     
+    #SQLserver = "Laptop"
+    #SQLserver = "ShopServer"
+    #SQLserver = "Azure"
+    #if SQLserver = "Laptop":
+    '''    params = urllib.parse.quote_plus("DRIVER={ODBC Driver 17 for SQL Server};"
+                                    "SERVER={localhost\SQLEXPRESS};"
+                                    "UID=sa;"
+                                    "PWD={vwc-0513!};"
+                                    "DATABASE=VWC;"
+                                    "Persist Security Info=False;"
+                                    "MultipleActiveResultSets=False;"
+                                    "Encrypt=yes;"
+                                    "TrustServerCertificate=yes;"
+                                    "Connection timeout=30;") 
+                                    '''
+
+    #if SQLserver = "Azure":                                    
     params = urllib.parse.quote_plus("DRIVER={ODBC Driver 17 for SQL Server};"
-                                 "SERVER={localhost\SQLEXPRESS};"
-                                 "UID=sa;"
-                                 "PWD={vwc-0513!};"
-                                 "DATABASE=woodshop;"
-                                 "Persist Security Info=False;"
-                                 "MultipleActiveResultSets=False;"
-                                 "Encrypt=yes;"
-                                 "TrustServerCertificate=yes;"
-                                 "Connection timeout=30;")
+                                "SERVER={nro5j08dna.database.windows.net};"
+                                "UID={vwcDataMgr};"
+                                "PWD={vwc-0513!};"
+                                "DATABASE=VWCAccess;"
+                                "Persist Security Info=False;"
+                                "MultipleActiveResultSets=False;"
+                                "Encrypt=yes;"
+                                "TrustServerCertificate=yes;"
+                                "Connection timeout=30;")
+
     conn_str = 'mssql+pyodbc:///?odbc_connect={}'.format(params)
     SQLALCHEMY_DATABASE_URI = conn_str 
     #REDIS_URL = "redis://:password@localhost:6379/0"

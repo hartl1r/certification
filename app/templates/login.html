@@ -7,9 +7,9 @@
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
-            {{ form.userName.label }}<br>
-            {{ form.userName(size=6) }}
-            {% for error in form.userName.errors %}
+            {{ form.userID.label }}<br>
+            {{ form.userID(size=6) }}
+            {% for error in form.userID.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>

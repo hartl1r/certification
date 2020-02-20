@@ -2,11 +2,11 @@
 {% block app_content %}
 
 <table border="1">
-    <caption>ROLLING ACRES TRAINING SESSIONS</caption>
+    <caption>{{shopName}}</caption>
     <tr>
         <th style="background-color: white">DATE</th>
     </tr>
-    {% for t in trainingDatesShop1 %}
+    {% for t in trainingDate %}
         <tr>
             <form method="POST" action="./selectDate1" style="display: inline" >
             <td>{{ t.trainingDate }}</td>

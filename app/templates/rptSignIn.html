@@ -17,19 +17,19 @@
         <tr>
             <th style="width:300px">Name</th>
             <th style="text-align:left">Training</th>
-            <th>Cell</th>
+            <th>style="text-align:left">Cell</th>
             <th style="text-align:left">Home</th>
             <th style="text-align:left">E-Mail</th>
             <th style="text-align:center">Joined</th>
         </tr>    
     {% for n in enrollees %}
     <tr>
-        <td style="text-align:left">{{n.wholeName}}</td>
-        <td style="text-align:left">{{n.trainingDt}}</td>
-        <td style="text-align:left">{{n.mobilePhone}}</td>
-        <td style="text-align:left">{{n.homePhone}}</td>
-        <td style="text-align:left">{{n.emailAddress}}</td>
-        <td style="text-align:center">{{n.dateJoined.strftime('%m-%d-%Y')}}</td>
+        <td> style="text-align:left">{{n.Last_Name}}</td>
+        <td style="text-align:left">{{n.Certification_Training_Date}}</td>
+        <td style="text-align:left">{{n.Mobile_Phone}}</td>
+        <td style="text-align:left">{{n.Home_Phone}}</td>
+        <td style="text-align:left">email address</td>
+        <td style="text-align:center">{{n.Date_Joined.strftime('%m-%d-%Y')}}</td>
         
     </tr>    
     {% endfor %}

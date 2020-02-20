@@ -18,11 +18,14 @@ def load_user(id):
 
     
 class User(UserMixin, db.Model):
+    __tablename__ = 'user'
+    __table_args__ = {"schema": "dbo"}
     id = db.Column(db.Integer, primary_key=True)
     userID = db.Column(db.String(6),index=True, unique=True)
-    userName = db.Column(db.String(6), index=True, unique=True)
+    userName = db.Column(db.String(30), index=True, unique=True)
     passwordHash = db.Column(db.String(255))
     email = db.Column(db.String(128))
+    applications = db.Column(db.String(128))
     lastSeen = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
@@ -84,6 +87,28 @@ class Person(db.Model):
 #def fullname(cls):
 #    return db.func.concat(cls.firstName, ' ', cls.lastName)
 
+class Member(db.Model):
+    __tablename__ = 'tblMember_Data'
+    __table_args__ = {"schema": "dbo"}
+    id = db.Column(db.Integer, primary_key=True)
+    Member_ID = db.Column(db.String(6), index=True, unique=True)
+    Last_Name = db.Column(db.String(30))
+    First_Name = db.Column(db.String(30))
+    #NickName = db.Column(db.String(30))
+    Date_Joined = db.Column(db.DateTime)
+    #monthJoined = db.Column(db.Integer)
+    #yearJoined=db.Column(db.String(4))
+    Certified = db.Column(db.Boolean)
+    Certification_Training_Date = db.Column(db.DateTime)
+    Certified_2 = db.Column(db.Boolean)
+    Certification_Training_Date_2 = db.Column(db.DateTime)
+    Home_Phone = db.Column(db.String(14))
+    Cell_Phone = db.Column(db.String(14))
+    #Email = db.Column(db.String(255))
+    Dues_Paid=db.Column(db.Boolean)
+    NonMember_Volunteer=db.Column(db.Boolean)
+    fullName = column_property(First_Name + " " + Last_Name)
+  
 class AuthorizedUser(db.Model):
     __tablename__ = 'authorizedUser'
     villageID = db.Column(db.String(6), primary_key=True)
@@ -97,16 +122,19 @@ class MonthList(db.Model):
     monthAbbr = db.Column(db.String(3))
 
 class CertificationClass(db.Model):
-    __tablename__ = 'certificationClass'
+    __tablename__ = 'tblTrainingDates'
+    __table_args__ = {"schema": "dbo"}
     id = db.Column(db.Integer, primary_key=True)
     trainingDate = db.Column(db.DateTime)
     classLimit = db.Column(db.String(30))
     shopNumber = db.Column(db.Integer)
+    #purpose = db.column(db.String(30))
 
     def __repr__(self):
-        return '<certificationClass {}>'.format(self.dateForCertificationTraining)
+        return '<certificationClass {}>'.format(self.trainingDate)
 
 class ShopName(db.Model):
-    __tablename__ = 'shopName'
-    shopNumber = db.Column(db.Integer, primary_key=True)
-    shopName = db.Column(db.String(30))
+    __tablename__ = 'tblShop_Names'
+    __table_args__ = {"schema": "dbo"}
+    Shop_Number = db.Column(db.Integer, primary_key=True)
+    Shop_Name = db.Column(db.String(30))

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block app_content %}
+
+<h1>{{shopName}}</h1>
+<p>{{headingDate}}</p>
+<p>{{trainingDateID}}</p>
+<ul>
+    <li><a href="rptNotCertified/{{shopNumber}}">List Members Not Certified</a></li>
+    <li><a href="rptSignIn/{{shopNumber}}">Print Sign In Sheet</a></li>
+    <li><a href="rptCertified/{{trainingDateID}}">List Members Certified In This Class </a></li>
+</ul>
+
+{% endblock %}    

@@ -7,15 +7,16 @@ from flask_bootstrap import Bootstrap
 from werkzeug.urls import url_parse
 from app.forms import MemberLookupForm, LoginForm, RegistrationForm, DisplayMemberForm  ,NewSessionForm,\
 ChangeClassLimitForm, ReportForm
-from app.models import User, Person, MonthList, AuthorizedUser, CertificationClass, ShopName
+from app.models import User, Person, MonthList, AuthorizedUser, CertificationClass, ShopName, Member
 from app import app
 from app import db
-from sqlalchemy import func, case, desc, extract, select 
+from sqlalchemy import func, case, desc, extract, select, update
 from app.forms import ResetPasswordRequestForm, ResetPasswordForm, NotCertifiedForm
 from app.email import send_password_reset_email
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date
+
 #from flask_redis import FlaskRedis
 #r=FlaskRedis()
 def get_count(q):
@@ -33,42 +34,61 @@ def before_request():
 @app.route('/home')
 @login_required
 def home():
-     # PREPARE trainingDatesShop1 USING RAW SQL
-    sql = """SELECT id, shopNumber, format(trainingDate,'M/d/yyyy') as trainingDate, classLimit, (select count(*) from person where certTrainingShop1= trainingDate) AS seatsTaken 
-    FROM certificationClass Where shopNumber = 1 and trainingDate >= CAST (GETDATE() AS DATE) ORDER BY format(trainingDate,'yyyyMMdd') """
+    # PREPARE trainingDatesShop1 USING RAW SQL
+    #sql = """SELECT id, shopNumber, format(trainingDate,'M/d/yyyy') as trainingDate, classLimit, (select count(*) from person where certTrainingShop1= trainingDate) AS seatsTaken 
+    #FROM certificationClass Where shopNumber = 1 and trainingDate >= CAST (GETDATE() AS DATE) ORDER BY format(trainingDate,'yyyyMMdd') """
+    sql = """SELECT id, shopNumber, format(trainingDate,'M/d/yyyy') as trainingDate, classLimit, (select count(*) from tblMember_Data where Certification_Training_Date = trainingDate) AS seatsTaken 
+    FROM tblTrainingDates Where shopNumber = 1 and trainingDate >= CAST (GETDATE() AS DATE) ORDER BY format(trainingDate,'yyyyMMdd') """
+    #print (sql)
     trainingDatesShop1 = db.engine.execute(sql)
-  
-    sql = """SELECT id, shopNumber, format(trainingDate,'M/d/yyyy') as trainingDate, classLimit, (select count(*) from person where certTrainingShop2= trainingDate) AS seatsTaken 
-    FROM certificationClass WHERE shopNumber = 2 and trainingDate >= CAST (getdate() as Date) ORDER BY format(trainingDate,'yyyyMMdd')"""
+    #for t1 in trainingDatesShop1:
+    #    print (t1.trainingDate)
+
+
+    sql = """SELECT id, shopNumber, format(trainingDate,'M/d/yyyy') as trainingDate, classLimit, (select count(*) from tblMember_Data where Certification_Training_Date_2= trainingDate) AS seatsTaken 
+    FROM tblTrainingDates WHERE shopNumber = 2 and trainingDate >= CAST (getdate() as Date) ORDER BY format(trainingDate,'yyyyMMdd')"""
     trainingDatesShop2 = db.engine.execute(sql)
+    #for t2 in trainingDatesShop2:
+    #    print (t2.trainingDate)
+
     form = NewSessionForm(request.form)
 
     # CALCULATE STATISTICS
-    newThisYear = db.session.query(func.count(Person.villageID)).filter(extract('year',Person.dateJoined) == datetime.date.today().year).scalar()
-    notCertifiedLastYear = db.session.query(func.count(Person.villageID)).filter(extract('year',Person.dateJoined) == datetime.date.today().year -1 and Person.certifiedShop1 != True).scalar()
-    notCertifiedThisYear = db.session.query(func.count(Person.villageID)).filter(extract('year',Person.dateJoined) == datetime.date.today().year and Person.certifiedShop1 != True).scalar()
+    newThisYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Member.Date_Joined) == datetime.date.today().year).scalar()
+    #notCertifiedLastYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Member.Date_Joined) == datetime.date.today().year -1 and Member.Certified != True).scalar()
+    #notCertifiedThisYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Member.Date_Joined) == datetime.date.today().year and Member.Certified != True).scalar()
     
-    currentMembers = db.session.query(func.count(Person.villageID)).filter(Person.duesPaid == True).scalar()
-    certifiedShop1=db.session.query(func.count(Person.villageID)).filter((Person.certifiedShop1 == True and Person.duesPaid == True)).scalar()
-    certifiedShop2=db.session.query(func.count(Person.villageID)).filter((Person.certifiedShop2 == True and Person.duesPaid == True)).scalar()
+    currentPaidMembers = db.session.query(func.count(Member.Member_ID)).filter(Member.Dues_Paid == True).scalar()
+    print ("Current paid members -", currentPaidMembers)
 
-    notCertifiedShop1=db.session.query(func.count(Person.villageID))\
-        .filter((Person.certifiedShop1 == False) | (Person.certifiedShop1 == None))\
-        .filter((Person.duesPaid == True)).scalar()
+    certifiedShop1=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified == True and Member.Dues_Paid == True)).scalar()
+    print ("Number certified in shop 1 -",certifiedShop1)
 
-    notCertifiedShop2=db.session.query(func.count(Person.villageID))\
-        .filter((Person.certifiedShop2 == False) | (Person.certifiedShop2 == None))\
-        .filter((Person.duesPaid == True)).scalar()
+    certifiedShop2=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified_2 == True and Member.Dues_Paid == True)).scalar()
+    certifiedForBothShops=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified == True and Member.Certified_2 == True and Member.Dues_Paid == True)).scalar()
+    #print ("Number Certified In Both Shops -",certifiedForBothShops)
+
+    notCertifiedShop1=db.session.query(func.count(Member.Member_ID))\
+        .filter((Member.Certified == False) | (Member.Certified == None))\
+        .filter((Member.Dues_Paid == True)).scalar()
+    #print ("Not certified shop 1 -",notCertifiedShop1)
+
+    notCertifiedShop2=db.session.query(func.count(Member.Member_ID))\
+        .filter((Member.Certified_2 == False) | (Member.Certified_2 == None))\
+        .filter((Member.Dues_Paid == True)).scalar()
+    #print ("Not certified shop 2 -",notCertifiedShop2)
 
     noCertification=db.session.query\
-        (func.count(Person.villageID))\
-        .filter((Person.certifiedShop1 == False) | (Person.certifiedShop1 == None))\
-        .filter((Person.certifiedShop2 == False) | (Person.certifiedShop2 == None))\
-        .filter((Person.duesPaid == True)).scalar()
-        
+        (func.count(Member.Member_ID))\
+        .filter((Member.Certified == False) | (Member.Certified == None))\
+        .filter((Member.Certified_2 == False) | (Member.Certified_2 == None))\
+        .filter((Member.Dues_Paid == True)).scalar()
+    #print ("Not certified either shop -",noCertification)
+
     return render_template("home.html",trainingDatesShop1=trainingDatesShop1,trainingDatesShop2=trainingDatesShop2,\
-        form=form,newThisYear=newThisYear,currentMembers=currentMembers,certifiedShop1=certifiedShop1,\
-        certifiedShop2=certifiedShop2,notCertifiedShop1=notCertifiedShop1,notCertifiedShop2=notCertifiedShop2,noCertification=noCertification)
+        form=form,newThisYear=newThisYear,currentPaidMembers=currentPaidMembers,certifiedShop1=certifiedShop1,\
+        certifiedShop2=certifiedShop2,certifiedForBothShops=certifiedForBothShops,notCertifiedShop1=notCertifiedShop1,\
+        notCertifiedShop2=notCertifiedShop2,noCertification=noCertification)
 
 
 @app.route('/index')
@@ -85,20 +105,20 @@ def index():
     FROM certificationClass WHERE shopNumber = 2 and trainingDate >= CAST (getdate() as Date) ORDER BY format(trainingDate,'yyyyMMdd')"""
     trainingDatesShop2 = db.engine.execute(sql)
 
-    newThisYear = db.session.query(func.count(Person.villageID)).filter(extract('year',Person.dateJoined) == datetime.date.today().year).scalar()
-    notCertifiedLastYear = db.session.query(func.count(Person.villageID)).filter(extract('year',Person.dateJoined) == datetime.date.today().year -1 and Person.certifiedShop1 != True).scalar()
-    notCertifiedThisYear = db.session.query(func.count(Person.villageID)).filter(extract('year',Person.dateJoined) == datetime.date.today().year and Person.certifiedShop1 != True).scalar()
+    newThisYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Person.Date_Joined) == datetime.date.today().year).scalar()
+    notCertifiedLastYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Person.Date_Joined) == datetime.date.today().year -1 and Person.Certified != True).scalar()
+    notCertifiedThisYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Person.Date_Joined) == datetime.date.today().year and Person.Certified != True).scalar()
     
-    currentMembers = db.session.query(func.count(Person.villageID)).filter(Person.duesPaid == True).scalar()
-    NotCertifiedShop1=db.session.query(func.count(Person.villageID)).filter((Person.certifiedShop1 == False) | (Person.certifiedShop1 == None)).scalar()
-    NotCertifiedShop2=db.session.query(func.count(Person.villageID)).filter((Person.certifiedShop2 == False) | (Person.certifiedShop2 == None)).scalar()
+    currentMembers = db.session.query(func.count(Member.Member_ID)).filter(Person.Dues_Paid == True).scalar()
+    NotCertified=db.session.query(func.count(Member.Member_ID)).filter((Person.Certified == False) | (Person.Certified == None)).scalar()
+    NotCertified_2=db.session.query(func.count(Member.Member_ID)).filter((Person.Certified_2 == False) | (Person.Certified_2 == None)).scalar()
     NoCertification=db.session.query\
-        (func.count(Person.villageID))\
-        .filter((Person.certifiedShop1 == False) | (Person.certifiedShop1 == None))\
-        .filter((Person.certifiedShop2 == False) | (Person.certifiedShop2 == None)).scalar()
+        (func.count(Member.Member_ID))\
+        .filter((Person.Certified == False) | (Person.Certified == None))\
+        .filter((Person.Certified_2 == False) | (Person.Certified_2 == None)).scalar()
 
     form = NewSessionForm(request.form)
-    return render_template("stats.html", NotCertifiedShop1=NotCertifiedShop1,NotCertifiedShop2=NotCertifiedShop2,currentMembers=currentMembers,newThisYear=newThisYear,notCertifiedThisYear=notCertifiedThisYear,notCertifiedLastYear=notCertifiedLastYear,trainingDatesShop1=trainingDatesShop1,trainingDatesShop2=trainingDatesShop2,NoCertification=NoCertification,form=form ,selectedDate1=selectedDate1)
+    return render_template("stats.html", NotCertified=NotCertified,NotCertified_2=NotCertified_2,currentMembers=currentMembers,newThisYear=newThisYear,notCertifiedThisYear=notCertifiedThisYear,notCertifiedLastYear=notCertifiedLastYear,trainingDatesShop1=trainingDatesShop1,trainingDatesShop2=trainingDatesShop2,NoCertification=NoCertification,form=form ,selectedDate1=selectedDate1)
 
 @app.route("/newSession", methods=["GET","POST"])
 @login_required
@@ -135,10 +155,22 @@ def newSession():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    #user = User.query.filter_by(userID="604875").first()
+    #print("User-",user.userName)
+
+    #member = Member.query.filter_by(Member_ID="604875").first()
+    #print("Member-",member.Last_Name)
+
+    #sql = """SELECT Member_ID, Last_Name FROM tblMember_Data Where Member_ID = """ + "'605875'" 
+    #print (sql) 
+    #member = db.engine.execute(sql)
+    #for m in member:
+    #    print (m.Member_ID, m.Last_Name)
+    
     nameOfUser = 'Unknown'
    #print("Status-",current_user.is_authenticated)
     if current_user.is_authenticated:
-        nameOfUser = db.session.query(Person.fullName).filter(Person.villageID==current_user.userName).first()
+        nameOfUser = db.session.query(Member.fullName).filter(Member.Member_ID==current_user.userID).first()
         return  redirect(url_for('home'))
        #print("authenicated -", nameOfUser)
         #return redirect(url_for('home'),nameOfUser=nameOfUser)
@@ -147,17 +179,17 @@ def login():
     #print("before validate_on_submit")
     if form.validate_on_submit():
        #print("validate_on_submit routine")
-        user = User.query.filter_by(userName=form.userName.data).first()
+        user = User.query.filter_by(userID=form.userID.data).first()
                
-        #print("User-",user)
-       #print("PW-",form.password.data)
-       #print("PW status-", user.check_password(form.password.data))
+        print("User-",user.userName)
+        #print("PW-",form.password.data)
+        #print("PW status-", user.check_password(form.password.data))
         pw1=user.set_password("infosys03")
         if user.check_password("infosys03"):
            print("infosys03 ok")
 
         if user is None:   
-            flash('Invalid userName',"info")
+            flash('Invalid userID',"info")
             return redirect(url_for('login'))
 
        #print("PW: ", form.password.data)
@@ -173,19 +205,31 @@ def login():
             # if not authorized display message
             # return ?
         # retrieve nickname or first name
-        # nameOfUser = db.session.query(Person.firstName).filter(Person.villageID==form.userName.data).scalar()
-       
+        # nameOfUser = db.session.query(Person.firstName).filter(Member.Member_ID==form.userName.data).scalar()
+        #member = Member.query.filter_by(Member_ID=form.userID.data).first()
 
-        p = db.session.query(Person.fullName).filter(Person.villageID==form.userName.data).first()
-        if p is None:
-            flash("Not a member or volunteer.","warning")
+        #records = Member.query.all()  'THIS WORKS!
+        #records = db.session.query(Member).all()
+        #for record in records:
+        #    print(record)
+        #sql = """SELECT Member_ID, Last_Name FROM tblMember_Data Where Member_ID = """ + "'605875'" 
+        #print (sql) 
+        #member = db.engine.execute(sql)
+        #member = Member.query.filter_by(Member_ID=form.userID.data).first()
+        #print (member.Last_Name)
+        
+        member = db.session.query(Member.fullName).filter(Member.Member_ID==form.userID.data).first()
+        if member is None:
+            flash("ID is in user table but not in member table.","warning")
             return redirect(url_for('login'))
 
         #if p.nickName:
         #    nameOfUser = p.nickName
         #else:
         #    nameOfUser = p.firstname
-        nameOfUser=p.fullName 
+        nameOfUser=member.fullName 
+        print ("Name of user - ", nameOfUser)
+
         login_user(user, remember=form.remember_me.data)
         # THE FOLLOWING IS NEEDED IF WE NEED TO RETURN TO THE PAGE THAT CAUSED THE USER TO GET TO THE LOGIN
         # WITHOUT THIS CODE THE USER WILL ALWAYS BE SENT TO THE index.html PAGE AFTER LOGIN
@@ -301,9 +345,9 @@ def notcertified():
         return redirect(url_for('notcertified'))
    # members = Person.query.all()
     people = db.session.query\
-        (Person.villageID,Person.firstName,Person.lastName,Person.fullName,Person.certTrainingShop1,\
-         Person.homePhone,Person.nickName,Person.certifiedShop1,Person.dateJoined)\
-        .filter(Person.certifiedShop1 == False and Person.dateJoined != None)
+        (Member.Member_ID,Person.firstName,Person.lastName,Person.fullName,Person.certTrainingShop1,\
+         Person.homePhone,Person.nickName,Person.Certified,Person.Date_Joined)\
+        .filter(Person.Certified == False and Person.Date_Joined != None)
 
     #for p in people:
        #print(p.fullName, p.certTrainingShop1)
@@ -331,8 +375,8 @@ def editsessions():
     #sql = """SELECT trainingDate, classLimit, (select count(*) from person where certTrainingShop2= trainingDate) AS seatsTaken 
     #FROM certificationClass WHERE shopNumber = 2 ORDER BY trainingDate"""
     #trainingDatesShop2 = db.engine.execute(sql)
-    #newThisYear = db.session.query(func.count(Person.villageID)).filter(extract('year',Person.dateJoined) == datetime.date.today().year).scalar()
-   #newThisYear = db.session.query(func.count(Person.villageID)).filter(Person.yearJoined == datetime.date.today().year).scalar()
+    #newThisYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Person.Date_Joined) == datetime.date.today().year).scalar()
+   #newThisYear = db.session.query(func.count(Member.Member_ID)).filter(Person.yearJoined == datetime.date.today().year).scalar()
    # return render_template('editsessions.html', title='Edit Training Dates', trainingDatesShop1=trainingDatesShop1, trainingDatesShop2=trainingDatesShop2,form=form)
 
 
@@ -350,12 +394,12 @@ def updateSessions():
     # DETERMINE IF NEW CLASS LIMIT IS GREATER THAN NUMBER ALREADY ENROLLED'
     if shopNumber == 1:
         membersEnrolled=db.session.query\
-        (func.count(Person.villageID))\
+        (func.count(Member.Member_ID))\
         .filter(Person.certTrainingShop1 == oldTrainingDate).scalar()
 
     if shopNumber == 2:
         membersEnrolled=db.session.query\
-        (func.count(Person.villageID))\
+        (func.count(Member.Member_ID))\
         .filter(Person.certTrainingShop2 == oldTrainingDate).scalar()
 
     if membersEnrolled > newClassLimit: 
@@ -414,24 +458,24 @@ def editTrainingSession(id):
         #newClassLimit = form.classLimit.data
         if newClassLimit == currentClassLimit:
             flash ("No change to class limit","success")
-            return redirect(url_for("/index"))
+            return redirect(url_for("/home"))
 
         # DETERMINE IF NEW CLASS LIMIT IS GREATER THAN NUMBER ALREADY ENROLLED'
         membersEnrolled = 0
        #print("Members enrolled - ", str(membersEnrolled))
         if cc.shopNumber == 1:
             membersEnrolled = db.session.query\
-            (func.count(Person.villageID))\
-            .filter(Person.certTrainingShop1 == cc.trainingDate).scalar()
+            (func.count(Member.Member_ID))\
+            .filter(Member.Certification_Training_Date == cc.trainingDate).scalar()
 
         if cc.shopNumber == 2:
             membersEnrolled = db.session.query\
-            (func.count(Person.villageID))\
-            .filter(Person.certTrainingShop2 == cc.trainingDate).scalar()
+            (func.count(Member.Member_ID))\
+            .filter(Member.Certification_Training_Date_2 == cc.trainingDate).scalar()
 
         if membersEnrolled > int(newClassLimit):
             flash ("Members enrolled exceeds new limit; limit not changed.","info")
-            return redirect(url_for("/index"))
+            return redirect(url_for("home"))
 
         # Change class limit in database
         try:
@@ -443,8 +487,9 @@ def editTrainingSession(id):
             db.session.rollback()
             return redirect(url_for('changeClassLimit'))
 
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
+'''
 @app.route("/deleteTrainingClass/<string:id>/",methods=['GET','POST'])
 def deleteTrainingClass(id):
     # Get record to be deleted
@@ -460,12 +505,12 @@ def deleteTrainingClass(id):
     # Are there any members enrolled?
     if shopNumber == 1:
         membersEnrolled = db.session.query\
-        (func.count(Person.villageID))\
+        (func.count(Member.Member_ID))\
         .filter(Person.certTrainingShop1 == trainingDate).scalar()
 
     if shopNumber == 2:
         membersEnrolled = db.session.query\
-        (func.count(Person.villageID))\
+        (func.count(Member.Member_ID))\
         .filter(Person.certTrainingShop2 == trainingDate).scalar()
     
     if membersEnrolled == 0:
@@ -478,21 +523,21 @@ def deleteTrainingClass(id):
             db.session.rollback()
             flash ("Delete was not successful","warning")
         finally:
-            return redirect("/index")
+            return redirect("/home")
     else:
         msg = "Cannot delete as there are still student(s) enrolled."
         flash (msg,"warning")
-        return redirect("/index")
-
+        return redirect("/home")
+'''
 
 @app.route("/rptNotCertified", methods=["GET","POST"])
 def rpt():
     notCertified = None
-    #notCertified = Person.query.filter(certifiedShop1 == false).all()
+    #notCertified = Person.query.filter(Certified == false).all()
     notCertified = db.session.query(Person.wholeName,Person.certTrainingShop1,Person.mobilePhone,\
-        Person.homePhone,Person.emailAddress,Person.dateJoined)\
+        Person.homePhone,Person.emailAddress,Person.Date_Joined)\
         .order_by(Person.wholeName)\
-        .filter(Person.certifiedShop1 == False).all()
+        .filter(Person.Certified == False).all()
     
     todays_date = date.today().strftime('%m-%d-%Y')
    #print("Today is  ",todays_date)
@@ -501,16 +546,40 @@ def rpt():
 
 @app.route("/rptCertified", methods=["GET","POST"])
 def rpt2():
-    filterClause="Person.certifiedShop1 == True"
+    filterClause="Person.Certified == True"
     certified = None
     certified = db.session.query(Person.id,Person.wholeName,Person.certTrainingShop1,Person.mobilePhone,\
-        Person.homePhone,Person.emailAddress,Person.dateJoined)\
+        Person.homePhone,Person.emailAddress,Person.Date_Joined)\
         .order_by(Person.wholeName)\
-        .filter(Person.certifiedShop1 == True).all()
+        .filter(Person.Certified == True).all()
 
     todays_date = date.today().strftime('%m-%d-%Y')
-    recordCount = db.session.query(Person).filter(Person.certifiedShop1 == True).count()
+    recordCount = db.session.query(Person).filter(Person.Certified == True).count()
     return render_template('rptCertified.html', certified=certified,todays_date=todays_date,recordCount=recordCount)
+
+@app.route("/rptSignIn/<string:id>/", methods=["GET","POST"])
+def rptSignIn(id):
+    # GET SHOPNUMBER, TRAINING DATE
+    trainingDates = db.session.query(CertificationClass).filter(CertificationClass.id == id).all()
+    for t in trainingDates:
+        shopNumber = t.shopNumber
+        trainingDate = t.trainingDate
+    shopName = db.session.query(ShopName).filter(ShopName.Shop_Number == shopNumber).scalar()
+    
+    if shopNumber == 1:
+        enrollees = db.session.query(Member).filter(Member.Certification_Training_Date == trainingDate).all()
+        recordCount = db.session.query(Member).filter(Member.Certification_Training_Date == trainingDate).count()
+    else:
+        enrollees = db.session.query(Member).filter(Member.Certification_Training_Date_2 == trainingDate).all()
+        recordCount = db.session.query(Member).filter(Member.Certification_Training_Date_2 == trainingDate).count()
+
+    for e in enrollees:
+        print (e.Last_Name)
+
+    todays_date = date.today().strftime('%m-%d-%Y')
+    
+    
+    return render_template('rptSignIn.html', enrollees=enrollees,todays_date=todays_date,recordCount=recordCount)
 
 
 @app.route("/certify", methods=["GET", "POST"])
@@ -521,52 +590,72 @@ def certify():
     #    Person.certified).filter(Person.certified == False).all()
     notcertified = db.session.query\
         (Person.id, Person.fullName, Person.homePhone, Person.certTrainingShop1, \
-        Person.dateJoined,Person.certifiedShop1).all()
-       #Person.dateJoined,Person.certified).filter(Person.certified == False).all()
+        Person.Date_Joined,Person.Certified).all()
+       #Person.Date_Joined,Person.certified).filter(Person.certified == False).all()
     return render_template("certify.html", notcertified=notcertified)
 
 @app.route("/certifySelected", methods=["GET","POST"])
 def certifySelected():
-    passedString = request.get.args('str')
-    print("Passed string -", passedString)
-    return redirect("/certify")
+    selectedIDs = request.get_json()
+    # GET SHOPNUMBER FROM FRONT OF ARRAY AND REMOVE FROM ARRAY
+    shopNumber = selectedIDs.pop(0)
+    # GET TRAINING CLASS ID FROM FRONT OF ARRAY AND REMOVE FROM ARRAY
+    trainingClassID = selectedIDs.pop(0)
+        
+    # ROUTINE TO SET CERTIFIED TO TRUE FOR EACH MEMBER_ID IN THE ARRAY PASSED FROM JAVASCRIPT
+    for id in selectedIDs:
+        m = db.session.query(Member).filter(Member.Member_ID == id).first()
+        if m != None:
+            # UPDATE CERTIFIED FLAG
+            try:
+                if shopNumber == '1':
+                    m.Certified = True
+                else:
+                    m.Certified_2 = True
 
+                db.session.commit()
+            except:
+                db.session.rollback()
+        else:
+            print ("Nothing in m")
+
+    ## THE FOLLOWING LINE IS NOT REFRESHING THE PAGE
+    ## BUT A 'RELOAD' DOES 
+    return redirect(url_for('trainingClass',id=trainingClassID))
+    
 @app.route("/trainingClass/<string:id>/", methods=["GET", "POST"])
 def trainingClass(id):
-    sql = """SELECT id, shopNumber, format(trainingDate,'MMMM d, yyyy') as classDate FROM certificationClass Where id = """ + str(id)  
+    sql = """SELECT tblTrainingDates.id, tblTrainingDates.shopNumber, tblTrainingDates.trainingDate, tblShop_Names.Shop_Name
+        FROM tblTrainingDates LEFT JOIN tblShop_Names ON tblTrainingDates.shopNumber = tblShop_Names.Shop_Number
+        WHERE tblTrainingDates.id = """ + str(id)
     currentTrainingClass = db.engine.execute(sql)
 
     for c in currentTrainingClass:
-        classDate = c.classDate
+        headingDate = c.trainingDate.strftime("%A, %B %e, %Y")
         shopNumber = c.shopNumber
+        shopName = c.Shop_Name 
+        trainingDate = c.trainingDate.strftime('%x')
 
-    s = db.session.query(ShopName).filter(ShopName.shopNumber == shopNumber).first()
-    if s is None:
-        msg = "Missing shop number for training class with id of " + id
-        flash(msg,"warning")
-        shopName="Unknown"
+    # IF SHOP 1 THEN COMPARE TRAINING DATE TO CERTIFICATION_TRAINING_DATE
+    if shopNumber == 1: 
+        sqlSelect = ""
+        sqlSelect = '''SELECT Member_ID, (Last_Name + ', ' + First_Name) as fullName, Cell_Phone,
+            Home_Phone, [E-mail] as Email,Certification_Training_Date,format(Date_Joined,'M/d/yy') as DateJoined,
+            Certified,Certified_2,iif(Certified=1,'CERTIFIED','') as labelCertified,iif(Certified_2=1,'CERTIFIED','') as labelCertified_2
+            from dbo.tblMember_Data WHERE Certification_Training_Date = ' ''' + str(trainingDate) + ''' ' ORDER BY Last_Name;'''
     else:
-        shopName=s.shopName
-    trainingClass = None
-
-    if shopNumber == 1:
-        trainingClass = db.session.query\
-            (Person.id, Person.fullName,Person.mobilePhone, Person.homePhone, Person.emailAddress, \
-            Person.certTrainingShop1, Person.dateJoined,Person.certifiedShop1, Person.dateJoined)\
-            .filter(Person.certTrainingShop1==classDate).all()
-    else:
-        trainingClass = db.session.query\
-            (Person.id, Person.fullName,Person.mobilePhone, Person.homePhone, Person.emailAddress, \
-            Person.certTrainingShop2, Person.dateJoined,Person.certifiedShop1, Person.dateJoined)\
-            .filter(Person.certTrainingShop2==classDate).all()   
-    for t in trainingClass:
-        print(t.fullName)
-
-    if len(trainingClass) == 0:
+         # IF SHOP 2 THEN COMPARE TRAINING DATE TO CERTIFICATION_TRAINING_DATE_2
+        sqlSelect = '''SELECT Member_ID, (Last_Name + ', ' + First_Name) as fullName, Cell_Phone,
+            Home_Phone, [E-mail] as Email,Certification_Training_Date,format(Date_Joined,'M/d/yy') as DateJoined,
+            Certified,Certified_2,iif(Certified=1,'CERTIFIED','') as labelCertified,iif(Certified_2=1,'CERTIFIED','') as labelCertified
+            from dbo.tblMember_Data WHERE Certification_Training_Date_2 = ' ''' + str(trainingDate) + ''' ' ORDER BY Last_Name;'''
+    trainingClass = db.engine.execute(sqlSelect)
+    
+    if trainingClass == None:
         flash("No members are enrolled.","info")
         return redirect(url_for('home'))
-       #Person.dateJoined,Person.certified).filter(Person.certified == False).all()
-    return render_template("trainingClass.html",trainingClass=trainingClass,classDate=classDate,shopName=shopName)
+       
+    return render_template("trainingClass.html",trainingClass=trainingClass,trainingClassID=id,headingDate=headingDate,shopName=shopName,shopNumber=shopNumber)
 
 
 
@@ -635,7 +724,7 @@ def printReport():
             try:
                 enrollees = None
                 enrollees = db.session.query(Person.id,Person.wholeName,Person.certTrainingShop1.label("trainingDt"),Person.mobilePhone,\
-                Person.homePhone,Person.emailAddress,Person.dateJoined) \
+                Person.homePhone,Person.emailAddress,Person.Date_Joined) \
                 .order_by(Person.wholeName) \
                 .filter(Person.certTrainingShop1 == trainingDate).all()
             except:
@@ -646,7 +735,7 @@ def printReport():
             try:
                 enrollees = None
                 enrollees = db.session.query(Person.id,Person.wholeName,Person.certTrainingShop2.label("trainingDt"),Person.mobilePhone,\
-                Person.homePhone,Person.emailAddress,Person.dateJoined) \
+                Person.homePhone,Person.emailAddress,Person.Date_Joined) \
                 .order_by(Person.wholeName) \
                 .filter(Person.certTrainingShop2 == trainingDate).all()
             except:
@@ -689,9 +778,10 @@ def memberLookupRoutine():
 
     if searchByID != '':
         #lookup member by ID
-        qry = db.session.query(Person).filter(Person.villageID == searchByID)
+        qry = db.session.query(Member).filter(Member.Member_ID == searchByID)
         member = qry.first()
         if member:
+            print(member.Member_ID,member.Home_Phone,member.Cell_Phone)
             form = DisplayMemberForm(obj=member)
             #form.populate_obj(member)
             return render_template ('memberLookup.html', form=form)
@@ -702,13 +792,13 @@ def memberLookupRoutine():
     if searchByName != '':
         #name was entered
         search_string = searchByName + '%'
-        #people = db.session.query(Person.fullName,Person.villageID).filter(Person.lastName.like('H*'))
-        people = db.session.query(Person.id, Person.wholeName, Person.villageID).filter(Person.lastName.like(search_string)).order_by(Person.lastName)
-        #people = db.session.query(Person.fullName,Person.villageID).filter(Person.villageID == search_string)
-        #for p in people:
-        #    print(p.lastName, p.villageID)
+        #people = db.session.query(Person.fullName,Member.Member_ID).filter(Person.lastName.like('H*'))
+        members = db.session.query(Member.Member_ID, Member.fullName).filter(Member.Last_Name.like(search_string)).order_by(Member.fullName)
+        #people = db.session.query(Person.fullName,Member.Member_ID).filter(Member.Member_ID == search_string)
+        for m in members:
+            print(m.fullName, m.Member_ID)
 
-        return render_template('memberLookup.html',people=people,form=form)  
+        return render_template('memberLookup.html',members=members,form=form)  
 
     flash("Please enter a Village ID or a name.","warning")
     return render_template('memberLookup.html',form=form)
@@ -719,7 +809,7 @@ def memberLookupRoutine():
 @app.route('/memberByID/<id>')  
 def memberByID(id):
     searchID = id
-    qry = db.session.query(Person).filter(Person.villageID == searchID)
+    qry = db.session.query(Person).filter(Member.Member_ID == searchID)
     member = qry.first()
     if member:
         form = DisplayMemberForm(obj=member)
@@ -735,20 +825,34 @@ def memberByID(id):
 @app.route("/displayMember",methods = ['POST'])   
 def displayMember():
     id = request.form.get("memberID")
-    qry = db.session.query(Person).filter(Person.id == id)
+    qry = db.session.query(Member).filter(Member.Member_ID == id)
     member = qry.first()
     if member:
+        #print ("Name - ", member.fullName)
         form = DisplayMemberForm(obj=member)
         return render_template ('memberLookup.html', form=form)
     else:
         return 'Error loading #{id}'.format(id=id)
         
+@app.route('/reportMenu/<id>/')
+def reportMenu(id):
+    #print (type(id))
+    #print (id)
+    #trainingDates = db.session.query(CertificationClass).join(ShopName,Shop_Number==shopNumber).filter(CertificationClass.id == {id}).all()
+    trainingDates = db.session.query(CertificationClass).filter(CertificationClass.id == id).all()
+    for t in trainingDates:
+        #print (t.trainingDate,t.shopNumber)
+        headingDate = t.trainingDate.strftime("%A, %B %e, %Y")
+        shopNumber = t.shopNumber
+        shopName='Unknown'
+        shopName= db.session.query(ShopName.Shop_Name).filter(ShopName.Shop_Number == shopNumber).scalar()
+    return render_template('reportMenu.html',shopName=shopName,headingDate=headingDate,trainingDate=t.trainingDate,trainingDateID=id,shopNumber=shopNumber)
+
 @app.route('/reports/<id>/')
 def reports(id):
     trainingDatesShop1 = db.session.query(CertificationClass).filter(CertificationClass.id == {id}).all()
     trainingDatesShop1 = db.session.query(CertificationClass).filter(CertificationClass.shopNumber == 1).order_by(CertificationClass.trainingDate).all()
     return render_template('reports.html',  trainingDatesShop1=trainingDatesShop1)
-
 
 #@app.route('/selectDate1', methods = ['POST'])
 #def selectDate1():
@@ -770,11 +874,11 @@ def search_results(search):
 
     if search.data['searchByName'] != '':
         search_string = search.data['searchByName'] & '*'
-        people = db.session.query(Person.fullName,Person.villageID).filter(Person.villageID == search_string)
+        people = db.session.query(Person.fullName,Member.Member_ID).filter(Member.Member_ID == search_string)
         return redirect('/memberLookup',people=people)  
 
     if search.data['searchByName'] == 'b':
-        members = db.session.query(Person.fullName,Person.villageID).filter(Person.villageID == search_string)
+        members = db.session.query(Person.fullName,Member.Member_ID).filter(Member.Member_ID == search_string)
         return render_template('/results.html', members=members)
 
 @app.route('/printSignIn')
@@ -799,13 +903,13 @@ def removeTrainingClass(id):
     # Are there any members enrolled?
     if shopNumber == 1:
         membersEnrolled = db.session.query\
-        (func.count(Person.villageID))\
-        .filter(Person.certTrainingShop1 == trainingDate).scalar()
+        (func.count(Member.Member_ID))\
+        .filter(Member.Certification_Training_Date == trainingDate).scalar()
 
     if shopNumber == 2:
         membersEnrolled = db.session.query\
-        (func.count(Person.villageID))\
-        .filter(Person.certTrainingShop2 == trainingDate).scalar()
+        (func.count(Member.Member_ID))\
+        .filter(Member.Certification_Training_Date_2 == trainingDate).scalar()
     
     if membersEnrolled == 0:
         try:
@@ -857,12 +961,12 @@ def editClassLimit(id):
        #print("Members enrolled - ", str(membersEnrolled))
         if cc.shopNumber == 1:
             membersEnrolled = db.session.query\
-            (func.count(Person.villageID))\
+            (func.count(Member.Member_ID))\
             .filter(Person.certTrainingShop1 == cc.trainingDate).scalar()
 
         if cc.shopNumber == 2:
             membersEnrolled = db.session.query\
-            (func.count(Person.villageID))\
+            (func.count(Member.Member_ID))\
             .filter(Person.certTrainingShop2 == cc.trainingDate).scalar()
 
         if membersEnrolled > int(newClassLimit):

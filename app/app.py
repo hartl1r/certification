@@ -1,7 +1,7 @@
 # app.py
 
 from app import app, db
-from app.models import AuthorizedUser, Person, User
+from app.models import AuthorizedUser, Person, User, Member
 
 #@app.context_processor
 #def inject_today_date():

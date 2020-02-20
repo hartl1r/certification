@@ -1,92 +1,96 @@
-2019-11-21 10:12:29,968 ERROR: Exception on /postmethod [POST] [in c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py:1780]
+2020-02-17 11:30:03,497 ERROR: Exception on /memberLookupRoutine [POST] [in c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py:1780]
 Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\app\routes.py", line 1085, in postmethod
-    return redirect(url_for('trainingClass'),id=id)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\helpers.py", line 356, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 2080, in handle_url_build_error
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\helpers.py", line 345, in url_for
-    force_external=external)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\werkzeug\routing.py", line 2007, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'trainingClass'. Did you forget to specify values ['id']?
-2019-11-21 10:13:21,649 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-21 10:13:51,313 ERROR: Exception on /postmethod [POST] [in c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py:1780]
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\default.py", line 550, in do_execute
+    cursor.execute(statement, parameters)
+pyodbc.ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'Email'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
     response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
     raise value
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
     rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\app\routes.py", line 1085, in postmethod
-    return redirect('/trainingClass',id=id)
-TypeError: redirect() got an unexpected keyword argument 'id'
-2019-11-21 10:15:03,642 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-21 10:16:44,973 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-21 10:17:33,769 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-21 10:18:30,503 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-21 14:10:39,736 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-21 14:12:47,031 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-21 14:14:06,141 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-21 14:15:43,960 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-21 14:23:05,521 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-21 14:25:26,186 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-21 16:41:41,564 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-21 16:44:16,914 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-22 14:37:47,061 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-22 14:42:53,914 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-11-22 14:45:40,346 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-12-23 14:26:45,544 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-12-23 15:02:06,330 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-12-23 15:08:36,519 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-12-23 15:13:46,882 ERROR: Exception on /changeClassLimit/3/ [POST] [in c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py:1780]
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\app\routes.py", line 748, in memberLookupRoutine
+    member = qry.first()
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3221, in first
+    ret = list(self[0:1])
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3011, in __getitem__
+    return list(res)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3323, in __iter__
+    return self._execute_and_instances(context)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3348, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\util\compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\util\compat.py", line 128, in reraise
+    raise value.with_traceback(tb)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\sqlalchemy\engine\default.py", line 550, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'Email'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Statement(s) could not be prepared. (8180)")
+[SQL: SELECT TOP 1 dbo.[tblMember_Data].[First_Name] + ? + dbo.[tblMember_Data].[Last_Name] AS anon_1, dbo.[tblMember_Data].id AS [dbo_tblMember_Data_id], dbo.[tblMember_Data].[Member_ID] AS [dbo_tblMember_Data_Member_ID], dbo.[tblMember_Data].[Last_Name] AS [dbo_tblMember_Data_Last_Name], dbo.[tblMember_Data].[First_Name] AS [dbo_tblMember_Data_First_Name], dbo.[tblMember_Data].[Date_Joined] AS [dbo_tblMember_Data_Date_Joined], dbo.[tblMember_Data].[Certified] AS [dbo_tblMember_Data_Certified], dbo.[tblMember_Data].[Certification_Training_Date] AS [dbo_tblMember_Data_Certification_Training_Date], dbo.[tblMember_Data].[Certified_2] AS [dbo_tblMember_Data_Certified_2], dbo.[tblMember_Data].[Certification_Training_Date_2] AS [dbo_tblMember_Data_Certification_Training_Date_2], dbo.[tblMember_Data].[Home_Phone] AS [dbo_tblMember_Data_Home_Phone], dbo.[tblMember_Data].[Cell_Phone] AS [dbo_tblMember_Data_Cell_Phone], dbo.[tblMember_Data].[Email] AS [dbo_tblMember_Data_Email], dbo.[tblMember_Data].[Dues_Paid] AS [dbo_tblMember_Data_Dues_Paid], dbo.[tblMember_Data].[NonMember_Volunteer] AS [dbo_tblMember_Data_NonMember_Volunteer] 
+FROM dbo.[tblMember_Data] 
+WHERE dbo.[tblMember_Data].[Member_ID] = ?]
+[parameters: (' ', '423621')]
+(Background on this error at: http://sqlalche.me/e/f405)
+2020-02-17 11:54:10,271 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 11:55:05,017 ERROR: Exception on /certifySelected [POST] [in c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py:1780]
 Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
     response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
     raise value
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
     rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\app\routes.py", line 554, in editTrainingSession
-    return redirect(url_for("/index"))
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\helpers.py", line 356, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\app.py", line 2080, in handle_url_build_error
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\app\routes.py", line 575, in certifySelected
+    shopNumber = selectedIDs.shift()
+AttributeError: 'list' object has no attribute 'shift'
+2020-02-17 12:08:18,649 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 12:08:51,070 ERROR: Exception on /certifySelected [POST] [in c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py:1780]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 2311, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1834, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1737, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\_compat.py", line 36, in reraise
     raise value
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\flask\helpers.py", line 345, in url_for
-    force_external=external)
-  File "c:\Users\richa\OneDrive\Projects\Cert22\venv\lib\site-packages\werkzeug\routing.py", line 2007, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint '/index'. Did you mean 'index' instead?
-2019-12-23 15:30:14,107 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
-2019-12-23 15:54:34,123 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\Cert22\app\__init__.py:48]
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1832, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\venv\lib\site-packages\flask\app.py", line 1818, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\AzureCertification\app\routes.py", line 575, in certifySelected
+    print("Type is " + type(selectedIDs))
+TypeError: can only concatenate str (not "type") to str
+2020-02-17 12:10:11,634 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 12:11:35,144 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-17 12:20:44,129 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]

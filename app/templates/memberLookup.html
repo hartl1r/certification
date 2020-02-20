@@ -44,12 +44,12 @@
           </tr>
         </thead>
         <tbody>
-        {% for person in people %}
+        {% for m in members %}
             <tr>
               <form method="POST" action="./displayMember" style="display: inline" >
-                <td>{{ person.wholeName }}</td>
-                <td>{{ person.villageID }}</td>
-                <td><input type="hidden" value="{{ person.id }}" name="memberID"></td>
+                <td>{{ m.fullName }}</td>
+                <td>{{ m.Member_ID }}</td>
+                <td><input type="hidden" value="{{ m.Member_ID }}" name="memberID"></td>
                 <td><button type="submit" class="btn btn-primary btn-sm">Display</button></button></td>
               </form>
             </tr>
@@ -71,48 +71,47 @@
         </div>
 
         <div class="card-body">
-            <form action="" method="post" novalidate>
+          <form action="" method="post" novalidate>
               <input autocomplete="false" name="hidden" type="text" style="display:none;">
-            <div class="col-sm-3"></div>
-
+          <div class="col-sm-12  ml-5 mr-0 py-0">
             <table>
                 <tr>
-                    <td>{{ form.homePhone.label }}</td>
+                    <td>{{ form.Home_Phone.label }}</td>
                     <td>     </td>
-                    <td>{{ form.homePhone(size=14,readonly=true) }}</td>
+                    <td>{{ form.Home_Phone(size=14,readonly=true) }}</td>
                 </tr>
                 <tr>
-                    <td>{{ form.mobilePhone.label }}</td>
+                    <td>{{ form.Cell_Phone.label }}</td>
                     <td>     </td>
-                    <td>{{ form.mobilePhone(size=14,readonly=true) }}</td>
+                    <td>{{ form.Cell_Phone(size=14,readonly=true) }}</td>
                 <tr>
-                    <td>{{ form.emailAddress.label }}</td>
+                    <td>{{ form.Email.label }}</td>
                     <td>     </td>
-                    <td>{{ form.emailAddress(size=32,readonly=true) }}</td>
-                </tr>
-                <tr></tr>
-                <tr>
-                    <td>{{ form.certTrainingShop1.label }}</td>
-                    <td>     </td>
-                    <td>{{ form.certTrainingShop1(placeholder='mm/dd/yyyy',size=10) }}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.certifiedShop1.label }}</td>
-                    <td>     </td>
-                    <td>{{ form.certifiedShop1 }}</td>
+                    <td>{{ form.Email(size=32,readonly=true) }}</td>
                 </tr>
                 <tr></tr>
                 <tr>
-                    <td>{{ form.certTrainingShop2.label }}</td>
+                    <td>{{ form.Certification_Training_Date.label }}</td>
                     <td>     </td>
-                    <td>{{ form.certTrainingShop2(placeholder='mm/dd/yyyy',size=10) }}</td><br> 
+                    <td>{{ form.Certification_Training_Date(placeholder='mm/dd/yyyy',size=10) }}</td>
+                </tr>               <tr>
+                    <td>{{ form.Certified.label }}</td>
+                    <td>     </td>
+                    <td>{{ form.Certified }}</td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>{{ form.Certification_Training_Date_2.label }}</td>
+                    <td>     </td>
+                    <td>{{ form.Certification_Training_Date_2(placeholder='mm/dd/yyyy',size=10) }}</td><br> 
                 </tr>
                 <tr>
-                    <td>{{ form.certifiedShop2.label }}</td>
+                    <td>{{ form.Certified_2.label }}</td>
                     <td>     </td>
-                    <td>{{ form.certifiedShop2 }}</td>
+                    <td>{{ form.Certified_2 }}</td>
                 </tr>
             </table>
+          </div>
             </form>
           
         </div> <!-- End of card body -->
