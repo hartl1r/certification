@@ -10,7 +10,7 @@ class Config(object):
     #SQLserver = "ShopServer"
     #SQLserver = "Azure"
     #if SQLserver = "Laptop":
-    '''    params = urllib.parse.quote_plus("DRIVER={ODBC Driver 17 for SQL Server};"
+    params = urllib.parse.quote_plus("DRIVER={ODBC Driver 17 for SQL Server};"
                                     "SERVER={localhost\SQLEXPRESS};"
                                     "UID=sa;"
                                     "PWD={vwc-0513!};"
@@ -20,7 +20,7 @@ class Config(object):
                                     "Encrypt=yes;"
                                     "TrustServerCertificate=yes;"
                                     "Connection timeout=30;") 
-                                    '''
+    '''
 
     #if SQLserver = "Azure":                                    
     params = urllib.parse.quote_plus("DRIVER={ODBC Driver 17 for SQL Server};"
@@ -32,7 +32,7 @@ class Config(object):
                                 "MultipleActiveResultSets=False;"
                                 "Encrypt=yes;"
                                 "TrustServerCertificate=yes;"
-                                "Connection timeout=30;")
+                                "Connection timeout=30;")  '''
 
     conn_str = 'mssql+pyodbc:///?odbc_connect={}'.format(params)
     SQLALCHEMY_DATABASE_URI = conn_str 

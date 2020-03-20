@@ -573,10 +573,10 @@ def rptSignIn(id):
         enrollees = db.session.query(Member).filter(Member.Certification_Training_Date_2 == trainingDate).all()
         recordCount = db.session.query(Member).filter(Member.Certification_Training_Date_2 == trainingDate).count()
 
-    for e in enrollees:
-        print (e.Last_Name)
+    #for e in enrollees:
+        #print (e.Last_Name)
 
-    todays_date = date.today().strftime('%m-%d-%Y')
+    todays_date = date.today().strftime("%A, %B %e, %Y")
     
     
     return render_template('rptSignIn.html', enrollees=enrollees,todays_date=todays_date,recordCount=recordCount)

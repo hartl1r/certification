@@ -46,3 +46,13 @@ Traceback (most recent call last):
     return getattr(obj, attribute)
 jinja2.exceptions.UndefinedError: 'app.models.Member object' has no attribute 'dateJoined'
 2020-02-19 17:29:56,490 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-20 18:57:29,816 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-20 19:21:51,757 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-20 19:23:52,270 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-20 19:40:01,601 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-21 19:07:12,494 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-02-24 14:49:57,711 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-03-03 12:36:07,521 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-03-03 14:16:46,455 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-03-03 14:17:14,369 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]
+2020-03-17 14:29:12,221 INFO: Certification startup [in c:\Users\richa\OneDrive\Projects\AzureCertification\app\__init__.py:48]

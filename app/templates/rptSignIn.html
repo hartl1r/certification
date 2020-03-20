@@ -16,16 +16,14 @@
         <tbody>
         <tr>
             <th style="width:300px">Name</th>
-            <th style="text-align:left">Training</th>
-            <th>style="text-align:left">Cell</th>
+            <th style="text-align:left">Cell</th>
             <th style="text-align:left">Home</th>
             <th style="text-align:left">E-Mail</th>
             <th style="text-align:center">Joined</th>
         </tr>    
     {% for n in enrollees %}
     <tr>
-        <td> style="text-align:left">{{n.Last_Name}}</td>
-        <td style="text-align:left">{{n.Certification_Training_Date}}</td>
+        <td style="text-align:left">{{n.Last_Name}}</td>
         <td style="text-align:left">{{n.Mobile_Phone}}</td>
         <td style="text-align:left">{{n.Home_Phone}}</td>
         <td style="text-align:left">email address</td>
@@ -33,7 +31,7 @@
         
     </tr>    
     {% endfor %}
-    <tfoot>"Record count - " {{recordCount}}</tfoot> 
+    <tfoot>Record count -  {{recordCount}}</tfoot> 
     </tbody>
 </div>  
 {% endblock %} 
