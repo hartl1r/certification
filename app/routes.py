@@ -12,10 +12,12 @@ from app import app
 from app import db
 from sqlalchemy import func, case, desc, extract, select, update
 from app.forms import ResetPasswordRequestForm, ResetPasswordForm, NotCertifiedForm
-from app.email import send_password_reset_email
+# from app.email import send_password_reset_email
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date
+
+app.secret_key = 'My secret key'
 
 #from flask_redis import FlaskRedis
 #r=FlaskRedis()
