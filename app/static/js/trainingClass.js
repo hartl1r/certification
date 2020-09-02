@@ -21,7 +21,6 @@ $(document).ready(function(){
 
 
 	$("#btnCertify").click(function () {
-		console.log("Certify clicked.");
 		var message ="";
 		var idArray = [];
 		var idString = "";
@@ -70,63 +69,4 @@ $(document).ready(function(){
 		
 	});
 });
-	/*function() {
-		var httpRequest;
-		document.getElementById("ajaxButton").addEventListener('click', makeRequest);
-	  
-		function makeRequest() {
-		  httpRequest = new XMLHttpRequest();
-	  
-		  if (!httpRequest) {
-			alert('Giving up :( Cannot create an XMLHTTP instance');
-			return false;
-		  }
-		  httpRequest.onreadystatechange = alertContents;
-		  httpRequest.open('GET', 'test.html');
-		  httpRequest.send();
-		}
-	  
-		function alertContents() {
-			try {
-				if (httpRequest.readyState === XMLHttpRequest.DONE) {
-					if (httpRequest.status === 200) {
-					alert(httpRequest.responseText);
-					} else {
-					errorMsg='Status of request -'+httpRequest.status;
-					alert(errorMsg);
-					alert('There was a problem with the request.');
-					}
-				}
-			}
-			catch(e) {
-				alert('Caught Exception: ' + e.description);
-			}
-		  }
-		
-}) */ 
 	
-
-	
-		//var id = 3;
-		//idArray.unshift(id);
-		//msg = "idArray w/id -" + idArray;
-		//console.log(msg);
-
-/*		const href = window.location.href;
-
-		const params = new URLSearchParams(window.location.search);  
-		const URLid = params.get("id"); 
-		msg = "URL -" + href + ' ?' + URLid; 
-		console.log(msg);
-*/
-		//$.ajax({
-		//	type : 'POST',
-		//	url: '/postmethod',
-		//	dataType: 'json',
-		//	data : JSON.stringify(idArray),
-		//	contentType:"application/json; charset=UTF-8"
-		//}); 
-		
-		//Display selected Row data in Alert Box.
-		//alert(message);	
-		//alert(idString);

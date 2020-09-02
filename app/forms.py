@@ -23,6 +23,21 @@ class ResetPasswordForm(FlaskForm):
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Request Password Reset')
 
+
+# <!-- <form method='POST' action="{{ url_for('saveAddress') }}">
+#                 {{ form.csrf_token }}
+#                 {{ form.street.label }}
+#                 {{ form.street }}
+#                 {{ form.city.label }}
+#                 {{ form.city }}
+#                 {{ form.state.label }}
+#                 {{ form.state }}
+#                 {{ form.zip.label }}
+#                 {{ form.zip }}
+#                 {{ form.village.label }}
+#                 {{ form.village }}
+#                 <input type="submit" value='SAVE'>
+#             </form> -->
     
 class RegistrationForm(FlaskForm):
     userID = StringField('userID')
