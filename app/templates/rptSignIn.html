@@ -5,30 +5,36 @@
  <head>
     <title>CERTIFICATION SIGN IN - {{ shopName }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/print.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rptSignIn.css') }}">
 </head>
 <div class="VWCreports">
     <button id="printPageButton" onClick="window.print();">PRINT</button>
     <h1 class="text-center">THE VILLAGES WOODWORKERS CLUB</h1>
     <h2 class="text-center">SIGN IN SHEET</h2>
-    <h2 class="text-center">TODAY IS {{ todays_date }}</h2>
+    <h2 class="text-center">FOR TRAINING CLASS ON {{ trainingDisplayDate }}</h2>
    
     <table style="display: inline block;">                      
         <tbody>
         <tr>
-            <th style="width:300px">Name</th>
-            <th style="text-align:left">Cell</th>
-            <th style="text-align:left">Home</th>
-            <th style="text-align:left">E-Mail</th>
-            <th style="text-align:center">Joined</th>
+            <th style="width:75px;text-align:left">Initials</th>
+            <th style="width:200px; text-align:left">Name</th>
+            <th style="width:200px;text-align:left">E-Mail</th>
+            <th style="width:150px;text-align:left">Cell</th>
+            <th style="width:150px;text-align:left">Home</th>
+            <th style="width:75px;text-align:left">Staff</th>
         </tr>    
     {% for n in enrollees %}
     <tr>
-        <td style="text-align:left">{{n.Last_Name}}</td>
-        <td style="text-align:left">{{n.Mobile_Phone}}</td>
-        <td style="text-align:left">{{n.Home_Phone}}</td>
-        <td style="text-align:left">email address</td>
-        <td style="text-align:center">{{n.Date_Joined.strftime('%m-%d-%Y')}}</td>
-        
+        <td style="width:75px">
+            <input type="text" class="initials">
+        </td>
+        <td style="width:200px;text-align:left">{{n.Last_Name}}, {{n.First_Name}}  ({{n.Member_ID}})</td>
+        <td style="width:200px;text-align:left">{{n.eMail}}</td>
+        <td style="width:150px;text-align:left">{{n.Mobile_Phone}}</td>
+        <td style="width:150px;text-align:left">{{n.Home_Phone}}</td>
+        <td style="width:75px;">
+            <input type="text" class="initials">
+        </td>
     </tr>    
     {% endfor %}
     <tfoot>Record count -  {{recordCount}}</tfoot> 

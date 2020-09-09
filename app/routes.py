@@ -373,7 +373,6 @@ def deleteTrainingClass(id):
         flash (msg,"warning")
         return redirect("/home")
 '''
-
 @app.route("/rptNotCertified", methods=["GET","POST"])
 def rpt():
     notCertified = None
@@ -402,21 +401,28 @@ def rpt2():
 @app.route("/rptSignIn/<string:id>/", methods=["GET","POST"])
 def rptSignIn(id):
     # GET SHOPNUMBER, TRAINING DATE
-    trainingDates = db.session.query(CertificationClass).filter(CertificationClass.id == id).all()
+    trainingDates = db.session.query(CertificationClass)\
+        .filter(CertificationClass.id == id).all()
     for t in trainingDates:
         shopNumber = t.shopNumber
-        trainingDate = t.trainingDate
+        trainingDate = t.trainingDate 
+        trainingDisplayDate = trainingDate.strftime("%A, %B %e, %Y")
     shopName = db.session.query(ShopName).filter(ShopName.Shop_Number == shopNumber).scalar()
     
     if shopNumber == 1:
-        enrollees = db.session.query(Member).filter(Member.Certification_Training_Date == trainingDate).all()
+        enrollees = db.session.query(Member)\
+            .filter(Member.Certification_Training_Date == trainingDate)\
+            .order_by(Member.Last_Name,Member.First_Name).all()
         recordCount = db.session.query(Member).filter(Member.Certification_Training_Date == trainingDate).count()
     else:
-        enrollees = db.session.query(Member).filter(Member.Certification_Training_Date_2 == trainingDate).all()
+        enrollees = db.session.query(Member)\
+            .filter(Member.Certification_Training_Date_2 == trainingDate)\
+            .order_by(Member.Last_Name,Member.First_Name).all()
         recordCount = db.session.query(Member).filter(Member.Certification_Training_Date_2 == trainingDate).count()
 
     todays_date = date.today().strftime("%A, %B %e, %Y")
-    return render_template('rptSignIn.html', enrollees=enrollees,todays_date=todays_date,recordCount=recordCount)
+    
+    return render_template('rptSignIn.html', enrollees=enrollees,todays_date=todays_date,recordCount=recordCount,trainingDisplayDate=trainingDisplayDate)
 
 
 @app.route("/certify", methods=["GET", "POST"])

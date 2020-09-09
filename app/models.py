@@ -104,7 +104,7 @@ class Member(db.Model):
     Certification_Training_Date_2 = db.Column(db.DateTime)
     Home_Phone = db.Column(db.String(14))
     Cell_Phone = db.Column(db.String(14))
-    #Email = db.Column(db.String(255))
+    eMail = db.Column(db.String(255))
     Dues_Paid=db.Column(db.Boolean)
     NonMember_Volunteer=db.Column(db.Boolean)
     fullName = column_property(First_Name + " " + Last_Name)
