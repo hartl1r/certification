@@ -17,34 +17,24 @@
 {% block navbar %}
 <nav class="navbar navbar-custom py-0 navbar-expand-sm navbar-dark ">
     <!-- Links -->
-    <a class="navbar-brand " href="#"><h2>CERTIFICATION - {{ current_user.username }}</h2></a>
+    <a class="navbar-brand " href="#"><h2>CERTIFICATION</h2></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" >
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarMenu">
         <ul class="navbar-nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('home') }}">HOME</a>
+                <a class="nav-link" href="{{ url_for('index') }}">HOME</a>
             </li>
            
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('memberlookup') }}">MEMBER LOOKUP</a>
             </li> 
 
-        </ul>
-        <ul class="navbar-nav ml-auto">   
-            {% if current_user.is_anonymous %}
-            <li class="nav-item">
-                NOT LOGGED IN
-                <a class="nav-link" href="{{ url_for('login') }}">LOGIN</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-                {{ current_user.username }}
-                <a class="nav-link" href="{{ url_for('logout') }}">LOGOUT</a>
-            </li>
-            {%  endif %} 
-        </ul>       
+        </ul>    
+    </div>
+    <div class="navbar-nav ml-auto version">
+        <a class="navbar-brand " href="#"><h3>ver. 12/1/2020</h3></a>
     </div>        
 </nav>
 {% endblock %}

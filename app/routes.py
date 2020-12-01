@@ -1,7 +1,7 @@
 # routes.py
 
 from flask import render_template, flash, redirect, url_for, request, jsonify
-from flask_login import current_user, login_user, logout_user #, login_required
+#from flask_login import current_user, login_user, logout_user #, login_required
 from flask_bootstrap import Bootstrap
 from werkzeug.utils import cached_property
 from werkzeug.urls import url_parse
@@ -20,26 +20,11 @@ from datetime import date
 
 app.secret_key = 'My secret key'
 
-#from flask_redis import FlaskRedis
-#r=FlaskRedis()
-def get_count(q):
-    count_q = q.statement.with_only_columns([func.count()]).order_by(None)
-    count = q.session.execute(count_q).scalar()
-    return count
-
-@app.before_request
-def before_request():
-    if current_user.is_authenticated:
-        current_user.last_seen = datetime.datetime.utcnow()
-        db.session.commit()
-
 @app.route('/')
+@app.route('/index/')
 @app.route('/home')
-#@login_required
-def home():
+def index():
     # PREPARE trainingDatesShop1 USING RAW SQL
-    #sql = """SELECT id, shopNumber, format(trainingDate,'M/d/yyyy') as trainingDate, classLimit, (select count(*) from person where certTrainingShop1= trainingDate) AS seatsTaken 
-    #FROM certificationClass Where shopNumber = 1 and trainingDate >= CAST (GETDATE() AS DATE) ORDER BY format(trainingDate,'yyyyMMdd') """
     sql = """SELECT id, shopNumber, format(trainingDate,'M/d/yyyy') as trainingDate, classLimit, (select count(*) from tblMember_Data where Certification_Training_Date = trainingDate) AS seatsTaken 
     FROM tblTrainingDates Where shopNumber = 1 and trainingDate >= CAST (GETDATE() AS DATE) ORDER BY format(trainingDate,'yyyyMMdd') """
     trainingDatesShop1 = db.engine.execute(sql)
@@ -51,17 +36,11 @@ def home():
     form = NewSessionForm(request.form)
 
     # CALCULATE STATISTICS
-    newThisYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Member.Date_Joined) == datetime.date.today().year).scalar()
-    #notCertifiedLastYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Member.Date_Joined) == datetime.date.today().year -1 and Member.Certified != True).scalar()
-    #notCertifiedThisYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Member.Date_Joined) == datetime.date.today().year and Member.Certified != True).scalar()
-    
+    newThisYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Member.Date_Joined) == datetime.date.today().year).scalar() 
     currentPaidMembers = db.session.query(func.count(Member.Member_ID)).filter(Member.Dues_Paid == True).scalar()
-
     certifiedShop1=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified == True and Member.Dues_Paid == True)).scalar()
-
     certifiedShop2=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified_2 == True and Member.Dues_Paid == True)).scalar()
-    certifiedForBothShops=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified == True and Member.Certified_2 == True and Member.Dues_Paid == True)).scalar()
-    
+    certifiedForBothShops=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified == True and Member.Certified_2 == True and Member.Dues_Paid == True)).scalar() 
     notCertifiedShop1=db.session.query(func.count(Member.Member_ID))\
         .filter((Member.Certified == False) | (Member.Certified == None))\
         .filter((Member.Dues_Paid == True)).scalar()
@@ -81,38 +60,7 @@ def home():
         certifiedShop2=certifiedShop2,certifiedForBothShops=certifiedForBothShops,notCertifiedShop1=notCertifiedShop1,\
         notCertifiedShop2=notCertifiedShop2,noCertification=noCertification)
 
-
-@app.route('/index')
-def index():
-    # Get next earliest training date for shop 1
-    selectedDate1 = db.session.query(func.min(CertificationClass.trainingDate)).filter(CertificationClass.shopNumber==1 and CertificationClass.trainingDate >= todays_date).scalar()
-    
-     # PREPARE trainingDatesShop1 USING RAW SQL
-    sql = """SELECT id, shopNumber, format(trainingDate,'M/d/yy') as trainingDate, classLimit, (select count(*) from person where certTrainingShop1= trainingDate) AS seatsTaken 
-    FROM certificationClass Where shopNumber = 1 and trainingDate >= CAST (GETDATE() AS DATE) ORDER BY format(trainingDate,'yyyyMMdd') """
-    trainingDatesShop1 = db.engine.execute(sql)
-    
-    sql = """SELECT id, shopNumber, format(trainingDate,'M/d/yy') as trainingDate, classLimit, (select count(*) from person where certTrainingShop2= trainingDate) AS seatsTaken 
-    FROM certificationClass WHERE shopNumber = 2 and trainingDate >= CAST (getdate() as Date) ORDER BY format(trainingDate,'yyyyMMdd')"""
-    trainingDatesShop2 = db.engine.execute(sql)
-
-    newThisYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Person.Date_Joined) == datetime.date.today().year).scalar()
-    notCertifiedLastYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Person.Date_Joined) == datetime.date.today().year -1 and Person.Certified != True).scalar()
-    notCertifiedThisYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Person.Date_Joined) == datetime.date.today().year and Person.Certified != True).scalar()
-    
-    currentMembers = db.session.query(func.count(Member.Member_ID)).filter(Person.Dues_Paid == True).scalar()
-    NotCertified=db.session.query(func.count(Member.Member_ID)).filter((Person.Certified == False) | (Person.Certified == None)).scalar()
-    NotCertified_2=db.session.query(func.count(Member.Member_ID)).filter((Person.Certified_2 == False) | (Person.Certified_2 == None)).scalar()
-    NoCertification=db.session.query\
-        (func.count(Member.Member_ID))\
-        .filter((Person.Certified == False) | (Person.Certified == None))\
-        .filter((Person.Certified_2 == False) | (Person.Certified_2 == None)).scalar()
-
-    form = NewSessionForm(request.form)
-    return render_template("stats.html", NotCertified=NotCertified,NotCertified_2=NotCertified_2,currentMembers=currentMembers,newThisYear=newThisYear,notCertifiedThisYear=notCertifiedThisYear,notCertifiedLastYear=notCertifiedLastYear,trainingDatesShop1=trainingDatesShop1,trainingDatesShop2=trainingDatesShop2,NoCertification=NoCertification,form=form ,selectedDate1=selectedDate1)
-
 @app.route("/newSession", methods=["GET","POST"])
-#@login_required
 def newSession():
     # ADD NEW TRAINING DATE
     shopNumber=None
@@ -125,141 +73,23 @@ def newSession():
         c = CertificationClass.query.filter(CertificationClass.shopNumber == form.shopNumber.data).filter(CertificationClass.trainingDate == form.trainingDate.data).first()
         if c != None:
             flash("This session is already on file.","warning")
-            return redirect(url_for('home'))
+            return redirect(url_for('index'))
 
         if trainingDate < datetime.date.today():
             flash ("The training date may not be a past date.","warning")
-            return redirect(url_for('home'))
+            return redirect(url_for('index'))
 
         try:
             cert = CertificationClass(shopNumber=form.shopNumber.data ,trainingDate=form.trainingDate.data, classLimit=form.classLimit.data)
             db.session.add(cert)
             db.session.commit()
             flash("Session added successfully.","success")
-            return redirect(url_for('home'))
+            return redirect(url_for('index'))
         except Exception as e:
             db.session.rollback()
             flash("Session could not be added.","danger")
-            return redirect(url_for('home'))
-    return  redirect(url_for('home'))
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    #user = User.query.filter_by(userID="604875").first()
-    
-    #member = Member.query.filter_by(Member_ID="604875").first()
-
-    #sql = """SELECT Member_ID, Last_Name FROM tblMember_Data Where Member_ID = """ + "'605875'" 
-
-    #member = db.engine.execute(sql)
-    #for m in member:
-    #    print (m.Member_ID, m.Last_Name)
-    
-    nameOfUser = 'Unknown'
-   
-    if current_user.is_authenticated:
-        nameOfUser = db.session.query(Member.fullName).filter(Member.Member_ID==current_user.userID).first()
-        return  redirect(url_for('home'))
-       
-        #return redirect(url_for('home'),nameOfUser=nameOfUser)
-        
-    form = LoginForm()
-    if form.validate_on_submit():
-        if not user.check_password(form.password.data):
-            flash(user.check_password(form.password.data),"info")
-            flash('Invalid password',"warning")
-            return redirect(url_for('login'))
-            
-        # check to see if person is authorized for this application
-            # if not authorized display message
-            # return ?
-        # retrieve nickname or first name
-        # nameOfUser = db.session.query(Person.firstName).filter(Member.Member_ID==form.userName.data).scalar()
-        #member = Member.query.filter_by(Member_ID=form.userID.data).first()
-        #records = Member.query.all()  'THIS WORKS!
-        #records = db.session.query(Member).all()
-        #sql = """SELECT Member_ID, Last_Name FROM tblMember_Data Where Member_ID = """ + "'605875'"  
-        #member = db.engine.execute(sql)
-        #member = Member.query.filter_by(Member_ID=form.userID.data).first()
-        
-        member = db.session.query(Member.fullName).filter(Member.Member_ID==form.userID.data).first()
-        if member is None:
-            flash("ID is in user table but not in member table.","warning")
-            return redirect(url_for('login'))
-
-        #if p.nickName:
-        #    nameOfUser = p.nickName
-        #else:
-        #    nameOfUser = p.firstname
-        nameOfUser=member.fullName 
-
-        login_user(user, remember=form.remember_me.data)
-        # THE FOLLOWING IS NEEDED IF WE NEED TO RETURN TO THE PAGE THAT CAUSED THE USER TO GET TO THE LOGIN
-        # WITHOUT THIS CODE THE USER WILL ALWAYS BE SENT TO THE index.html PAGE AFTER LOGIN
-        # next_page = request.args.get('next')
-        # if not next_page or url_parse(next_page).netloc != '':
-        #     next_page = url_for('index')
-        # return redirect(next_page,nameOfUser=nameOfUser)
-       
-        #return render_template('home.html',nameOfUser=nameOfUser)
-        return  redirect(url_for('home'))
-
-    return render_template('login.html', title='Sign In', form=form)   
-
-
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('login'))
-
-        
-#Either restrict this routine to the DBA or put it in the DBA app
-#Should not register person unless they are in the Person table
-#Should pull email address from Person table
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        user = User(userName=form.userName.data, email=form.email.data)
-        user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        flash('Congratulations, you are now a registered user!','success')
-        return redirect(url_for('login'))
-    return render_template('register.html', title='Register', form=form)
-
-
-@app.route('/reset_password_request', methods=['GET', 'POST'])
-def reset_password_request():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-    form = ResetPasswordRequestForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user:
-            send_password_reset_email(user)
-        flash('Check your email for the instructions to reset your password','info')
-        return redirect(url_for('login'))
-    return render_template('reset_password_request.html',
-                           title='Reset Password', form=form)
-
-
-@app.route('/reset_password/<token>', methods=['GET', 'POST'])
-def reset_password(token):
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-    user = User.verify_reset_password_token(token)
-    if not user:
-        return redirect(url_for('index'))
-    form = ResetPasswordForm()
-    if form.validate_on_submit():
-        user.set_password(form.password.data)
-        db.session.commit()
-        flash('Your password has been reset.','success')
-        return redirect(url_for('login'))
-    return render_template('reset_password.html', form=form)     
+            return redirect(url_for('index'))
+    return  redirect(url_for('index'))
 
 @app.context_processor
 def inject_last_year():
@@ -302,7 +132,7 @@ def editTrainingSession(id):
         newClassLimit = request.form['classLimit']
         if newClassLimit == currentClassLimit:
             flash ("No change to class limit","success")
-            return redirect(url_for("/home"))
+            return redirect(url_for("/index"))
 
         # DETERMINE IF NEW CLASS LIMIT IS GREATER THAN NUMBER ALREADY ENROLLED'
         membersEnrolled = 0
@@ -319,7 +149,7 @@ def editTrainingSession(id):
 
         if membersEnrolled > int(newClassLimit):
             flash ("Members enrolled exceeds new limit; limit not changed.","info")
-            return redirect(url_for("home"))
+            return redirect(url_for("index"))
 
         # Change class limit in database
         try:
@@ -331,48 +161,8 @@ def editTrainingSession(id):
             db.session.rollback()
             return redirect(url_for('changeClassLimit'))
 
-    return redirect(url_for('home'))
+    return redirect(url_for('index'))
 
-'''
-@app.route("/deleteTrainingClass/<string:id>/",methods=['GET','POST'])
-def deleteTrainingClass(id):
-    # Get record to be deleted
-    qry = db.session.query(CertificationClass).filter(CertificationClass.id == int(id))
-    cc = qry.first()
-    if cc == None:
-        flash("Could not delete; record not found","warning")
-        return redirect(url_for('/changeClassLimit'))
-
-    shopNumber = cc.shopNumber
-    trainingDate = cc.trainingDate
-
-    # Are there any members enrolled?
-    if shopNumber == 1:
-        membersEnrolled = db.session.query\
-        (func.count(Member.Member_ID))\
-        .filter(Person.certTrainingShop1 == trainingDate).scalar()
-
-    if shopNumber == 2:
-        membersEnrolled = db.session.query\
-        (func.count(Member.Member_ID))\
-        .filter(Person.certTrainingShop2 == trainingDate).scalar()
-    
-    if membersEnrolled == 0:
-        try:
-            db.session.delete(cc)
-            db.session.commit()
-            deleteMsg = "Training class of " + str(trainingDate) + " removed."
-            flash (deleteMsg,"warning")
-        except:
-            db.session.rollback()
-            flash ("Delete was not successful","warning")
-        finally:
-            return redirect("/home")
-    else:
-        msg = "Cannot delete as there are still student(s) enrolled."
-        flash (msg,"warning")
-        return redirect("/home")
-'''
 @app.route("/rptNotCertified", methods=["GET","POST"])
 def rpt():
     notCertified = None
@@ -492,7 +282,7 @@ def trainingClass(id):
     
     if trainingClass == None:
         flash("No members are enrolled.","info")
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
        
     return render_template("trainingClass.html",trainingClass=trainingClass,trainingClassID=id,headingDate=headingDate,shopName=shopName,shopNumber=shopNumber)
 
@@ -510,12 +300,7 @@ def certifyupdate():
     newCertified = request.form.get("newCertified")
     newBooleanCertified = request.form.get("newBooleanCertified")
     c = Person.query.filter_by(id=oldPersonID).first()
-   #print ("STOP HERE",c)
-
-        #c = db.session.query(Person).filter(id==oldPersonID)
-        #c = db.session.query(Person).filter(id==oldPersonID).first()
    
-
     if c == None:
        #print ("No record found.")
         return redirect("/certify")    
@@ -529,10 +314,7 @@ def certifyupdate():
 
     if newCertified != oldCertified: #and newCertified != None:
         c.certified = newCertified
-
-    #if newBooleanCertified != oldCertified:
-    #    c.certified = newBooleanCertified 
-        
+    
     try:
         db.session.commit()
     except Exception as e:
@@ -549,10 +331,6 @@ def reportPrint():
 
 @app.route("/printReport", methods=['GET','POST'])
 def printReport():
-    #if request.method != 'POST':
-    #    return 'GET request'
-
-    #if request.method == 'POST':
     shopNumber = request.form.get("shopNumber")
     trainingDate = request.form.get("trainingDate")
     reportNumber = request.form.get("reportNumber")
@@ -601,9 +379,6 @@ def memberlookup():
         return render_template('memberLookup.html',form=form)
 
     return render_template('memberLookup.html',form=form)
-#        members = db.session.query(Person.fullName,Person.id)
-#        return render_template('/results.html', members=members)
-
 
 @app.route("/memberLookupRoutine", methods=['GET', 'POST'])
 def memberLookupRoutine():
@@ -621,7 +396,6 @@ def memberLookupRoutine():
         if member:
             print(member.Member_ID,member.Home_Phone,member.Cell_Phone)
             form = DisplayMemberForm(obj=member)
-            #form.populate_obj(member)
             return render_template ('memberLookup.html', form=form)
         else:
             flash ("Member ID " + searchByID + " not found.","warning")
@@ -630,9 +404,7 @@ def memberLookupRoutine():
     if searchByName != '':
         #name was entered
         search_string = searchByName + '%'
-        #people = db.session.query(Person.fullName,Member.Member_ID).filter(Person.lastName.like('H*'))
         members = db.session.query(Member.Member_ID, Member.fullName).filter(Member.Last_Name.like(search_string)).order_by(Member.fullName)
-        #people = db.session.query(Person.fullName,Member.Member_ID).filter(Member.Member_ID == search_string)
         for m in members:
             print(m.fullName, m.Member_ID)
 
@@ -674,12 +446,8 @@ def displayMember():
         
 @app.route('/reportMenu/<id>/')
 def reportMenu(id):
-    #print (type(id))
-    #print (id)
-    #trainingDates = db.session.query(CertificationClass).join(ShopName,Shop_Number==shopNumber).filter(CertificationClass.id == {id}).all()
     trainingDates = db.session.query(CertificationClass).filter(CertificationClass.id == id).all()
     for t in trainingDates:
-        #print (t.trainingDate,t.shopNumber)
         headingDate = t.trainingDate.strftime("%A, %B %e, %Y")
         shopNumber = t.shopNumber
         shopName='Unknown'
@@ -692,23 +460,13 @@ def reports(id):
     trainingDatesShop1 = db.session.query(CertificationClass).filter(CertificationClass.shopNumber == 1).order_by(CertificationClass.trainingDate).all()
     return render_template('reports.html',  trainingDatesShop1=trainingDatesShop1)
 
-#@app.route('/selectDate1', methods = ['POST'])
-#def selectDate1():
-#    id = request.form.get("id1")
-   #print("ID - ",id)
-#    return redirect('/reports')
-
 @app.route('/results')
 def search_results(search):
-    #results = []
     search_string = search.data['searchByID']
-   #print(todays_date)
 
     if search.data['searchByID'] != '':
         flash("place lookup by ID here ...")
         redirect('/memberLookup')
-        #qry = db_session.query(Album)
-        #results = qry.all()
 
     if search.data['searchByName'] != '':
         search_string = search.data['searchByName'] & '*'
@@ -796,7 +554,7 @@ def editClassLimit(id):
 
         # DETERMINE IF NEW CLASS LIMIT IS GREATER THAN NUMBER ALREADY ENROLLED'
         membersEnrolled = 0
-       #print("Members enrolled - ", str(membersEnrolled))
+       
         if cc.shopNumber == 1:
             membersEnrolled = db.session.query\
             (func.count(Member.Member_ID))\
@@ -822,87 +580,3 @@ def editClassLimit(id):
             return redirect(url_for('/editClassLimit'))
 
     return redirect(url_for('/editClassLimit'))
-
-@app.route('/queryExample')
-def queryExample():
-    selectedIDs=[];
-    #idArray = request.args.get(id) #if key doesn't exist, returns None
-    selectedIDs = request.form.getlist('idString')
-    #framework = request.args['framework'] #if key doesn't exist, returns a 400, bad request error
-    #website = request.args.get('website')
-
-    return '''<h1>The language value is: {}</h1>'''.format(language)
-             #<h1>The framework value is: {}</h1>
-             # <h1>The website value is: {}'''.format(language, framework, website)
-
-@app.route('/form-example',methods=["GET","POST"])
-def formexample():
-    if request.method == 'POST': #this block is only entered when the form is submitted
-        language = request.form.get('language')
-        framework = request.form['framework']
-
-        return '''<h1>The language value is: {}</h1>
-                  <h1>The framework value is: {}</h1>'''.format(language, framework)
-
-    return '''<form method="POST">
-                  Language: <input type="text" name="language"><br>
-                  Framework: <input type="text" name="framework"><br>
-                  <input type="submit" value="Submit"><br>
-              </form>'''
-
-@app.route('/jsonExample',methods=["POST"])
-def jsonexample():
-    req_data = request.get_json()
-
-    language = None
-    if 'language' in req_data:
-        language = req_data['language']
-    
-    framework = None
-    if 'framework' in req_data:
-        framework = req_data['framework']
-
-    python_version = req_data['version_info']['python'] #two keys are needed because of the nested object
-
-    example = None
-    if 'example' in req_data:
-        example = req_data['examples'][0] #an index is needed because of the array
-
-    boolean_test = False
-    if 'boolean_test' in req_data:    
-        boolean_test = req_data['boolean_test']
-
-    return '''
-           The language value is: {}
-           The framework value is: {}
-           The Python version is: {}
-           The item at index 0 in the example list is: {}
-           The boolean value is: {}'''.format(language, framework, python_version, example, boolean_test)
-
-@app.route('/processjson', methods=['POST'])
-def processjson():
-    data = request.get_json()
-    name = data['name']
-    location = data['location']
-    randomlist = data['randomlist']
-
-    return jsonify({'result' : 'Success!', 'name' : name, 'location' : location, 'randomkeyinlist' : randomlist[1]});   
-
-
-@app.route('/getmethod/<jsdata>')
-def getmethod(jsdata):
-    print("/getmethod routine")
-    print(jsdata)
-    return json.loads(jsdata)[0]
-
-@app.route('/postmethod', methods = ['GET','POST'])
-def postmethod():
-    if request.method == "POST":
-        jsdata = request.get_json()
-        msg = "postmethod data - '" + str(jsdata) + "'"
-        # add code to update certified fields in person table
-        # need member ID to get the right training class
-    #return redirect(url_for('/trainingClass?id=3'))
-    id=2
-   #return redirect('/trainingClass',id=id)
-    return ('/trainingClass?id=2')

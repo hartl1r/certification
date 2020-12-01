@@ -131,7 +131,7 @@ class CertificationClass(db.Model):
     #purpose = db.column(db.String(30))
 
     def __repr__(self):
-        return '<certificationClass {}>'.format(self.trainingDate)
+        return '<CertificationClass {}>'.format(self.trainingDate)
 
 class ShopName(db.Model):
     __tablename__ = 'tblShop_Names'
