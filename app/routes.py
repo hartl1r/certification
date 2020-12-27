@@ -6,9 +6,9 @@ from flask_bootstrap import Bootstrap
 from werkzeug.utils import cached_property
 from werkzeug.urls import url_parse
 
-from app.forms import MemberLookupForm, LoginForm, RegistrationForm, DisplayMemberForm  ,NewSessionForm,\
+from app.forms import MemberLookupForm, DisplayMemberForm  ,NewSessionForm,\
 ChangeClassLimitForm, ReportForm
-from app.models import User, Person, MonthList, AuthorizedUser, CertificationClass, ShopName, Member
+from app.models import CertificationClass, ShopName, Member
 from app import app
 from app import db
 from sqlalchemy import func, case, desc, extract, select, update
@@ -26,11 +26,11 @@ app.secret_key = 'My secret key'
 def index():
     # PREPARE trainingDatesShop1 USING RAW SQL
     sql = """SELECT id, shopNumber, format(trainingDate,'M/d/yyyy') as trainingDate, classLimit, (select count(*) from tblMember_Data where Certification_Training_Date = trainingDate) AS seatsTaken 
-    FROM tblTrainingDates Where shopNumber = 1 and trainingDate >= CAST (GETDATE() AS DATE) ORDER BY format(trainingDate,'yyyyMMdd') """
+    FROM tblTrainingDates Where shopNumber = 1 and trainingDate >= DATEADD(day, -15, GETDATE()) ORDER BY format(trainingDate,'yyyyMMdd') desc """
     trainingDatesShop1 = db.engine.execute(sql)
 
     sql = """SELECT id, shopNumber, format(trainingDate,'M/d/yyyy') as trainingDate, classLimit, (select count(*) from tblMember_Data where Certification_Training_Date_2= trainingDate) AS seatsTaken 
-    FROM tblTrainingDates WHERE shopNumber = 2 and trainingDate >= CAST (getdate() as Date) ORDER BY format(trainingDate,'yyyyMMdd')"""
+    FROM tblTrainingDates WHERE shopNumber = 2 and trainingDate >= DATEADD(day, -15, GETDATE()) ORDER BY format(trainingDate,'yyyyMMdd') desc """
     trainingDatesShop2 = db.engine.execute(sql)
     
     form = NewSessionForm(request.form)
@@ -163,30 +163,112 @@ def editTrainingSession(id):
 
     return redirect(url_for('index'))
 
-@app.route("/rptNotCertified", methods=["GET","POST"])
-def rpt():
-    notCertified = None
-    #notCertified = Person.query.filter(Certified == false).all()
-    notCertified = db.session.query(Person.wholeName,Person.certTrainingShop1,Person.mobilePhone,\
-        Person.homePhone,Person.emailAddress,Person.Date_Joined)\
-        .order_by(Person.wholeName)\
-        .filter(Person.Certified == False).all()
+@app.route("/rptNotCertified/<string:shopNumber>", methods=["GET","POST"])
+def rptNotCertified(shopNumber):
+    print('rptNotCertified, shop # ',shopNumber)
+
+    # GET SHOP NAME
+    shopName = db.session.query(ShopName.Shop_Name).filter(ShopName.Shop_Number == shopNumber).scalar()
+    print('shop name - ',shopName)
+    if shopNumber == '1':
+        print('processing shop 1')
+        members = db.session.query(Member)\
+            .filter(Member.Certified == False)\
+            .order_by(Member.Last_Name,Member.First_Name).all()
+        recordCount = db.session.query(Member).filter(Member.Certified == False).count()
+        print('recordCount - ',recordCount)
+    else:
+        print('processing shop 2')
+        members = db.session.query(Member)\
+            .filter(Member.Certified_2 != True)\
+            .order_by(Member.Last_Name,Member.First_Name).all()
+        recordCount = db.session.query(Member).filter(Member.Certified_2 != True).count()
     
-    todays_date = date.today().strftime('%m-%d-%Y')
-    return render_template('rptNotCertified.html', notCertified=notCertified,todays_date=todays_date)
+    notCertifiedDict = []
+    notCertifiedItem = []
+    for m in members:
+        #print(m.Last_Name, m.Certified)
+        if shopNumber == 1:
+            dateToBeTrained = m.Certification_Training_Date
+        else:
+            dateToBeTrained = m.Certification_Training_Date_2
+        if m.Cell_Phone == None:
+            cellPhone = ''
+        else:
+            cellPhone = m.Cell_Phone
+        if m.Home_Phone == None:
+            homePhone = ''
+        else:
+            homePhone = m.Home_Phone
+        joined = m.Date_Joined.strftime('%m-%d-%Y')
 
-@app.route("/rptCertified", methods=["GET","POST"])
-def rpt2():
-    filterClause="Person.Certified == True"
-    certified = None
-    certified = db.session.query(Person.id,Person.wholeName,Person.certTrainingShop1,Person.mobilePhone,\
-        Person.homePhone,Person.emailAddress,Person.Date_Joined)\
-        .order_by(Person.wholeName)\
-        .filter(Person.Certified == True).all()
+        notCertifiedItem = {
+            'name':m.Last_Name + ', ' + m.First_Name + ' ('+ m.Member_ID + ')',
+            'dateToBeTrained':dateToBeTrained,
+            'cellPhone':cellPhone,
+            'homePhone':homePhone,
+            'eMail':m.eMail,
+            'joined':joined
+        }
+        notCertifiedDict.append (notCertifiedItem)
 
-    todays_date = date.today().strftime('%m-%d-%Y')
-    recordCount = db.session.query(Person).filter(Person.Certified == True).count()
-    return render_template('rptCertified.html', certified=certified,todays_date=todays_date,recordCount=recordCount)
+    todays_date = date.today().strftime("%A, %B %e, %Y")
+    print(todays_date,recordCount,shopName)
+    return render_template('rptNotCertified.html', notCertifiedDict=notCertifiedDict,todays_date=todays_date,\
+    recordCount=recordCount,shopNumber=shopNumber,shopName=shopName)
+
+@app.route("/rptClassRoster/<string:id>/", methods=["GET","POST"])
+def rptClassRoster(id):
+    # GET SHOPNUMBER, TRAINING DATE
+    trainingDates = db.session.query(CertificationClass)\
+        .filter(CertificationClass.id == id).all()
+    for t in trainingDates:
+        shopNumber = t.shopNumber
+        trainingDate = t.trainingDate 
+        trainingDisplayDate = trainingDate.strftime("%A, %B %e, %Y")
+    shopName = db.session.query(ShopName.Shop_Name).filter(ShopName.Shop_Number == shopNumber).scalar()
+    
+    if shopNumber == 1:
+        members = db.session.query(Member)\
+            .filter(Member.Certification_Training_Date == trainingDate)\
+            .order_by(Member.Last_Name,Member.First_Name).all()
+        recordCount = db.session.query(Member).filter(Member.Certification_Training_Date == trainingDate).count()
+    else:
+        members = db.session.query(Member)\
+            .filter(Member.Certification_Training_Date_2 == trainingDate)\
+            .order_by(Member.Last_Name,Member.First_Name).all()
+        recordCount = db.session.query(Member).filter(Member.Certification_Training_Date_2 == trainingDate).count()
+    enrolleesDict = []
+    enrolleesItem = []
+    for m in members:
+        if shopNumber == 1:
+            certified = m.Certified
+        else:
+            certified = m.Certified_2
+        if m.Cell_Phone == None:
+            cellPhone = ''
+        else:
+            cellPhone = m.Cell_Phone
+        if m.Home_Phone == None:
+            homePhone = ''
+        else:
+            homePhone = m.Home_Phone
+        joined = m.Date_Joined.strftime('%m-%d-%Y')
+
+        enrolleesItem = {
+            'name':m.Last_Name + ', ' + m.First_Name + ' ('+ m.Member_ID + ')',
+            'eMail':m.eMail,
+            'cellPhone':cellPhone,
+            'homePhone':homePhone,
+            'joined':joined,
+            'certified':certified
+        }
+        enrolleesDict.append (enrolleesItem)
+
+    todays_date = date.today().strftime("%A, %B %e, %Y")
+    print(todays_date,recordCount,trainingDisplayDate,shopNumber,shopName)
+    return render_template('rptClassRoster.html', enrolleesDict=enrolleesDict,todays_date=todays_date,\
+    recordCount=recordCount,trainingDisplayDate=trainingDisplayDate,shopNumber=shopNumber,shopName=shopName)
 
 @app.route("/rptSignIn/<string:id>/", methods=["GET","POST"])
 def rptSignIn(id):
@@ -245,12 +327,14 @@ def certifySelected():
                 db.session.commit()
             except:
                 db.session.rollback()
+                return jsonify("ERROR - Could not certify.")
         else:
             print ("Nothing in m")
 
     ## THE FOLLOWING LINE IS NOT REFRESHING THE PAGE
     ## BUT A 'RELOAD' DOES 
-    return redirect(url_for('trainingClass',id=trainingClassID))
+    #return redirect(url_for('trainingClass',id=trainingClassID))
+    return jsonify("SUCCESS - Members certified.")
     
 @app.route("/trainingClass/<string:id>/", methods=["GET", "POST"])
 def trainingClass(id):
@@ -269,15 +353,16 @@ def trainingClass(id):
     if shopNumber == 1: 
         sqlSelect = ""
         sqlSelect = '''SELECT Member_ID, (Last_Name + ', ' + First_Name) as fullName, Cell_Phone,
-            Home_Phone, [E-mail] as Email,Certification_Training_Date,format(Date_Joined,'M/d/yy') as DateJoined,
-            Certified,Certified_2,iif(Certified=1,'CERTIFIED','') as labelCertified,iif(Certified_2=1,'CERTIFIED','') as labelCertified_2
+            Home_Phone, [E-mail] as Email,Certification_Training_Date,format(Date_Joined,'MM/dd/yy') as DateJoined,
+            Certified,Certified_2,iif(Certified=1,'CERTIFIED','') as labelCertified
             from dbo.tblMember_Data WHERE Certification_Training_Date = ' ''' + str(trainingDate) + ''' ' ORDER BY Last_Name;'''
     else:
          # IF SHOP 2 THEN COMPARE TRAINING DATE TO CERTIFICATION_TRAINING_DATE_2
         sqlSelect = '''SELECT Member_ID, (Last_Name + ', ' + First_Name) as fullName, Cell_Phone,
-            Home_Phone, [E-mail] as Email,Certification_Training_Date,format(Date_Joined,'M/d/yy') as DateJoined,
-            Certified,Certified_2,iif(Certified=1,'CERTIFIED','') as labelCertified,iif(Certified_2=1,'CERTIFIED','') as labelCertified
+            Home_Phone, [E-mail] as Email,Certification_Training_Date,format(Date_Joined,'MM/dd/yy') as DateJoined,
+            Certified,Certified_2,iif(Certified_2=1,'CERTIFIED','') as labelCertified
             from dbo.tblMember_Data WHERE Certification_Training_Date_2 = ' ''' + str(trainingDate) + ''' ' ORDER BY Last_Name;'''
+    
     trainingClass = db.engine.execute(sqlSelect)
     
     if trainingClass == None:

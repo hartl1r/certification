@@ -11,11 +11,24 @@
 {% block app_content %}
 <!-- {{super()}}   -->
 <div class="container-fluid py-0 m-0">
+    <div class="card py-0 m-0 col-md-12">
+        <div class="pageHdg row">
+            <div class="title col-md-6">
+                <h2>CERTIFICATION</h2>
+            </div>
+            <div class="version col-md-6">
+                <h3>version Dec 27, 2020</h3>
+            </div>
+        </div>
+    </div>
 <div class="card-group py-0 m-0 ">
+
     <div class="card py-0 m-0 col-md-6 ">
-        <div class="card-heading p-0 m-0 text-center"style="background:green"><h2>ROLLING ACRES</h2></div>
+        <div class="card-heading p-0 m-0 text-center"style="background:green">
+            <h2>ROLLING ACRES</h2>
+        </div>
         <div class="card-body p-0 m-0">
-            <table id="shop1Table" class="table table-sm table-hover mr-5 py-5"> <!-- class ="table text-center border-collapse"> -->
+            <table id="shop1Table" class="table table-sm table-striped table-hover"> <!-- class ="table text-center border-collapse"> -->
                 <thead> <!--  style="font-size: 10px; padding: 1px !important; height: 15px"> --> 
                      <tr>
                         <th></th>
@@ -55,7 +68,7 @@
                                 <button type="button" class="shop1Btn dropdown-toggle reportBtn btn btn-success btn-sm btn-spacing" data-toggle="dropdown" >REPORTS<span class="caret"></span></button>
                                 <ul class="dropdown-menu">
                                     <li><a href="rptSignIn/{{t1.id}}">Print Sign In Sheet</a></li>
-                                    <li><a href="rptCertified/{{t1.id}}"">Print Class Roster</a></li>
+                                    <li><a href="rptClassRoster/{{t1.id}}">Print Class Roster</a></li>
                                     <li><a href="rptNotCertified/1">List Members NOT Certified</a></li>
                                 </ul> 
                             </div>                               
@@ -79,7 +92,7 @@
     <div class="card col-md-6">
         <div class="card-heading  text-center"style="background:brown"><h2>BROWNWOOD</h2></div>
         <div class="card-body">
-            <table id="shop2Table" class="table table-sm table-hover mx-auto">
+            <table id="shop2Table" class="table table-sm table-striped table-hover">
                 <thead>
                 <tr>
                     <th></th>
@@ -119,8 +132,8 @@
                             <button type="button" class="shop1Btn dropdown-toggle reportBtn btn btn-success btn-sm btn-spacing" data-toggle="dropdown" >REPORTS<span class="caret"></span></button>
                             <ul class="dropdown-menu">
                                 <li><a href="rptSignIn/{{t2.id}}">Print Sign In Sheet</a></li>
-                                <li><a href="rptCertified/{{t2.id}}"">Print Class Roster</a></li>
-                                <li><a href="rptNotCertified/1">List Members NOT Certified</a></li>
+                                <li><a href="rptClassRoster/{{t2.id}}">Print Class Roster</a></li>
+                                <li><a href="rptNotCertified/2">List Members NOT Certified</a></li>
                             </ul> 
                         </div>  
                         <button type="button" class="shop2Btn viewBtn btn btn-success btn-sm btn-spacing" onclick="location.href='trainingClass/{{t2.id}}'">View Class</button>

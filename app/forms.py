@@ -3,7 +3,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateTimeField, DateField, SelectField, IntegerField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, AnyOf, InputRequired, NumberRange
-from app.models import User, CertificationClass
+from app.models import CertificationClass
 from wtforms.fields.html5 import DateField
 from wtforms import Form
 
@@ -39,24 +39,24 @@ class ResetPasswordForm(FlaskForm):
 #                 <input type="submit" value='SAVE'>
 #             </form> -->
     
-class RegistrationForm(FlaskForm):
-    userID = StringField('userID')
-    userName = StringField('userName', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Register')
+# class RegistrationForm(FlaskForm):
+#     userID = StringField('userID')
+#     userName = StringField('userName', validators=[DataRequired()])
+#     email = StringField('Email', validators=[DataRequired(), Email()])
+#     password = PasswordField('Password', validators=[DataRequired()])
+#     password2 = PasswordField(
+#         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+#     submit = SubmitField('Register')
 
-    def validate_userName(self, userName):
-        user = User.query.filter_by(userName=userName.data).first()
-        if user is not None:
-            raise ValidationError('Please use a different userName.')
+#     def validate_userName(self, userName):
+#         user = User.query.filter_by(userName=userName.data).first()
+#         if user is not None:
+#             raise ValidationError('Please use a different userName.')
 
-    def validate_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
-        if user is not None:
-            raise ValidationError('Please use a different email address.')
+#     def validate_email(self, email):
+#         user = User.query.filter_by(email=email.data).first()
+#         if user is not None:
+#             raise ValidationError('Please use a different email address.')
 
 class ChangeClassLimitForm(FlaskForm):
     id = IntegerField('id')

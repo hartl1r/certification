@@ -13,31 +13,35 @@
     <h2 class="text-center">SIGN IN SHEET</h2>
     <h2 class="text-center">FOR TRAINING CLASS ON {{ trainingDisplayDate }}</h2>
    
-    <table style="display: inline block;">                      
-        <tbody>
-        <tr>
-            <th style="width:75px;text-align:left">Initials</th>
-            <th style="width:200px; text-align:left">Name</th>
-            <th style="width:200px;text-align:left">E-Mail</th>
-            <th style="width:150px;text-align:left">Cell</th>
-            <th style="width:150px;text-align:left">Home</th>
-            <th style="width:75px;text-align:left">Staff</th>
-        </tr>    
+    <div class="row headingRow">
+        <div class="col" style=margin-left:50px>Initials</div>
+        <div class="col-3">Name</div>
+        <div class="col">E-Mail</div>
+        <div class="col">Cell</div>
+        <div class="col">Home</div>
+        <div class="col">Staff</div>
+    </div>
     {% for n in enrollees %}
-    <tr>
-        <td style="width:75px">
-            <input type="text" class="initials">
-        </td>
-        <td style="width:200px;text-align:left">{{n.Last_Name}}, {{n.First_Name}}  ({{n.Member_ID}})</td>
-        <td style="width:200px;text-align:left">{{n.eMail}}</td>
-        <td style="width:150px;text-align:left">{{n.Mobile_Phone}}</td>
-        <td style="width:150px;text-align:left">{{n.Home_Phone}}</td>
-        <td style="width:75px;">
-            <input type="text" class="initials">
-        </td>
-    </tr>    
+        <div class="row detailRow">
+            <div class="col" style=margin-left:50px>________</div>
+            <div class="col-3">{{n.Last_Name}}, {{n.First_Name}}   ({{n.Member_ID}})</div>
+            <div class="col">{{n.eMail}}</div>
+            <div class="col">{{n.Cell_Phone}}</div>
+            <div class="col">{{n.Home_Phone}}</div>
+            <div class="col">________</div>
+        </div>
+
+        <div class="row emergencyRow">
+            <div class="col-5 emergContact">
+                <div>Emergency contact -  {{n.Emerg_Name}}</div>
+            </div>
+            <div class="col-5 emergPhone">
+                <div>Emergency phone -  {{n.Emerg_Phone}}</div>
+            </div>
+        </div>
+       <br>
     {% endfor %}
-    <tfoot>Record count -  {{recordCount}}</tfoot> 
-    </tbody>
+    <div class="row"style=margin-left:100px;margin-top:100px>Record count -  {{recordCount}}</div>
+    
 </div>  
 {% endblock %} 

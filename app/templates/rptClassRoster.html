@@ -4,9 +4,9 @@
 <!-- Include Print CSS -->
 
  <head>
-    <title>Not Certified - {{ shopName }}</title>
+    <title>CERTIFICATION SIGN IN - {{ shopName }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/print.css') }}">
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/rptNotCertified.css') }}"> -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/rptSignIn.css') }}"> -->
 </head>
 <div class="VWCreports">
     <div class='titles'>
@@ -23,11 +23,11 @@
             </div>
         </div>
        
-        <h3 class="text-center">Members Not Certified</h3>
+        <h3 class="text-center">CLASS ROSTER</h3>
         <h3 class="text-center">{{shopName}}</h3>
-        <h3 class="text-center">As of {{ todays_date }}</h3>
+        <h3 class="text-center">FOR TRAINING CLASS ON {{ trainingDisplayDate }}</h3>
     </div>
-   
+    
     <div class="row headingRow">
         <div class="col-2" style=margin-left:50px>Name</div>
         <div class="col-3">E-Mail</div>
@@ -36,16 +36,15 @@
         <div class="col-1" style=text-align:center>Joined</div>
         <div class="col-1" style=text-align:center>Certified</div>
     </div>
-    <hr style='background-color:black;'>
-    {% for n in notCertifiedDict %}
+    {% for e in enrolleesDict %}
         <div class="row detailRow">
-            <div class="col-2" style=margin-left:50px>{{n.name}}</div>
-            <div class="col-3">{{n.eMail}}</div>
-            <div class="col-2">{{n.cellPhone}}</div>
-            <div class="col-2">{{n.homePhone}}</div>
-            <div class="col-1" style=text-align:right>{{n.joined}}</div>
+            <div class="col-2" style=margin-left:50px>{{e.name}}</div>
+            <div class="col-3">{{e.eMail}}</div>
+            <div class="col-2">{{e.cellPhone}}</div>
+            <div class="col-2">{{e.homePhone}}</div>
+            <div class="col-1" style=text-align:right>{{e.joined}}</div>
             <div class="col-1 isCertified" style="margin:0 auto">
-                {% if n.certified %}
+                {% if e.certified %}
                     <span style='margin-bottom:5px; display:inline-block'>&#x2714</span>
                 {% else %}
                     <span style='border:1px solid black;height:20px;width:20px;display:inline-block'>&nbsp</span>

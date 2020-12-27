@@ -1,5 +1,22 @@
+.pageHdg {
+  background-color: navy;
+  color:white;
+  height:50px;
+}
+.title {
+  text-align:left;
+}
+.version { 
+  text-align:right;
+}
 table {
+  display:block;
+  width:100%;
   border-spacing:0;
+  height:300px;
+  overflow:auto;
+  margin-left:0px;
+  padding-left:50px;
 }
 thead {
     height:50%;
@@ -14,14 +31,14 @@ thead {
       text-align:center;
       border:0px;
       height:1.5;
-      margin:0;
+      
   }
-  
+/*   
    thead th {
     font-size: 0.6em;
     padding: 1px !important;
     height:10px;
-   }
+   } */
    
   tr {
         padding:0px;
@@ -36,6 +53,7 @@ thead {
   
   tbody {
     background-color:lightgray;
+    border:1px solid black;
   }
   /*
   .fixed-panel {
@@ -54,11 +72,11 @@ thead {
     background-color:lightgray;
     padding:0;
   } 
-
+/* 
   tr td .button {
     padding: 0px;
     color:yellow;
-  }
+  } */
   .btn-spacing {
     padding:0px;
   }

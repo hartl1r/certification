@@ -6,38 +6,19 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<!--<link rel="stylesheet" href="{{ url_for('static', filename='css/trainingClass.css') }}">-->
-{% endblock %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/trainingClass.css') }}">
+	{% endblock %}
 
-{% block scripts %}
-	{{super()}}
-	<script src="{{ url_for('static', filename='js/trainingClass.js') }}" defer></script>
-	
-{% endblock %}
+{% block app_content %}
 
-{% block content %}
-{{ super() }}
-    <div class="container-fluid py-5 m-0">
+    <div class="container-fluid py-0 m-0">
 	    <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12" style="text-align:center">
 						<h2>Training class of <b>{{headingDate}} for {{shopName}} certification.</b></h2><br>
 						<p hidden id="shopNumber">{{shopNumber}}</p> 
 						<p hidden id = "trainingClassID">{{trainingClassID}}</p>
-
-													<!-- LOOK FOR CLASS info-modal IN AUTHORS JS FILE -->
-						<!-- <a href="#" data-text="Certification means ..." class="info-modal">CERTIFICATION</a>  -->
-						<br>
-					</div>
-					<div class="col-sm-6">
-						
-						<!--<a href="#" id="btnSendArray" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>TEST Sending Array</span></a>  -->
-						<!--<button type="button" class="btn btn-success btn-sm btn-spacing" onclick="location.href='/certifySelected/[1,2,3]'">Set Certified Flag</button>-->
-						<!--<button id="ajaxButton" type="button">Make a request</button>-->
-
-						<!--<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
-						<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						-->
 					</div>
                 </div>
 			</div>
@@ -55,7 +36,9 @@
 					<th></th>
 					<th></th>
 					<th></th>
-					<th></th>
+					<th>
+						<button class='btn btn-primary' onclick="history.back()">Go Back</button>
+					</th>
 					<th>
 						<a href="#" id="btnCertify" class="btn btn-success" data-toggle="modal"> <span>Certify Selected Members</span></a>
 					</th>
@@ -85,7 +68,7 @@
 						<td>{{t.Cell_Phone}}</td>
 						<td>{{t.Home_Phone}}</td>
 						<td>{{t.Email}}</td>
-						<td>{{t.Date_Joined}}</td>
+						<td>{{t.DateJoined}}</td>
 						<td>{{t.labelCertified}}</td>
 
                         <!--<td>
@@ -215,6 +198,11 @@
 				</div>
 			</div>
 		</div>
-{% endblock %}   
+{% endblock %}
+{% block scripts %}
+    {{super()}}
+    <script src="{{ url_for('static', filename='js/trainingClass.js') }}"> </script>
+{% endblock %}
+
 
                        		                            
