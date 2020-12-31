@@ -3,15 +3,11 @@
 		display:block;
 		width:100%;
 	}
-	#printPageButton, #closePageButton {
+	#printPageButton, #backButton {
 		float: right;
 		display: block;
 		margin-right:20px;
 	} 
-	.emergencyData {
-		font-style: italic;
-		font-weight:400;
-	}
 	body {
 		background-color: #f5f5f0ea;
 		color: rgb(40, 5, 97);
@@ -34,10 +30,15 @@
 	tr:nth-child(even) {
 		background-color: #d5d2dfa6;
 	}
-	/* th, td {
+	th, td {
   		border-bottom: 1px solid #ddd;
-	} */
-  
+	}
+   p {
+    background-color: #FFFF33;
+    color: #330980;
+    text-align: center;
+    border: 3px groove #FFFF33;
+   }  
 }
 @media print {
 	html, body {
@@ -52,7 +53,7 @@
 		break-after:avoid;
 	}
 
-	#printPageButton, #closePageButton{
+	#printPageButton, #backButton{
 		display: none;
 	}
 

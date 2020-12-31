@@ -4,44 +4,55 @@
 <!-- Include Print CSS -->
  <head>
     <title>CERTIFICATION SIGN IN - {{ shopName }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/print.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/rptSignIn.css') }}">
 </head>
-<div class="VWCreports">
-    <button id="printPageButton" onClick="window.print();">PRINT</button>
-    <h1 class="text-center">THE VILLAGES WOODWORKERS CLUB</h1>
-    <h2 class="text-center">SIGN IN SHEET</h2>
-    <h2 class="text-center">FOR TRAINING CLASS ON {{ trainingDisplayDate }}</h2>
-   
-    <div class="row headingRow">
-        <div class="col" style=margin-left:50px>Initials</div>
-        <div class="col-3">Name</div>
-        <div class="col">E-Mail</div>
-        <div class="col">Cell</div>
-        <div class="col">Home</div>
-        <div class="col">Staff</div>
+<div class="wholePage">
+    <div class="pageButtons">
+        <button id="closePageButton" class='btn btn-secondary' onclick="window.history.back()" >CLOSE PAGE</button>
+        <button id="printPageButton" class='btn btn-primary'  onClick="window.print();">PRINT</button>
     </div>
-    {% for n in enrollees %}
-        <div class="row detailRow">
-            <div class="col" style=margin-left:50px>________</div>
-            <div class="col-3">{{n.Last_Name}}, {{n.First_Name}}   ({{n.Member_ID}})</div>
-            <div class="col">{{n.eMail}}</div>
-            <div class="col">{{n.Cell_Phone}}</div>
-            <div class="col">{{n.Home_Phone}}</div>
-            <div class="col">________</div>
-        </div>
+    <br><br>
+    <div class="title">
+        <h1 class="text-center">THE VILLAGES WOODWORKERS CLUB</h1>
+    </div>
 
-        <div class="row emergencyRow">
-            <div class="col-5 emergContact">
-                <div>Emergency contact -  {{n.Emerg_Name}}</div>
-            </div>
-            <div class="col-5 emergPhone">
-                <div>Emergency phone -  {{n.Emerg_Phone}}</div>
-            </div>
-        </div>
-       <br>
-    {% endfor %}
-    <div class="row"style=margin-left:100px;margin-top:100px>Record count -  {{recordCount}}</div>
+    <div class="subTitles">
+        <h2 class="text-center">SIGN IN SHEET</h2>
+        <h2 class="text-center">FOR TRAINING CLASS ON {{ trainingDisplayDate }}</h2>
+    </div>
+   
+    <table>
+        <thead>
+            <th style=text-align:center>Initials</th>
+            <th>Name</th>
+            <th>E-Mail</th>
+            <th>Cell</th>
+            <th>Home</th>
+            <th style=text-align:center>Staff</th>
+        </thead>
+        <tbody>
+            {% for n in enrollees %}
+                <tr>
+                    <td style=text-align:center><span style='border:1px solid black' >&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                    <td>{{n.Last_Name}}, {{n.First_Name}}   ({{n.Member_ID}}</td>
+                    <td>{{n.eMail}}</td>
+                    <td>{{n.Cell_Phone}}</td>
+                    <td>{{n.Home_Phone}}</td>
+                    <td style=text-align:center><span style='border:1px solid black' >&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                </tr>
+                <tr >
+                    <td></td>
+                    <td>&nbsp;</td>
+                    <td class=emergencyData>Emergency contact - {{n.Emerg_Name}}</td>
+                    <td>&nbsp;</td>
+                    <td class=emergencyData>Emergency phone -  {{n.Emerg_Phone}}</td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="row"style=margin-left:70px;margin-top:10px;font-weight:400>Record count -  {{recordCount}}</div>
     
 </div>  
 {% endblock %} 

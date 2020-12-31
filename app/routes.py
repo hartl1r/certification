@@ -5,19 +5,19 @@ from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_bootstrap import Bootstrap
 from werkzeug.utils import cached_property
 from werkzeug.urls import url_parse
-
+from sqlalchemy.exc import SQLAlchemyError, IntegrityError, DBAPIError
 from app.forms import MemberLookupForm, DisplayMemberForm  ,NewSessionForm,\
 ChangeClassLimitForm, ReportForm
-from app.models import CertificationClass, ShopName, Member
+from app.models import CertificationClass, ShopName, Member, MemberTransactions
 from app import app
 from app import db
 from sqlalchemy import func, case, desc, extract, select, update
 from app.forms import ResetPasswordRequestForm, ResetPasswordForm, NotCertifiedForm
 # from app.email import send_password_reset_email
-import datetime
-from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import date
-
+import datetime as dt
+#from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import date, datetime, timedelta
+from pytz import timezone
 app.secret_key = 'My secret key'
 
 @app.route('/')
@@ -36,7 +36,10 @@ def index():
     form = NewSessionForm(request.form)
 
     # CALCULATE STATISTICS
-    newThisYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Member.Date_Joined) == datetime.date.today().year).scalar() 
+    todays_date = date.today()
+    currentYear = todays_date.year
+    print('currentYear - ', currentYear)
+    newThisYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Member.Date_Joined) == currentYear).scalar() 
     currentPaidMembers = db.session.query(func.count(Member.Member_ID)).filter(Member.Dues_Paid == True).scalar()
     certifiedShop1=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified == True and Member.Dues_Paid == True)).scalar()
     certifiedShop2=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified_2 == True and Member.Dues_Paid == True)).scalar()
@@ -55,10 +58,35 @@ def index():
         .filter((Member.Certified_2 == False) | (Member.Certified_2 == None))\
         .filter((Member.Dues_Paid == True)).scalar()
     
+    # BUILD NAME LIST
+    # PREPARE LIST OF MEMBER NAMES AND VILLAGE IDs
+    # BUILD ARRAY OF NAMES FOR DROPDOWN LIST OF MEMBERS
+    nameArray=[]
+    sqlSelect = "SELECT Last_Name, First_Name, Member_ID FROM tblMember_Data "
+    sqlSelect += "ORDER BY Last_Name, First_Name "
+    try:
+        nameList = db.engine.execute(sqlSelect)
+    except Exception as e:
+        flash("Could not retrieve member list.","danger")
+        return 'ERROR in index function.'
+    position = 0
+    if nameList == None:
+        flash('No names to list.','danger')
+
+    # NEED TO PLACE NAME IN AN ARRAY BECAUSE OF NEED TO CONCATENATE 
+    for n in nameList:
+        position += 1
+        if n.First_Name == None:
+            lastFirst = n.Last_Name
+        else:
+            lastFirst = n.Last_Name + ', ' + n.First_Name + ' (' + n.Member_ID + ')'
+        nameArray.append(lastFirst)
+
+    
     return render_template("home.html",trainingDatesShop1=trainingDatesShop1,trainingDatesShop2=trainingDatesShop2,\
         form=form,newThisYear=newThisYear,currentPaidMembers=currentPaidMembers,certifiedShop1=certifiedShop1,\
         certifiedShop2=certifiedShop2,certifiedForBothShops=certifiedForBothShops,notCertifiedShop1=notCertifiedShop1,\
-        notCertifiedShop2=notCertifiedShop2,noCertification=noCertification)
+        notCertifiedShop2=notCertifiedShop2,noCertification=noCertification,nameArray=nameArray)
 
 @app.route("/newSession", methods=["GET","POST"])
 def newSession():
@@ -91,13 +119,13 @@ def newSession():
             return redirect(url_for('index'))
     return  redirect(url_for('index'))
 
-@app.context_processor
-def inject_last_year():
-    return {'last_year': datetime.date.today().year-1}
+# @app.context_processor
+# def inject_last_year():
+#     return {'last_year': datetime.date.today().year-1}
 
-@app.context_processor
-def inject_this_year():
-    return {'this_year': datetime.date.today().year}
+# @app.context_processor
+# def inject_this_year():
+#     return {'this_year': datetime.date.today().year}
 
 
 @app.route("/showmonthlist", methods=["GET","POST"])
@@ -165,20 +193,15 @@ def editTrainingSession(id):
 
 @app.route("/rptNotCertified/<string:shopNumber>", methods=["GET","POST"])
 def rptNotCertified(shopNumber):
-    print('rptNotCertified, shop # ',shopNumber)
-
+    
     # GET SHOP NAME
     shopName = db.session.query(ShopName.Shop_Name).filter(ShopName.Shop_Number == shopNumber).scalar()
-    print('shop name - ',shopName)
     if shopNumber == '1':
-        print('processing shop 1')
         members = db.session.query(Member)\
             .filter(Member.Certified == False)\
             .order_by(Member.Last_Name,Member.First_Name).all()
         recordCount = db.session.query(Member).filter(Member.Certified == False).count()
-        print('recordCount - ',recordCount)
     else:
-        print('processing shop 2')
         members = db.session.query(Member)\
             .filter(Member.Certified_2 != True)\
             .order_by(Member.Last_Name,Member.First_Name).all()
@@ -188,10 +211,13 @@ def rptNotCertified(shopNumber):
     notCertifiedItem = []
     for m in members:
         #print(m.Last_Name, m.Certified)
+        dateToBeTrained = ''
         if shopNumber == 1:
-            dateToBeTrained = m.Certification_Training_Date
+            if m.Certification_Training_Date != None:
+                dateToBeTrained = m.Certification_Training_Date.strftime('%m-%d-%Y')
         else:
-            dateToBeTrained = m.Certification_Training_Date_2
+            if m.Certification_Training_Date_2 != None:
+                dateToBeTrained = m.Certification_Training_Date_2.strftime('%m-%d-%Y')
         if m.Cell_Phone == None:
             cellPhone = ''
         else:
@@ -200,6 +226,10 @@ def rptNotCertified(shopNumber):
             homePhone = ''
         else:
             homePhone = m.Home_Phone
+        if m.eMail != None:
+            eMail = m.eMail
+        else:
+            eMail = ''
         joined = m.Date_Joined.strftime('%m-%d-%Y')
 
         notCertifiedItem = {
@@ -207,7 +237,7 @@ def rptNotCertified(shopNumber):
             'dateToBeTrained':dateToBeTrained,
             'cellPhone':cellPhone,
             'homePhone':homePhone,
-            'eMail':m.eMail,
+            'eMail':eMail,
             'joined':joined
         }
         notCertifiedDict.append (notCertifiedItem)
@@ -665,3 +695,162 @@ def editClassLimit(id):
             return redirect(url_for('/editClassLimit'))
 
     return redirect(url_for('/editClassLimit'))
+
+@app.route("/getMemberData")
+def getMemberData():
+    memberID = request.args.get('memberID')
+    member = db.session.query(Member).filter(Member.Member_ID == memberID).first()
+    if (member == None):
+        flash("Member ID "+ memberID + ' was not found.','danger')
+        msg = "ERROR - Member ID " + memberID + ' was not found.'
+        return jsonify(msg=msg)
+    homePhone = member.Home_Phone
+    cellPhone = member.Cell_Phone
+    eMail = member.eMail
+    if (member.Certified):
+        certifiedRAvalue = 'True'
+    else:
+        certifiedRAvalue = 'False'
+    print('CURRENT member.Certified - ',member.Certified)
+    print('CURRENT certifiedRAvalue - ',certifiedRAvalue)
+    print('CURRENT member.Certification_Training_Date - ',member.Certification_Training_Date)
+
+    if (member.Certification_Training_Date):
+        certifiedRAdate = member.Certification_Training_Date.strftime('%Y-%m-%d')
+    else:
+        certifiedRAdate = ''
+
+    if (member.Certified_2):
+        certifiedBWvalue = 'True'
+    else:
+        certifiedBWvalue = 'False'
+
+    if (member.Certification_Training_Date_2):
+        certifiedBWdate = member.Certification_Training_Date_2.strftime('%Y-%m-%d')
+    else:
+        certifiedBWdate = ''
+        
+    hdgName = member.First_Name
+    if (member.NickName):
+        hdgName += " (" + member.NickName + ')'
+
+    hdgName += " " + member.Last_Name
+
+    return jsonify(homePhone=homePhone,cellPhone=cellPhone,eMail=eMail,\
+    certifiedRAvalue=certifiedRAvalue,certifiedRAdate=certifiedRAdate,\
+    certifiedBWvalue=certifiedBWvalue,certifiedBWdate=certifiedBWdate,hdgName=hdgName,memberID=memberID)
+
+@app.route("/updateMemberData")
+def updateMemberData():
+    staffID = request.args.get('staffID')
+    memberID=request.args.get('memberID')
+    homePhone=request.args.get('homePhone')
+    cellPhone=request.args.get('cellPhone')
+    eMail=request.args.get('eMail')
+    certifiedRAvalue = request.args.get('certifiedRAvalue')
+    certifiedRAdate = request.args.get('certifiedRAdate')
+    certifiedBWvalue = request.args.get('certifiedBWvalue')
+    certifiedBWdate = request.args.get('certifiedBWdate')
+
+    print('certifiedRAvalue - ',certifiedRAvalue, ' type - ',type(certifiedRAvalue))
+    if certifiedRAvalue == 'True':
+        certifiedRA = True
+    else:
+        certifiedRA = False
+
+    if certifiedBWvalue == 'True':
+        certifiedBW = True
+    else:
+        certifiedBW = False
+    
+
+    # GET MEMBER RECORD 
+    member = db.session.query(Member).filter(Member.Member_ID == memberID).first()
+    if member == None:
+        flash('ERROR - Member '+memberID + ' not found.','danger')
+        return redirect(url_for('home'))
+    fieldsChanged = 0
+
+    # CHECK FOR DATA CHANGES
+    if member.Home_Phone != homePhone:
+        logChange(staffID,'Home Phone',memberID,member.Home_Phone,homePhone)
+        member.Home_Phone = homePhone
+        fieldsChanged += 1
+
+    if member.Cell_Phone != cellPhone:
+        logChange(staffID,'Cell Phone',memberID,member.Cell_Phone,cellPhone)
+        member.Cell_Phone = cellPhone
+        fieldsChanged += 1
+
+    if member.eMail != eMail:
+        logChange(staffID,'eMail',memberID,member.eMail,eMail)
+        member.eMail = eMail
+        fieldsChanged += 1
+
+    print('member.Certified - ',member.Certified)
+    print('certifiedRA - ',certifiedRA, ' type - ',type(certifiedRA))
+    if member.Certified != certifiedRA:
+        logChange(staffID,'Certified(RA)',memberID,member.Certified,certifiedRA)
+        member.Certified = certifiedRA
+        print('new Certified - ', member.Certified)
+        fieldsChanged += 1
+
+    print('1. form certifiedRAdate - ',certifiedRAdate)
+    print('2. member.Certification_Training_Date - ',member.Certification_Training_Date)
+    print('3. type certifiedRAdate - ',type(certifiedRAdate))
+    if member.Certification_Training_Date != certifiedRAdate:
+        logChange(staffID,'Certified Date (RA)',memberID,member.Certification_Training_Date,certifiedRAdate)
+        member.Certification_Training_Date = certifiedRAdate
+        print('4. new date - ',member.Certification_Training_Date)
+        fieldsChanged += 1
+
+    if member.Certified != certifiedBW:
+        logChange(staffID,'Certified(BW)',memberID,member.Certified,certifiedBW)
+        member.Certified = certifiedBW
+        fieldsChanged += 1
+
+    if member.Certification_Training_Date_2 != certifiedBWdate:
+        logChange(staffID,'Certified Date (BW)',memberID,member.Certification_Training_Date_2,certifiedBWdate)
+        member.Certification_Training_Date_2 = certifiedBWdate
+        fieldsChanged += 1
+
+    if fieldsChanged > 0:
+        try:
+            db.session.commit()
+            flash("Changes successful","success")
+            msg="Changes successful"
+            print(msg)
+        except Exception as e:
+            flash("Could not update member data.","danger")
+            db.session.rollback()
+            msg="ERROR - changes could not be made"
+            print(msg)
+    return jsonify(msg=msg)
+   
+
+def logChange(staffID,colName,memberID,newData,origData):
+    if staffID == None or staffID == '':
+        flash('Missing staffID in logChange routine.','danger')
+        staffID = '111111'
+
+    #  GET UTC TIME
+    est = timezone('EST')
+    # Write data changes to tblMember_Data_Transactions
+    try:
+        newTransaction = MemberTransactions(
+            Transaction_Date = datetime.now(est),
+            Member_ID = memberID,
+            Staff_ID = staffID,
+            Original_Data = origData,
+            Current_Data = newData,
+            Data_Item = colName,
+            Action = 'UPDATE'
+        )
+        db.session.add(newTransaction)
+        return
+        db.session.commit()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        flash('Transaction could not be logged.\n'+error,'danger')
+        db.session.rollback()
+

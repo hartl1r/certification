@@ -129,3 +129,15 @@ class ShopName(db.Model):
     __table_args__ = {"schema": "dbo"}
     Shop_Number = db.Column(db.Integer, primary_key=True)
     Shop_Name = db.Column(db.String(30))
+
+class MemberTransactions(db.Model):
+    __tablename__="tblMember_Data_Transactions"
+    __table_args__={"schema":"dbo"}
+    ID = db.Column(db.Integer, primary_key=True)
+    Transaction_Date = db.Column(db.DateTime)
+    Member_ID = db.Column(db.String(6))
+    Staff_ID = db.Column(db.String(6))
+    Original_Data = db.Column(db.String(50))
+    Current_Data = db.Column(db.String(50))
+    Data_Item = db.Column(db.String(30))
+    Action = db.Column(db.String(6))

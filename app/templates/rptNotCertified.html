@@ -5,59 +5,57 @@
 
  <head>
     <title>Not Certified - {{ shopName }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/print.css') }}">
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/rptNotCertified.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rptNotCertified.css') }}">
 </head>
-<div class="VWCreports">
-    <div class='titles'>
-        <div class="row">
-            <div class="col-2">
-                &nbsp;
-            </div>
-            <div class="col-8">
-                <h2 class="text-center">THE VILLAGES WOODWORKERS CLUB</h2>
-            </div>
-            <div class="col-2">
-                <button id="backButton" style=margin-right:20px; onClick="goBack();">Go Back</button> 
-                <button id="printPageButton" style=margin-right:20px; onClick="window.print();">PRINT</button>
-            </div>
+
+<div class="wholePage">
+    <div class='hdg'>
+        <div class='pageButtons'>
+            <button id="backButton" class='btn btn-secondary' style=margin-right:20px; onClick="goBack();">Go Back</button> 
+            <button id="printPageButton" class='btn btn-primary' style=margin-right:20px; onClick="window.print();">PRINT</button>
+            
         </div>
-       
+        <br>
+        <br>
+        <div class=title'>
+            <h2 class="text-center">THE VILLAGES WOODWORKERS CLUB</h2>
+        </div>     
+    </div>
+           
+    <div class="subtitles">
         <h3 class="text-center">Members Not Certified</h3>
         <h3 class="text-center">{{shopName}}</h3>
         <h3 class="text-center">As of {{ todays_date }}</h3>
-    </div>
-   
-    <div class="row headingRow">
-        <div class="col-2" style=margin-left:50px>Name</div>
-        <div class="col-3">E-Mail</div>
-        <div class="col-2">Cell</div>
-        <div class="col-2">Home</div>
-        <div class="col-1" style=text-align:center>Joined</div>
-        <div class="col-1" style=text-align:center>Certified</div>
-    </div>
-    <hr style='background-color:black;'>
-    {% for n in notCertifiedDict %}
-        <div class="row detailRow">
-            <div class="col-2" style=margin-left:50px>{{n.name}}</div>
-            <div class="col-3">{{n.eMail}}</div>
-            <div class="col-2">{{n.cellPhone}}</div>
-            <div class="col-2">{{n.homePhone}}</div>
-            <div class="col-1" style=text-align:right>{{n.joined}}</div>
-            <div class="col-1 isCertified" style="margin:0 auto">
-                {% if n.certified %}
-                    <span style='margin-bottom:5px; display:inline-block'>&#x2714</span>
-                {% else %}
-                    <span style='border:1px solid black;height:20px;width:20px;display:inline-block'>&nbsp</span>
-                {% endif %}
-            </div>
-            
-            
-        </div>
-    {% endfor %}
-    <div class="row"style=margin-left:50px;margin-top:100px>Record count -  {{recordCount}}</div>
+    </div>   
+    <br>
+    <table>
+        <thead>
+            <th>Name</th>
+            <th>Training</th>
+            <th>E-Mail</th>
+            <th>Cell</th>
+            <th>Home</th>
+            <th>Joined</th>
+        </thead>
+        <tbody>
+            {% for n in notCertifiedDict %}
+                <tr>
+                    <td>{{n.name}}</td>
+                    <td>{{n.dateToBeTrained}}</td>
+                    <td>{{n.eMail}}</td>
+                    <td>{{n.cellPhone}}</td>
+                    <td>{{n.homePhone}}</td>
+                    <td>{{n.joined}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>  
     
-</div>  
+
+    <div class="row reportFooter"style=margin-left:50px;margin-top:100px>Record count -  {{recordCount}}</div>
+    
+</div> 
+
 <script>
     function goBack() {
         window.history.back();
