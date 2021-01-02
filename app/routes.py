@@ -38,7 +38,7 @@ def index():
     # CALCULATE STATISTICS
     todays_date = date.today()
     currentYear = todays_date.year
-    print('currentYear - ', currentYear)
+   
     newThisYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Member.Date_Joined) == currentYear).scalar() 
     currentPaidMembers = db.session.query(func.count(Member.Member_ID)).filter(Member.Dues_Paid == True).scalar()
     certifiedShop1=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified == True and Member.Dues_Paid == True)).scalar()
@@ -210,7 +210,6 @@ def rptNotCertified(shopNumber):
     notCertifiedDict = []
     notCertifiedItem = []
     for m in members:
-        #print(m.Last_Name, m.Certified)
         dateToBeTrained = ''
         if shopNumber == 1:
             if m.Certification_Training_Date != None:
@@ -243,7 +242,7 @@ def rptNotCertified(shopNumber):
         notCertifiedDict.append (notCertifiedItem)
 
     todays_date = date.today().strftime("%A, %B %e, %Y")
-    print(todays_date,recordCount,shopName)
+   
     return render_template('rptNotCertified.html', notCertifiedDict=notCertifiedDict,todays_date=todays_date,\
     recordCount=recordCount,shopNumber=shopNumber,shopName=shopName)
 
@@ -296,7 +295,7 @@ def rptClassRoster(id):
         enrolleesDict.append (enrolleesItem)
 
     todays_date = date.today().strftime("%A, %B %e, %Y")
-    print(todays_date,recordCount,trainingDisplayDate,shopNumber,shopName)
+    
     return render_template('rptClassRoster.html', enrolleesDict=enrolleesDict,todays_date=todays_date,\
     recordCount=recordCount,trainingDisplayDate=trainingDisplayDate,shopNumber=shopNumber,shopName=shopName)
 
@@ -433,7 +432,6 @@ def certifyupdate():
     try:
         db.session.commit()
     except Exception as e:
-       #print("Couldn't update certification data")
         print(e)
         db.session.rollback()
 
@@ -509,7 +507,6 @@ def memberLookupRoutine():
         qry = db.session.query(Member).filter(Member.Member_ID == searchByID)
         member = qry.first()
         if member:
-            print(member.Member_ID,member.Home_Phone,member.Cell_Phone)
             form = DisplayMemberForm(obj=member)
             return render_template ('memberLookup.html', form=form)
         else:
@@ -520,9 +517,7 @@ def memberLookupRoutine():
         #name was entered
         search_string = searchByName + '%'
         members = db.session.query(Member.Member_ID, Member.fullName).filter(Member.Last_Name.like(search_string)).order_by(Member.fullName)
-        for m in members:
-            print(m.fullName, m.Member_ID)
-
+        
         return render_template('memberLookup.html',members=members,form=form)  
 
     flash("Please enter a Village ID or a name.","warning")
@@ -711,9 +706,6 @@ def getMemberData():
         certifiedRAvalue = 'True'
     else:
         certifiedRAvalue = 'False'
-    print('CURRENT member.Certified - ',member.Certified)
-    print('CURRENT certifiedRAvalue - ',certifiedRAvalue)
-    print('CURRENT member.Certification_Training_Date - ',member.Certification_Training_Date)
 
     if (member.Certification_Training_Date):
         certifiedRAdate = member.Certification_Training_Date.strftime('%Y-%m-%d')
@@ -752,7 +744,6 @@ def updateMemberData():
     certifiedBWvalue = request.args.get('certifiedBWvalue')
     certifiedBWdate = request.args.get('certifiedBWdate')
 
-    print('certifiedRAvalue - ',certifiedRAvalue, ' type - ',type(certifiedRAvalue))
     if certifiedRAvalue == 'True':
         certifiedRA = True
     else:
@@ -787,21 +778,14 @@ def updateMemberData():
         member.eMail = eMail
         fieldsChanged += 1
 
-    print('member.Certified - ',member.Certified)
-    print('certifiedRA - ',certifiedRA, ' type - ',type(certifiedRA))
     if member.Certified != certifiedRA:
         logChange(staffID,'Certified(RA)',memberID,member.Certified,certifiedRA)
         member.Certified = certifiedRA
-        print('new Certified - ', member.Certified)
         fieldsChanged += 1
 
-    print('1. form certifiedRAdate - ',certifiedRAdate)
-    print('2. member.Certification_Training_Date - ',member.Certification_Training_Date)
-    print('3. type certifiedRAdate - ',type(certifiedRAdate))
     if member.Certification_Training_Date != certifiedRAdate:
         logChange(staffID,'Certified Date (RA)',memberID,member.Certification_Training_Date,certifiedRAdate)
         member.Certification_Training_Date = certifiedRAdate
-        print('4. new date - ',member.Certification_Training_Date)
         fieldsChanged += 1
 
     if member.Certified != certifiedBW:
