@@ -103,7 +103,7 @@ def newSession():
             flash("This session is already on file.","warning")
             return redirect(url_for('index'))
 
-        if trainingDate < datetime.date.today():
+        if trainingDate < date.today():
             flash ("The training date may not be a past date.","warning")
             return redirect(url_for('index'))
 
@@ -803,7 +803,6 @@ def updateMemberData():
             db.session.commit()
             flash("Changes successful","success")
             msg="Changes successful"
-            print(msg)
         except Exception as e:
             flash("Could not update member data.","danger")
             db.session.rollback()
