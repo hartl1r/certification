@@ -1,21 +1,17 @@
 # routes.py
 
 from flask import render_template, flash, redirect, url_for, request, jsonify
-#from flask_login import current_user, login_user, logout_user #, login_required
 from flask_bootstrap import Bootstrap
 from werkzeug.utils import cached_property
 from werkzeug.urls import url_parse
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError, DBAPIError
-from app.forms import MemberLookupForm, DisplayMemberForm  ,NewSessionForm,\
-ChangeClassLimitForm, ReportForm
+from app.forms import NewSessionForm, ChangeClassLimitForm, ReportForm
 from app.models import CertificationClass, ShopName, Member, MemberTransactions
 from app import app
 from app import db
 from sqlalchemy import func, case, desc, extract, select, update
-from app.forms import ResetPasswordRequestForm, ResetPasswordForm, NotCertifiedForm
-# from app.email import send_password_reset_email
+from app.forms import NotCertifiedForm
 import datetime as dt
-#from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date, datetime, timedelta
 from pytz import timezone
 app.secret_key = 'My secret key'
