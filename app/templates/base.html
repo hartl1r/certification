@@ -2,40 +2,14 @@
 
 {% block styles %}
     {{super()}}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbarCustom.css') }}">  
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/navbarCustom.css') }}">   -->
 {% endblock %}
 
 {% block scripts %}
 	{{super()}}
-	<script src="{{ url_for('static', filename='js/navbar.js') }}">  </script>
 {% endblock %}
-<!-- 
-{% block title %}CERTIFICATION{% endblock %} -->
 
-{% block navbar %}
-<!-- <nav class="navbar navbar-custom py-0 navbar-expand-sm navbar-dark "> -->
-    <!-- Links -->
-    <!-- <a class="navbar-brand " href="#"><h2>CERTIFICATION</h2></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" >
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarMenu">
-        <ul class="navbar-nav nav-pills">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('index') }}">HOME</a>
-            </li>
-           
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('memberlookup') }}">MEMBER LOOKUP</a>
-            </li> 
 
-        </ul>    
-    </div>
-    <div class="navbar-nav ml-auto version">
-        <a class="navbar-brand " href="#"><h3>ver. Dec 7, 2020</h3></a>
-    </div>        
-</nav> -->
-{% endblock %}
 
 {% block content %}
 <div class="container p-0 m-0">

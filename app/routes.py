@@ -15,6 +15,13 @@ import datetime as dt
 from datetime import date, datetime, timedelta
 from pytz import timezone
 app.secret_key = 'My secret key'
+import os
+from flask import send_from_directory
+
+@app.route('/favicon.ico') 
+def favicon(): 
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 @app.route('/')
 @app.route('/index/')
