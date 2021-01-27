@@ -48,8 +48,7 @@
 	#wholePage {
 		width:100%;
 		margin:0 auto;
-		break-before: avoid;
-		break-after:avoid;
+		page-break-inside: avoid;
 	}
 
 	#printPageButton, #closePageButton{
@@ -60,13 +59,14 @@
 	body {
 		border: 1px solid white;
         height: 99%;
-        break-after: avoid;
-        break-before: avoid;
+        page-break-after: avoid;
+		page-break-before: avoid;
+		page-break-inside: avoid;
 	}
 
 	h1 {
 			font-size: 18pt;
-			break-before: page;
+			page-break-before: avoid;
 			/*counter-increment: page;*/
 	}
 			
@@ -113,6 +113,9 @@
 	display:block;
 	position:relative;
 	margin: 1cm;
+	page-break-after: avoid;
+	page-break-before: avoid;
+	page-break-inside: avoid;
 	/*counter-increment: page;*/
 	
 }
