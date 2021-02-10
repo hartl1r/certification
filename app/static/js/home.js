@@ -5,11 +5,11 @@ window.onload=function(){
     shop1Routine();
     shop2Routine();
     }
-staffID = localStorage.getItem('staffID')
-if (!staffID) {
-    staffID = prompt("Enter staff ID - ")
-    localStorage.setItem('staffID',staffID)
-}
+// staffID = localStorage.getItem('staffID')
+// if (!staffID) {
+//     staffID = prompt("Enter staff ID - ")
+//     localStorage.setItem('staffID',staffID)
+// }
 
 // DEFINE EVENT LISTENERS
 document.getElementById('selectpicker').addEventListener('change',memberSelectedRtn)
@@ -166,7 +166,6 @@ function processMember() {
         url : "/updateMemberData",
         type: "GET",
         data : {
-            staffID:staffID,
             memberID:memberID,
             homePhone:homePhone,
             cellPhone:cellPhone,

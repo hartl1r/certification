@@ -737,7 +737,7 @@ def getMemberData():
 
 @app.route("/updateMemberData")
 def updateMemberData():
-    staffID = request.args.get('staffID')
+    staffID = getStaffID()
     memberID=request.args.get('memberID')
     homePhone=request.args.get('homePhone')
     cellPhone=request.args.get('cellPhone')
@@ -767,37 +767,37 @@ def updateMemberData():
 
     # CHECK FOR DATA CHANGES
     if member.Home_Phone != homePhone:
-        logChange(staffID,'Home Phone',memberID,member.Home_Phone,homePhone)
+        logChange('Home Phone',memberID,member.Home_Phone,homePhone)
         member.Home_Phone = homePhone
         fieldsChanged += 1
 
     if member.Cell_Phone != cellPhone:
-        logChange(staffID,'Cell Phone',memberID,member.Cell_Phone,cellPhone)
+        logChange('Cell Phone',memberID,member.Cell_Phone,cellPhone)
         member.Cell_Phone = cellPhone
         fieldsChanged += 1
 
     if member.eMail != eMail:
-        logChange(staffID,'eMail',memberID,member.eMail,eMail)
+        logChange('eMail',memberID,member.eMail,eMail)
         member.eMail = eMail
         fieldsChanged += 1
 
     if member.Certified != certifiedRA:
-        logChange(staffID,'Certified(RA)',memberID,member.Certified,certifiedRA)
+        logChange('Certified(RA)',memberID,member.Certified,certifiedRA)
         member.Certified = certifiedRA
         fieldsChanged += 1
 
     if member.Certification_Training_Date != certifiedRAdate:
-        logChange(staffID,'Certified Date (RA)',memberID,member.Certification_Training_Date,certifiedRAdate)
+        logChange('Certified Date (RA)',memberID,member.Certification_Training_Date,certifiedRAdate)
         member.Certification_Training_Date = certifiedRAdate
         fieldsChanged += 1
 
     if member.Certified != certifiedBW:
-        logChange(staffID,'Certified(BW)',memberID,member.Certified,certifiedBW)
+        logChange('Certified(BW)',memberID,member.Certified,certifiedBW)
         member.Certified = certifiedBW
         fieldsChanged += 1
 
     if member.Certification_Training_Date_2 != certifiedBWdate:
-        logChange(staffID,'Certified Date (BW)',memberID,member.Certification_Training_Date_2,certifiedBWdate)
+        logChange('Certified Date (BW)',memberID,member.Certification_Training_Date_2,certifiedBWdate)
         member.Certification_Training_Date_2 = certifiedBWdate
         fieldsChanged += 1
 
@@ -814,11 +814,9 @@ def updateMemberData():
     return jsonify(msg=msg)
    
 
-def logChange(staffID,colName,memberID,newData,origData):
-    if staffID == None or staffID == '':
-        flash('Missing staffID in logChange routine.','danger')
-        staffID = '111111'
-
+def logChange(colName,memberID,newData,origData):
+    staffID = getStaffID()
+    
     #  GET UTC TIME
     est = timezone('EST')
     # Write data changes to tblMember_Data_Transactions
@@ -840,3 +838,8 @@ def logChange(staffID,colName,memberID,newData,origData):
         flash('Transaction could not be logged.\n'+error,'danger')
         db.session.rollback()
 
+def getStaffID():
+    staffID = session.get('staffID')
+    if staffID == None:
+        staffID = '111111'
+    return staffID
