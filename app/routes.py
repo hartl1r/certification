@@ -1,6 +1,6 @@
 # routes.py
 
-from flask import render_template, flash, redirect, url_for, request, jsonify
+from flask import render_template, flash, redirect, url_for, request, jsonify, session
 from flask_bootstrap import Bootstrap
 from werkzeug.utils import cached_property
 from werkzeug.urls import url_parse
@@ -44,22 +44,28 @@ def index():
    
     newThisYear = db.session.query(func.count(Member.Member_ID)).filter(extract('year',Member.Date_Joined) == currentYear).scalar() 
     currentPaidMembers = db.session.query(func.count(Member.Member_ID)).filter(Member.Dues_Paid == True).scalar()
-    certifiedShop1=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified == True and Member.Dues_Paid == True)).scalar()
-    certifiedShop2=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified_2 == True and Member.Dues_Paid == True)).scalar()
-    certifiedForBothShops=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified == True and Member.Certified_2 == True and Member.Dues_Paid == True)).scalar() 
+    certifiedShop1=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified == True)).scalar()
+    certifiedShop2=db.session.query(func.count(Member.Member_ID)).filter((Member.Certified_2 == True)).scalar()
+    certifiedForBothShops=db.session.query(func.count(Member.Member_ID))\
+    .filter(Member.Certified == True)\
+    .filter(Member.Certified_2 == True).scalar()
+
     notCertifiedShop1=db.session.query(func.count(Member.Member_ID))\
-        .filter((Member.Certified == False) | (Member.Certified == None))\
-        .filter((Member.Dues_Paid == True)).scalar()
+        .filter(Member.Certified != True) \
+        .filter(Member.Dues_Paid == True)\
+        .filter(Member.Inactive != True).scalar()
 
     notCertifiedShop2=db.session.query(func.count(Member.Member_ID))\
-        .filter((Member.Certified_2 == False) | (Member.Certified_2 == None))\
-        .filter((Member.Dues_Paid == True)).scalar()
+        .filter(Member.Certified_2 != True)\
+        .filter(Member.Dues_Paid == True)\
+        .filter(Member.Inactive != True).scalar()
 
     noCertification=db.session.query\
         (func.count(Member.Member_ID))\
-        .filter((Member.Certified == False) | (Member.Certified == None))\
-        .filter((Member.Certified_2 == False) | (Member.Certified_2 == None))\
-        .filter((Member.Dues_Paid == True)).scalar()
+        .filter(Member.Certified != True)\
+        .filter(Member.Certified_2 != True)\
+        .filter(Member.Dues_Paid == True)\
+        .filter(Member.Inactive != True).scalar()
     
     # BUILD NAME LIST
     # PREPARE LIST OF MEMBER NAMES AND VILLAGE IDs
@@ -232,7 +238,10 @@ def rptNotCertified(shopNumber):
             eMail = m.eMail
         else:
             eMail = ''
-        joined = m.Date_Joined.strftime('%m-%d-%Y')
+        if m.Date_Joined != None:
+            joined = m.Date_Joined.strftime('%m-%d-%Y')
+        else:
+            joined = ''
 
         notCertifiedItem = {
             'name':m.Last_Name + ', ' + m.First_Name + ' ('+ m.Member_ID + ')',
@@ -285,7 +294,10 @@ def rptClassRoster(id):
             homePhone = ''
         else:
             homePhone = m.Home_Phone
-        joined = m.Date_Joined.strftime('%m-%d-%Y')
+        if m.Date_Joined != None:
+            joined = m.Date_Joined.strftime('%m-%d-%Y')
+        else:
+            joined = ''
 
         enrolleesItem = {
             'name':m.Last_Name + ', ' + m.First_Name + ' ('+ m.Member_ID + ')',
@@ -359,6 +371,7 @@ def certifySelected():
                 db.session.commit()
             except:
                 db.session.rollback()
+                flash('ERROR - Could not certify.','danger')
                 return jsonify("ERROR - Could not certify.")
         else:
             print ("Nothing in m")
@@ -419,7 +432,6 @@ def certifyupdate():
     c = Person.query.filter_by(id=oldPersonID).first()
    
     if c == None:
-       #print ("No record found.")
         return redirect("/certify")    
 
 
@@ -746,6 +758,9 @@ def updateMemberData():
     certifiedRAdate = request.args.get('certifiedRAdate')
     certifiedBWvalue = request.args.get('certifiedBWvalue')
     certifiedBWdate = request.args.get('certifiedBWdate')
+    
+    print('certified RA - ',certifiedRAvalue)
+    print('certified BW - ',certifiedBWvalue)
 
     if certifiedRAvalue == 'True':
         certifiedRA = True
@@ -791,9 +806,9 @@ def updateMemberData():
         member.Certification_Training_Date = certifiedRAdate
         fieldsChanged += 1
 
-    if member.Certified != certifiedBW:
+    if member.Certified_2 != certifiedBW:
         logChange('Certified(BW)',memberID,member.Certified,certifiedBW)
-        member.Certified = certifiedBW
+        member.Certified_2 = certifiedBW
         fieldsChanged += 1
 
     if member.Certification_Training_Date_2 != certifiedBWdate:
@@ -805,7 +820,8 @@ def updateMemberData():
         try:
             db.session.commit()
             flash("Changes successful","success")
-            msg="Changes successful"
+            msg="SUCCESS - Changes successful"
+            print(msg)
         except Exception as e:
             flash("Could not update member data.","danger")
             db.session.rollback()

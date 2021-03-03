@@ -26,6 +26,7 @@ class Member(db.Model):
     Cell_Phone = db.Column(db.String(14))
     eMail = db.Column('E-Mail',db.String(255))
     Dues_Paid=db.Column(db.Boolean)
+    Inactive = db.Column(db.Boolean)
     NonMember_Volunteer=db.Column(db.Boolean)
     Emerg_Name = db.Column(db.String(30))
     Emerg_Phone = db.Column(db.String(14))

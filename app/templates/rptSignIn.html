@@ -34,7 +34,7 @@
             {% for n in enrollees %}
                 <tr>
                     <td style=text-align:center><span style='border:1px solid black' >&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                    <td>{{n.Last_Name}}, {{n.First_Name}}   ({{n.Member_ID}}</td>
+                    <td>{{n.Last_Name}}, {{n.First_Name}}   ({{n.Member_ID}})</td>
                     <td>{{n.eMail}}</td>
                     <td>{{n.Cell_Phone}}</td>
                     <td>{{n.Home_Phone}}</td>
@@ -43,7 +43,11 @@
                 <tr >
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
-                    <td>Joined - {{n.Date_Joined.strftime('%m-%d-%Y')}}</td>
+                    <td>Joined - 
+                        {% if n.Date_Joined != None %}
+                            {{n.Date_Joined.strftime('%m-%d-%Y')}}
+                        {% endif %}
+                        </td>
                     <td class=emergencyData>Emergency contact - {{n.Emerg_Name}}</td>
                     <td class=emergencyData>Emergency phone -  {{n.Emerg_Phone}}</td>
                     <td></td>

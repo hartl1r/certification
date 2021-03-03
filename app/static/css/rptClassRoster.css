@@ -11,6 +11,7 @@
 	body {
 		background-color: #f5f5f0ea;
 		color: rgb(40, 5, 97);
+		font-family:serif;
 	}
 	h1, h2, h3, h4{
 	color: navy;
@@ -63,6 +64,7 @@
         height: 99%;
         break-after: avoid;
         break-before: avoid;
+		font-family:serif;
 	}
 
 	h1 {

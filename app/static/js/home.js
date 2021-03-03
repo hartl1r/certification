@@ -188,4 +188,25 @@ function processMember() {
     $('#memberModalID').modal('hide')
 }
 
+$('.phones').usPhoneFormat({
+    format: '(xxx) xxx-xxxx',
+});
 
+// SET VALUE OF CERTIFICATION CHECKBOXES WHEN CLICKED
+document.getElementById('certifiedRA').onclick = function(ev) {
+    if (ev.target.checked) {
+        document.getElementById('certifiedRA').value='True'
+    }
+    else {
+        document.getElementById('certifiedRA').value='False' 
+    }
+}
+
+document.getElementById('certifiedBW').onclick = function(ev) {
+    if (ev.target.checked) {
+        document.getElementById('certifiedBW').value='True'
+    }
+    else {
+        document.getElementById('certifiedBW').value='False' 
+    }
+}

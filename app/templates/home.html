@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% block styles %}
     {{super()}}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}"> 
@@ -9,6 +10,9 @@
 	<script src="{{ url_for('static', filename='js/home.js') }}"defer>  </script> 
 {% endblock %}
 {% block app_content %}
+<!-- <head>
+    <title>CERTIFICATION</title>
+</head>  -->
 <!-- {{super()}}   -->
 <div class="container-fluid py-0 m-0">
     <div class="card py-0 m-0 col-md-12">
@@ -27,7 +31,7 @@
             <a id="linkToMember" style="display:none" href=""></a>
 
             <div class="version col-md-2">
-                <h3>ver. Feb 10, 2021</h3>
+                <h3>ver. Mar 3, 2021</h3>
             </div>
         </div>
     </div>
@@ -275,7 +279,7 @@
                         <label for="memberID" >Village ID</label>
                     </div>
                     <div class="col-5">
-                        <input id='memberID' type="text" style="width:80px" name='memberID'>
+                        <input id='memberID' type="text" style="width:80px" readonly name='memberID'>
                     </div>
                 </div>
                 <div class="row">
@@ -283,7 +287,7 @@
                         <label for="homePhone">Home phone</label>
                     </div>
                     <div class="col-5">
-                        <input id='homePhone' type="text" style=width:130px name='homePhone' >
+                        <input id='homePhone' type="text" class='phones' style=width:130px name='homePhone' >
                     </div>
                 </div>    
                 <div class="row">
@@ -291,7 +295,7 @@
                         <label for="cellPhone">Cell phone</label>
                     </div>
                     <div class="col-5">
-                        <input id='cellPhone' type="text" style=width:130px name='cellPhone'>
+                        <input id='cellPhone' type="text" class='phones' style=width:130px name='cellPhone'>
                     </div>
                 </div> 
                 <div class="row">
@@ -308,7 +312,15 @@
                         <label for="certifiedRA">Certified (RA)</label>
                     </div>
                     <div class="col-5">
-                        <input id='certifiedRA' name='certifiedRA' type="checkbox">
+                        <input 
+                            id='certifiedRA' 
+                            name='certifiedRA' 
+                            type="checkbox"
+                            {% if certifiedRAvalue == 'True' %}
+                                checked
+                            {% endif %}
+                            value={{certifiedRAvalue}}
+                            >
                     </div>
                 </div> 
                
@@ -326,7 +338,15 @@
                         <label for="certifiedBW">Certified (BW)</label>
                     </div>
                     <div class="col-5">
-                        <input id='certifiedBW' name='certifiedBW' type="checkbox">
+                        <input 
+                            id='certifiedBW' 
+                            name='certifiedBW' 
+                            type="checkbox"
+                            {% if certifiedBWvalue == 'True' %}
+                                checked
+                            {% endif %}
+                            value={{certifiedBWvalue}}
+                            >
                     </div>
                 </div> 
                 <div class="row">
@@ -334,7 +354,11 @@
                         <label for="certifiedBWdate">Date certified (BW)</label>
                     </div>
                     <div class="col-5">
-                        <input id='certifiedBWdate' name='certifiedBWdate' style=width:145px type="date">
+                        <input 
+                            id='certifiedBWdate' 
+                            name='certifiedBWdate' 
+                            style=width:145px 
+                            type="date">
                     </div>
                 </div> 
 
