@@ -206,15 +206,25 @@ def rptNotCertified(shopNumber):
     # GET SHOP NAME
     shopName = db.session.query(ShopName.Shop_Name).filter(ShopName.Shop_Number == shopNumber).scalar()
     if shopNumber == '1':
+        # GET MEMBERS NOT CERTIFIED FOR SPECIFIED SHOP
         members = db.session.query(Member)\
             .filter(Member.Certified == False)\
+            .filter(Member.Inactive != True)\
+            .filter(Member.NonMember_Volunteer != True)\
             .order_by(Member.Last_Name,Member.First_Name).all()
-        recordCount = db.session.query(Member).filter(Member.Certified == False).count()
+        recordCount = len(members)
+        # recordCount = db.session.query(Member)\
+        #     .filter(Member.Certified == False)\
+        #     .filter(Member.Inactive != True)\
+        #     .filter(Member.NonMember_Volunteer != True)\
+        #     .count()
     else:
         members = db.session.query(Member)\
             .filter(Member.Certified_2 != True)\
+            .filter(Member.Inactive != True)\
+            .filter(Member.NonMember_Volunteer != True)\
             .order_by(Member.Last_Name,Member.First_Name).all()
-        recordCount = db.session.query(Member).filter(Member.Certified_2 != True).count()
+        recordCount = len(members)
     
     notCertifiedDict = []
     notCertifiedItem = []
