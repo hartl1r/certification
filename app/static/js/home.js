@@ -15,6 +15,7 @@ window.onload=function(){
 document.getElementById('selectpicker').addEventListener('change',memberSelectedRtn)
 document.getElementById("cancelMemberID").addEventListener("click",cancelMember)
 document.getElementById("processMemberID").addEventListener("click",processMember)
+
 document.getElementById('certifiedRA').onclick = function(ev) {
     if (ev.target.checked) {
         document.getElementById('certifiedRA').value='True'
@@ -104,15 +105,11 @@ function memberSelectedRtn() {
             if (data.eMail) {
                 document.getElementById('eMail').value = data.eMail}
 
-            console.log('type of date.certifiedRAvalue - '+typeof(data.certifiedRAvalue))
-
             if (data.certifiedRAvalue == 'True') {
                 document.getElementById('certifiedRA').checked = true}
-                console.log('certifiedRAvalue - '+data.certifiedRAvalue)
             
             if (data.certifiedRAdate) {
                 document.getElementById('certifiedRAdate').value = data.certifiedRAdate}
-                console.log('CURRENT certifiedRAdate - '+ data.certifiedRAdate)
 
             if (data.certifiedBWvalue == 'True') {
                 document.getElementById('certifiedBW').checked = true}
@@ -127,13 +124,6 @@ function memberSelectedRtn() {
     })    
     $('#memberModalID').modal('show')
 }
-
-    // SET UP LINK TO MEMBER FORM 
-//     var linkToMemberBtn = document.getElementById('linkToMember');
-//     link='/index/' + currentMemberID +'/' + staffID
-//     linkToMemberBtn.setAttribute('href', link)
-//     linkToMemberBtn.click()
-// }
 
 function cancelMember() {
     $('#memberModalID').modal('hide')
@@ -150,16 +140,16 @@ function processMember() {
     certifiedBWdate = document.getElementById('certifiedBWdate').value
     
     if (certifiedRA.checked) {
-        certifiedRAvalue ='true'
+        certifiedRAvalue ='True'
     }
     else {
-        certifiedRAvalue='false'
+        certifiedRAvalue='False'
     }
     if (certifiedBW.checked) {
-        certifiedBWvalue ='true'
+        certifiedBWvalue ='True'
     }
     else {
-        certifiedBWvalue='false'
+        certifiedBWvalue='False'
     }
       
     $.ajax({

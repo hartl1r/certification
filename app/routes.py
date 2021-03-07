@@ -482,7 +482,6 @@ def printReport():
                 .order_by(Person.wholeName) \
                 .filter(Person.certTrainingShop1 == trainingDate).all()
             except:
-               #print ("No records.")
                 flash("No records available for sign in report.","info")
                 return redirect(url_for('/reportPrint'))
         if shopNumber == '2':
@@ -512,7 +511,6 @@ def printReport():
 @app.route("/memberlookup", methods=['GET','POST'])  # menu item link
 def memberlookup():
     form=DisplayMemberForm()
-    #print ("Name:", form.fullName.data)
     if request.method != 'POST':
         return render_template('memberLookup.html',form=form)
 
@@ -573,7 +571,6 @@ def displayMember():
     qry = db.session.query(Member).filter(Member.Member_ID == id)
     member = qry.first()
     if member:
-        #print ("Name - ", member.fullName)
         form = DisplayMemberForm(obj=member)
         return render_template ('memberLookup.html', form=form)
     else:
@@ -612,11 +609,11 @@ def search_results(search):
         members = db.session.query(Person.fullName,Member.Member_ID).filter(Member.Member_ID == search_string)
         return render_template('/results.html', members=members)
 
-@app.route('/printSignIn')
-def printSignIn():
-   #print ("Test printSignIn")
-    #return "print Sign In"
-    return redirect(url_for('index'))
+# @app.route('/printSignIn')
+# def printSignIn():
+#    #print ("Test printSignIn")
+#     #return "print Sign In"
+#     return redirect(url_for('index'))
 
 
 @app.route("/removeTrainingClass/<string:id>/",methods=['GET','POST'])
@@ -768,10 +765,7 @@ def updateMemberData():
     certifiedRAdate = request.args.get('certifiedRAdate')
     certifiedBWvalue = request.args.get('certifiedBWvalue')
     certifiedBWdate = request.args.get('certifiedBWdate')
-    
-    print('certified RA - ',certifiedRAvalue)
-    print('certified BW - ',certifiedBWvalue)
-
+   
     if certifiedRAvalue == 'True':
         certifiedRA = True
     else:
