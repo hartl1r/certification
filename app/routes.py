@@ -609,13 +609,6 @@ def search_results(search):
         members = db.session.query(Person.fullName,Member.Member_ID).filter(Member.Member_ID == search_string)
         return render_template('/results.html', members=members)
 
-# @app.route('/printSignIn')
-# def printSignIn():
-#    #print ("Test printSignIn")
-#     #return "print Sign In"
-#     return redirect(url_for('index'))
-
-
 @app.route("/removeTrainingClass/<string:id>/",methods=['GET','POST'])
 def removeTrainingClass(id):
     # Get record to be deleted
