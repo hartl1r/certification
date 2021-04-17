@@ -21,23 +21,23 @@ table {
   height:300px;
   overflow:auto;
   margin-left:0px;
-  padding-left:50px;
+  padding-left:150px;
 }
 thead {
+    background-color: darkblue;
     height:50%;
     width:100%;
     box-sizing:border-box;
   }
-  th {
-      background-color:darkblue;
-      color:white;
-      font-size: 10px;
-      padding:0px;
-      text-align:center;
-      border:0px;
-      height:1.5;
-      
-  }
+th {
+    background-color:darkblue;
+    color:white;
+    font-size: 10px;
+    padding:0px;
+    text-align:center;
+    border:1px solid darkblue;
+    height:1.5;
+}
 /*   
    thead th {
     font-size: 0.6em;
@@ -45,61 +45,60 @@ thead {
     height:10px;
    } */
    
-  tr {
-        padding:0px;
-        margin:0px;
-        border:0px;
-        line-height: 1;
-        width:100%;
-  }
-  td {
-      font-size:14px;
-  }
+tr {
+      padding:0px;
+      margin:0px;
+      line-height: 1;
+      width:100%;
+}
+td {
+    font-size:14px;
+}
   
-  tbody {
-    background-color:lightgray;
-    border:1px solid black;
-  }
+tbody {
+  background-color:lightgray;
+  border:1px solid navy;
+}
   /*
   .fixed-panel {
     min-height: 300px;
     max-height: 300px;
     overflow-y: scroll;
   }*/
-  .container-fluid {
-    height: 100vh;
-  }
-   .card-heading {
-    background-color:navy;
-    color:white;
-  }
-  .card-body {
-    background-color:lightgray;
-    padding:0;
-  } 
+.container-fluid {
+  height: 100vh;
+}
+.card-heading {
+  background-color:navy;
+  color:white;
+}
+.card-body {
+  background-color:lightgray;
+  padding:0;
+} 
 /* 
   tr td .button {
     padding: 0px;
     color:yellow;
   } */
-  .btn-spacing {
-    padding:0px;
-  }
-  .findMember {
-    display:inline;
-    padding-top:.4em;
-    text-align:right;
-  }
-  
-  .modal-content {
-    background-color: lightgrey;
-    width:70%;
-  }
-  .modal-header {
-    text-align:center;
-    background-color: navy;
-    color:white;
-    justify-content: center;
+.btn-spacing {
+  padding:0px;
+}
+.findMember {
+  display:inline;
+  padding-top:.4em;
+  text-align:right;
+}
+
+.modal-content {
+  background-color: lightgrey;
+  width:70%;
+}
+.modal-header {
+  text-align:center;
+  background-color: navy;
+  color:white;
+  justify-content: center;
 }
  
 /* .modal-header span {

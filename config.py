@@ -4,7 +4,18 @@ import os
 import pyodbc
 import urllib
 
+from flask import Flask
 from dotenv import load_dotenv
+from flask_mail import Mail,Message
+
+app = Flask(__name__)
+
+# mail setup
+app.config['MAIL_SERVER']='outlook.office365.com'
+app.config['MAIL_PORT']=587
+app.config['MAIL_USERNAME'] = 'dhartley@thevwc.net'
+app.config['MAIL_PASSWORRD'] = 'vwc-0513'
+app.config['MAIL_USE_TLS'] = True
 
 # LOAD dotenv IN THE BASE DIRECTORY
 basedir = os.path.abspath(os.path.dirname(__file__))

@@ -22,7 +22,7 @@ class ReportForm(FlaskForm):
 
 
 class NewSessionForm(FlaskForm):
-    shopNumber = SelectField ('Shop',choices=[(0,'Select one -'),(1,'Rolling Acres'),(2,'Brownwood')],coerce=int)
+    shopNumber = SelectField ('Location',choices=[(0,'Select one -'),(1,'Rolling Acres'),(2,'Brownwood')],coerce=int)
     trainingDate = DateField('Date', format='%Y-%m-%d', validators=[InputRequired('Training date is required.')])
     classLimit = IntegerField ('Class Limit', validators=[NumberRange(min=1,max=30,message='Limit must be from 1-30')])    
     submit = SubmitField('Add Class')
