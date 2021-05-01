@@ -14,7 +14,7 @@ from app.forms import NotCertifiedForm
 import datetime as dt
 from datetime import date, datetime, timedelta
 from pytz import timezone
-app.secret_key = 'My secret key'
+
 import os
 from flask import send_from_directory
 
